@@ -1,0 +1,58 @@
+/*fonts-sizes
+   12 14 16 18 20 22 24 26 28 32
+*/
+
+.balance-history {
+    padding: 0 0 16rem 0;
+}
+
+.balance-history,
+.data-title,
+.data-list {
+    display: flex;
+}
+
+.balance-history,
+.data-list {
+    flex-direction: column;
+}
+
+.data-title,
+.data-list {
+    padding-left: 20%;
+}
+
+
+.data-title {
+    font-size: 2.6rem;
+    align-items: center;
+    height: 6rem;
+    background-color: var(--main-gray);
+    border-top: 0.1rem solid var(--main-black);
+    border-bottom: 0.1rem solid var(--main-black);
+}
+
+.data-item,
+.data-item--empty{
+    font-size: 2.4rem;
+    margin-top: 2rem;
+    display: inline-block;
+}
+
+.data-list {
+    padding-bottom: 2rem;
+    box-shadow:
+            0 10px 10px -7px rgba(34, 34, 34, 0.3),
+            0 -10px 10px -7px rgba(34, 34, 34, 0.3);
+    position: relative;
+}
+
+.data-stroke {
+    display: grid;
+    gap: 3rem;
+    grid-template-columns: 1fr 1fr;
+}
+
+.data-item--empty a {
+    color: var(--main-blue)
+}

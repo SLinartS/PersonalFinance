@@ -1,0 +1,22 @@
+@import "../css/variables.css";
+@import "../css/global/fonts.css";
+@import "../css/global/utils.css";
+@import "../css/global/global.css";
+@import "../css/global/colors.css";
+
+
+
+@import "../css/pages/general-page.css";
+@import "../css/pages/balance-history.css";
+@import "../css/pages/categories.css";
+@import "../css/pages/analytics.css";
+
+@import "../css/blocks/header.css";
+@import "../css/blocks/curent-balance.css";
+@import "../css/blocks/footer.css";
+
+@import "../css/blocks/popup.css";
+@import "../css/blocks/auth-reg.css";
+
+@import "../css/global/screen-queries.css";
+

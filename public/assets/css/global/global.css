@@ -1,0 +1,60 @@
+
+.general,
+.balance-history,
+.categories,
+.analytics {
+    width: 93%;
+    margin: 0 auto 0 auto;
+    background-color: var(--main-white);
+    color: var(--main-black);
+    z-index: -1;
+}
+
+img {
+    /*width: 5rem;*/
+}
+
+html {
+    background-color: var(--second-white);
+    line-height: 1.5;
+    letter-spacing: 0.05rem;
+    font-weight: 500;
+}
+
+body {
+    margin: 0;
+}
+
+.button {
+    border-radius: 0.5rem;
+    color: var(--main-white);
+    font-weight: bold;
+}
+
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-family: var(--main-font);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+}
+
+ul,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    padding: 0;
+    font-size: 1em;
+}

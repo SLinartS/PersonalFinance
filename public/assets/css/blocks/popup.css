@@ -1,0 +1,73 @@
+/*fonts-sizes
+   12 14 16 18 20 22 24 26 28 32
+*/
+
+.popup {
+    width: 22rem;
+    height: 47rem;
+    z-index: 1;
+    box-shadow: 0 0 20px rgb(34, 34, 34);
+    border-radius: 1rem;
+    font-size: 2.4rem;
+    position: absolute;
+    right: 1%;
+    top: 5%;
+    display: block;
+    background: var(--main-blue);
+    overflow: hidden;
+}
+
+.popup__navigation-list {
+    padding-top: 1rem;
+    list-style-type: none;
+}
+
+.popup__navigation-item{
+    margin: 0 0 2rem 2rem;
+}
+
+.popup__buttons-section,
+.popup__header {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.popup__buttons-section {
+    flex-direction: column;
+}
+
+.popup__button {
+    padding: 0.5rem 0 0.5rem 0;
+    margin-bottom: 2rem;
+    width: 18rem;
+}
+
+.popup__header {
+    justify-content: space-between;
+    box-shadow: 0 2px 5px 0 rgba(34, 34, 34, 0.56);
+    position: relative;
+}
+
+.popup__header a {
+    margin: 1rem 2rem 0 2rem;
+
+    fill: var(--main-yellow);
+}
+
+.icon-bars {
+    width: 3.5rem;
+    margin-right: 2rem;
+    fill: var(--main-yellow);
+    display: none;
+}
+
+.popup__icon-setting {
+    width: 3.5rem;
+}
+
+.icon-close--popup {
+    width: 3rem;
+}
