@@ -1,5 +1,5 @@
 <template>
-    <div class="auth-reg auth-reg--auth hidden">
+    <div class="auth-reg auth-reg--auth">
         <div class="auth-reg__header">
             <h2 class="auth-reg__header__title">Авторизация</h2>
             <svg class="icon-close icon-close--auth-reg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">

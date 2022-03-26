@@ -23085,6 +23085,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Header",
+  computed: {
+    popupNav: function popupNav() {
+      return this.$store.getters.popupNav;
+    },
+    popupAuth: function popupAuth() {
+      return this.$store.getters.popupAuth;
+    },
+    popupReg: function popupReg() {
+      return this.$store.getters.popupReg;
+    }
+  },
   components: {
     PopupReg: _blocks_PopupReg__WEBPACK_IMPORTED_MODULE_2__["default"],
     PopupAuth: _blocks_PopupAuth__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -23137,7 +23148,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var _hoisted_1 = {
-  "class": "auth-reg auth-reg--auth hidden"
+  "class": "auth-reg auth-reg--auth"
 };
 
 var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"auth-reg__header\"><h2 class=\"auth-reg__header__title\">Авторизация</h2><svg class=\"icon-close icon-close--auth-reg\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 512\"><path d=\"M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z\"></path></svg></div><div class=\"auth-reg__input-section\"><div class=\"auth-reg__input-block\"><img class=\"auth-reg__image\" src=\"" + _public_assets_files_images_user_solid_svg__WEBPACK_IMPORTED_MODULE_1__["default"] + "\" alt=\"\"><input class=\"input\" type=\"text\" name=\"e-mail\" placeholder=\"Электронная почта\"></div><div class=\"auth-reg__input-block\"><img class=\"auth-reg__image\" src=\"" + _public_assets_files_images_key_solid_svg__WEBPACK_IMPORTED_MODULE_2__["default"] + "\" alt=\"\"><input class=\"input\" type=\"text\" name=\"password\" placeholder=\"Пароль\"></div><div class=\"auth-reg__input-block\"><a class=\"auth-reg__forgot-password\" href=\"\">Забыли пароль?</a></div></div><div class=\"auth-reg__button-section\"><a class=\"button button--auth auth-reg__button\" href=\"\">Войти в систему</a></div>", 3);
@@ -23163,7 +23174,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "popup hidden"
+  "class": "popup"
 };
 
 var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"popup__header\"><a class=\"popup__icon-setting\" href=\"\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 16 16\"><path d=\"M16 9v-2l-1.7-0.6c-0.2-0.6-0.4-1.2-0.7-1.8l0.8-1.6-1.4-1.4-1.6 0.8c-0.5-0.3-1.1-0.6-1.8-0.7l-0.6-1.7h-2l-0.6 1.7c-0.6 0.2-1.2 0.4-1.7 0.7l-1.6-0.8-1.5 1.5 0.8 1.6c-0.3 0.5-0.5 1.1-0.7 1.7l-1.7 0.6v2l1.7 0.6c0.2 0.6 0.4 1.2 0.7 1.8l-0.8 1.6 1.4 1.4 1.6-0.8c0.5 0.3 1.1 0.6 1.8 0.7l0.6 1.7h2l0.6-1.7c0.6-0.2 1.2-0.4 1.8-0.7l1.6 0.8 1.4-1.4-0.8-1.6c0.3-0.5 0.6-1.1 0.7-1.8l1.7-0.6zM8 12c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4z\"></path><path d=\"M10.6 7.9c0 1.381-1.119 2.5-2.5 2.5s-2.5-1.119-2.5-2.5c0-1.381 1.119-2.5 2.5-2.5s2.5 1.119 2.5 2.5z\"></path></svg></a><a class=\"icon-close icon-close--popup\" href=\"\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 85 320 335\"><path d=\"M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z\"></path></svg></a></div><ul class=\"popup__navigation-list\"><li class=\"popup__navigation-item\">Баланс</li><li class=\"popup__navigation-item\">Категории</li><li class=\"popup__navigation-item\">История</li><li class=\"popup__navigation-item\">Аналитика</li><li class=\"popup__navigation-item\">Бюджет</li></ul><div class=\"popup__buttons-section\"><a class=\"button popup__button button--auth\" href=\"\">Войти</a><a class=\"button popup__button button--reg\" href=\"\">Регистрация</a></div>", 3);
@@ -23193,7 +23204,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var _hoisted_1 = {
-  "class": "auth-reg auth-reg--reg hidden"
+  "class": "auth-reg auth-reg--reg"
 };
 
 var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"auth-reg__header\"><h2 class=\"auth-reg__header__title\">Регистрация</h2><svg class=\"icon-close icon-close--auth-reg\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 512\"><path d=\"M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z\"></path></svg></div><div class=\"auth-reg__input-section\"><div class=\"auth-reg__input-block\"><img class=\"auth-reg__image\" src=\"" + _public_assets_files_images_user_solid_svg__WEBPACK_IMPORTED_MODULE_1__["default"] + "\" alt=\"\"><input class=\"input\" type=\"text\" id=\"e-mail\" name=\"e-mail\" placeholder=\"Электронная почта\"></div><div class=\"auth-reg__input-block\"><img class=\"auth-reg__image\" src=\"" + _public_assets_files_images_key_solid_svg__WEBPACK_IMPORTED_MODULE_2__["default"] + "\" alt=\"\"><input class=\"input\" type=\"text\" id=\"password\" name=\"password\" placeholder=\"Пароль\"></div><div class=\"auth-reg__input-block\"><img class=\"auth-reg__image\" src=\"" + _public_assets_files_images_key_solid_svg__WEBPACK_IMPORTED_MODULE_2__["default"] + "\" alt=\"\"><input class=\"input\" type=\"text\" id=\"repeat-password\" name=\"repeat-password\" placeholder=\"Повторите пароль\"></div></div><div class=\"auth-reg__button-section\"><a class=\"button button--reg auth-reg__button\" href=\"\">Зарегистрироваться</a></div>", 3);
@@ -23561,7 +23572,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  })])]), _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_PopupNav), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_PopupAuth), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_PopupReg)]);
+  })])]), _hoisted_14, $options.popupNav ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_PopupNav, {
+    key: 0
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.popupAuth ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_PopupAuth, {
+    key: 1
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.popupReg ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_PopupReg, {
+    key: 2
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 }
 
 /***/ }),
@@ -23709,17 +23726,31 @@ __webpack_require__.r(__webpack_exports__);
 var store = (0,vuex__WEBPACK_IMPORTED_MODULE_0__.createStore)({
   state: function state() {
     return {
-      allData: null
+      popupNav: false,
+      popupAuth: false,
+      popupReg: false
     };
   },
   mutations: {
-    loadDB: function loadDB(state) {
-      console.log(state);
+    togglePopupNav: function togglePopupNav(state, value) {
+      state.popupNav = value;
+    },
+    togglePopupAuth: function togglePopupAuth(state, value) {
+      state.popupAuth = value;
+    },
+    togglePopupReg: function togglePopupReg(state, value) {
+      state.popupReg = value;
     }
   },
   getters: {
-    allData: function allData(state) {
-      console.log(state);
+    popupNav: function popupNav(state) {
+      return state.popupNav;
+    },
+    popupAuth: function popupAuth(state) {
+      return state.popupAuth;
+    },
+    popupReg: function popupReg(state) {
+      return state.popupReg;
     }
   },
   actions: {

@@ -3,17 +3,31 @@ import {createStore} from 'vuex';
 const store = createStore({
     state() {
         return {
-            allData: null,
+            popupNav: false,
+            popupAuth: false,
+            popupReg: false,
         };
     },
     mutations: {
-        loadDB(state) {
-            console.log(state)
+        togglePopupNav(state, value) {
+            state.popupNav = value
+        },
+        togglePopupAuth(state, value) {
+            state.popupAuth = value
+        },
+        togglePopupReg(state, value) {
+            state.popupReg = value
         }
     },
     getters: {
-        allData(state) {
-            console.log(state)
+        popupNav(state) {
+            return state.popupNav
+        },
+        popupAuth(state) {
+            return state.popupAuth
+        },
+        popupReg(state) {
+            return state.popupReg
         },
     },
     actions: {
