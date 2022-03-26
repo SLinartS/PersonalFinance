@@ -5,11 +5,11 @@
             <h1 class="main-title__text">РЭSources</h1>
         </div>
         <ul class="navigation-list">
-            <li class="navigation-item">Баланс</li>
-            <li class="navigation-item">Категории</li>
-            <li class="navigation-item">История</li>
-            <li class="navigation-item">Аналитика</li>
-            <li class="navigation-item">Бюджет</li>
+            <li class="navigation-item"><router-link to="/">Баланс</router-link></li>
+            <li class="navigation-item"><router-link to="/categories">Категории</router-link></li>
+            <li class="navigation-item"><router-link to="/history">История</router-link></li>
+            <li class="navigation-item"><router-link to="/analytics">Аналитика</router-link></li>
+            <li class="navigation-item"><router-link to="/budget">Бюджет</router-link></li>
         </ul>
         <div class="header__buttons-section">
             <a class="button header__button button--auth" href="">Войти</a>

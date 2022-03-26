@@ -13,6 +13,7 @@ window.Vue = require('vue').default;
 import {createApp} from 'vue';
 import App from "./components/App"
 import store from "./store"
+import router from "./router"
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -21,11 +22,11 @@ import store from "./store"
  */
 
 
-
 // app.config.unwrapInjectedRef = true
 
 const app = createApp(App)
 
 app.use(store);
+app.use(router);
 app.mount("#app")
 
