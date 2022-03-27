@@ -5,21 +5,21 @@
     --main-red: #DB4437;
     --main-white: #F8F8F8;
     --second-white: #EFEFEF;
-    --main-black: rgb(34, 34, 34);
+    --main-black: #222222;
     --main-gray: #E1E1E1;
 
     --category-blue: #4285F4;
     --category-pink: #F06292;
-    --category-yeallow: #E5CF00;
+    --category-yellow: #E5CF00;
     --category-green: #00BF4D;
     --category-orange: #FF8058;
     --category-turquoise: #00ACC1;
     --category-red: #DB4437;
     --category-light-green: #8BCC00;
     --category-violet: #AB47BC;
-    --category-dark-orange: #c58000;
-    --category-light-turquoise: #5fdab3;
-    --category-dark-green: #14721f;
+    --category-dark-orange: #C58000;
+    --category-light-turquoise: #5FDAB3;
+    --category-dark-green: #14721F;
 
 
     --main-font: "Roboto", sans-serif;

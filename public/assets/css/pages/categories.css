@@ -2,9 +2,9 @@
    12 14 16 18 20 22 24 26 28 32
 */
 
-/*.categories {*/
-/*    padding: 0 0 10rem 0;*/
-/*}*/
+.categories {
+    /*padding: 0 0 10rem 0;*/
+}
 
 .categories__list,
 .categories__item,
@@ -13,7 +13,7 @@
 }
 
 .categories__list {
-    padding: 5rem 0 10rem 0;
+    padding: 5rem 0 11rem 0;
     display: grid;
     justify-items: center;
     row-gap: 4rem;
@@ -57,7 +57,7 @@
 .change-section__button {
     font-size: 3.2rem;
     padding: 1rem 3rem 1rem 3rem;
-    margin-bottom: 5rem;
+    margin: 3rem 0 0rem 0;
 }
 .change-section__button--one {
     background-color: var(--main-red);

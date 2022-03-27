@@ -3,75 +3,74 @@
 */
 
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 93%;
-  height: 7rem;
-  margin: 2% auto 0 auto;
-  background-color: var(--main-blue);
-  color: var(--main-white);
-  border-radius: 10px 10px 0 0;
-  font-weight: 700;
-  position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 93%;
+    margin: 2% auto 0 auto;
+    background-color: var(--main-blue);
+    color: var(--main-white);
+    border-radius: 10px 10px 0 0;
+    font-weight: 700;
+    position: relative;
 }
 
 .main-title__text {
-  font-size: 3.2rem;
+    font-size: 3.2rem;
 }
 
 .main-title {
-  margin-left: 2rem;
+    margin-left: 2rem;
 }
 
 .main-title,
 .navigation-list,
 .header__buttons-section,
 .icon-setting {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
 
-  text-align: center;
+    text-align: center;
 }
 
 .header__buttons-section {
-  margin-right: 2rem;
+    margin-right: 2rem;
 }
 
 .navigation-list {
-  list-style-type: none ;
-  font-size: 2.6rem;
-  text-transform: uppercase;
+    list-style-type: none;
+    font-size: 2.6rem;
+    text-transform: uppercase;
 }
 
 .navigation-item {
-  padding: 1.5rem;
+    padding: 1.5rem;
 }
 
 .header__button {
-  width: 20rem;
-  padding: 0.5rem 0 0.5rem 0;
-  font-size: 2.4rem;
-  margin: 0 1rem 0 1rem;
+    width: 20rem;
+    padding: 0.5rem 0 0.5rem 0;
+    font-size: 2.4rem;
+    margin: 0 1rem 0 1rem;
 }
 
 .button--auth {
-  background-color: var(--main-green);
+    background-color: var(--main-green);
 }
 
 .button--reg {
-  background-color: var(--main-yellow);
+    background-color: var(--main-yellow);
 }
 
 .icon-main {
-  width: 5rem;
-  margin-right: 1rem;
+    width: 5rem;
+    margin-right: 1rem;
 }
 
 .icon-setting {
-  margin-left: 2rem;
-  fill: var(--main-yellow);
-  width: 4.5rem;
+    margin-left: 2rem;
+    fill: var(--main-yellow);
+    width: 4.5rem;
 }

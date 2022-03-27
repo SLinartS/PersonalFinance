@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('savings', function (Blueprint $table) {
             $table->id();
             $table->string('title', 20);
-            $table->double('amount', 20, 2);
+            $table->string('amount', 20);
             $table->foreignId('user_id')->constrained("users");
         });
     }

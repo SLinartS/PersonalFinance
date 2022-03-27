@@ -2,11 +2,11 @@
     <header class="header">
         <div class="main-title">
             <img class="icon-main" src="../../../../public/assets/files/images/icon-svg.svg" alt="">
-            <h1 class="main-title__text">РЭSources</h1>
+            <h1 class="main-title__text"><router-link to="/">РЭSources</router-link></h1>
         </div>
         <ul class="navigation-list">
-            <li class="navigation-item"><router-link to="/">Баланс</router-link></li>
-            <li class="navigation-item"><router-link to="/categories">Категории</router-link></li>
+            <li class="navigation-item"><router-link to="/balance">Баланс</router-link></li>
+            <li class="navigation-item"><router-link to="/categories/expenses">Категории</router-link></li>
             <li class="navigation-item"><router-link to="/history">История</router-link></li>
             <li class="navigation-item"><router-link to="/analytics">Аналитика</router-link></li>
             <li class="navigation-item"><router-link to="/budget">Бюджет</router-link></li>

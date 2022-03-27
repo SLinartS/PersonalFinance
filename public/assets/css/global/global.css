@@ -7,37 +7,43 @@
     margin: 0 auto 0 auto;
     background-color: var(--main-white);
     color: var(--main-black);
-    z-index: -1;
+    /*flex: 1 0 auto;*/
 }
 
-img {
-    /*width: 5rem;*/
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+#app {
+    height: 100%;
+}
+
+main {
+    flex: 1 0 auto;
+    min-height: 100%;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
 }
 
 html {
     background-color: var(--second-white);
+    font-family: var(--main-font);
     line-height: 1.5;
     letter-spacing: 0.05rem;
     font-weight: 500;
-}
-
-body {
-    margin: 0;
+    font-size: 62.5%;
 }
 
 .button {
     border-radius: 0.5rem;
     color: var(--main-white);
     font-weight: bold;
-}
-
-
-html {
-    font-size: 62.5%;
-}
-
-body {
-    font-family: var(--main-font);
 }
 
 a {
