@@ -19,15 +19,11 @@
 </template>
 
 <script>
-import img_analytics from "../../../../public/assets/files/images/analytics.png"
 export default {
-    name: "MainPage",
+    name: "CategoriesPage",
     data() {
-        return {
-            img_analytics: img_analytics
-        }
+        return {}
     }
-// :src="require('../../../../public/assets/files/images/analytics.png').default"
 }
 </script>
 

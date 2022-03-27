@@ -1,38 +1,24 @@
 import {createStore} from 'vuex';
+import moduleBalance from "./storeModules/moduleBalance";
 
 const store = createStore({
-    state() {
-        return {
-            popupNav: false,
-            popupAuth: false,
-            popupReg: false,
-        };
+    modules: {
+        moduleBalance
     },
-    mutations: {
-        togglePopupNav(state, value) {
-            state.popupNav = value
-        },
-        togglePopupAuth(state, value) {
-            state.popupAuth = value
-        },
-        togglePopupReg(state, value) {
-            state.popupReg = value
-        }
-    },
-    getters: {
-        popupNav(state) {
-            return state.popupNav
-        },
-        popupAuth(state) {
-            return state.popupAuth
-        },
-        popupReg(state) {
-            return state.popupReg
-        },
-    },
+    // state() {
+    //     return {
+    //
+    //     };
+    // },
+    // mutations: {
+    // },
+    // getters: {
+    // },
     actions: {
-        load(context) {
-            console.log(context)
+        startDataLoad(context) {
+            context.commit("moduleBalance/loadAccountsFromDB", {root: true})
+            context.commit("moduleBalance/loadDebtsFromDB", {root: true})
+            context.commit("moduleBalance/loadSavingFromDB", {root: true})
         },
     }
 })

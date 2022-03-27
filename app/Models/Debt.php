@@ -10,4 +10,9 @@ class Debt extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'debts';
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -10,4 +10,8 @@ class Color extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'colors';
+
+    public function categories() {
+        return $this->hasMany(Category::class);
+    }
 }

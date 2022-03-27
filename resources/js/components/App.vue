@@ -13,7 +13,10 @@ import Footer from "./section/Footer";
 
 export default {
     name: "App",
-    components: {Footer, MainPage, Header}
+    components: {Footer, MainPage, Header},
+    mounted() {
+        this.$store.dispatch("startDataLoad")
+    }
 }
 </script>
 

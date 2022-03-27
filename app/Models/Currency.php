@@ -10,4 +10,8 @@ class Currency extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'currencies';
+
+    public function options() {
+        return $this->hasMany(Option::class);
+    }
 }

@@ -52,15 +52,21 @@
 </template>
 
 <script>
-import img_analytics from "../../../../public/assets/files/images/analytics.png"
 export default {
-    name: "MainPage",
+    name: "HistoryPage",
+    mounted() {
+        this.loadBalances()
+    },
     data() {
-        return {
-            img_analytics: img_analytics
+        return {}
+    },
+    methods: {
+        async loadBalances() {
+            const response = await fetch("api/balances");
+            let allData = (await response.json());
+            console.log(allData)
         }
     }
-// :src="require('../../../../public/assets/files/images/analytics.png').default"
 }
 </script>
 

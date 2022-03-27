@@ -10,4 +10,8 @@ class Separator extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'separators';
+
+    public function options() {
+        return $this->hasMany(Option::class);
+    }
 }

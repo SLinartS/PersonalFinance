@@ -10,4 +10,9 @@ class Saving extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'savings';
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

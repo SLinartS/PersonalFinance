@@ -11,4 +11,8 @@ class Account extends Model
     public $timestamps = false;
     protected $table = 'accounts';
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
