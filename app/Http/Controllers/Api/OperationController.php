@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Operation;
 use Illuminate\Http\Request;
 
 class OperationController extends Controller
@@ -14,7 +15,7 @@ class OperationController extends Controller
      */
     public function index()
     {
-        //
+        return Operation::all();
     }
 
     /**

@@ -4,38 +4,17 @@ const moduleBalance = {
             accounts: [],
             debts: [],
             savings: [],
-            popupNav: false,
-            popupAuth: false,
-            popupReg: false,
         };
     },
     mutations: {
-        async loadAccountsFromDB(state) {
-            console.log("!!!")
-            await fetch("/api/account")
-                .then(async response => state.accounts = await response.json())
-                .catch(error => alert(error))
+        setAccounts(state, value) {
+            state.accounts = value
         },
-        async loadDebtsFromDB(state) {
-            console.log("!!!")
-            await fetch("/api/debt")
-                .then(async response => state.debts = await response.json())
-                .catch(error => alert(error))
+        setDebts(state, value) {
+            state.debts = value
         },
-        async loadSavingFromDB(state) {
-            console.log("!!!")
-            await fetch("/api/saving")
-                .then(async response => state.savings = await response.json())
-                .catch(error => alert(error))
-        },
-        togglePopupNav(state, value) {
-            state.popupNav = value
-        },
-        togglePopupAuth(state, value) {
-            state.popupAuth = value
-        },
-        togglePopupReg(state, value) {
-            state.popupReg = value
+        setSavings(state, value) {
+            state.savings = value
         }
     },
     getters: {
@@ -47,18 +26,45 @@ const moduleBalance = {
         },
         currentSavings(state) {
             return state.savings
-        },
-        popupNav(state) {
-            return state.popupNav
-        },
-        popupAuth(state) {
-            return state.popupAuth
-        },
-        popupReg(state) {
-            return state.popupReg
-        },
+        }
     },
     actions: {
+        async loadAccountsFromDB({commit}) {
+            let variable;
+            await fetch("/api/account")
+                .then(async response => variable = await response.json())
+                .catch(error => alert(error))
+
+            if (variable !== 0) {
+                commit("setAccounts", variable)
+            } else {
+                commit("setAccounts", 0)
+            }
+        },
+        async loadDebtsFromDB({commit}) {
+            let variable;
+            await fetch("/api/debt")
+                .then(async response => variable = await response.json())
+                .catch(error => alert(error))
+
+            if (variable !== 0) {
+                commit("setDebts", variable)
+            } else {
+                commit("setDebts", 0)
+            }
+        },
+        async loadSavingFromDB({commit}) {
+            let variable;
+            await fetch("/api/saving")
+                .then(async response => variable = await response.json())
+                .catch(error => alert(error))
+
+            if (variable !== 0) {
+                commit("setSavings", variable)
+            } else {
+                commit("setSavings", 0)
+            }
+        }
     }
 }
 

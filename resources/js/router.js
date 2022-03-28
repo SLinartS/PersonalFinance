@@ -6,7 +6,7 @@ import CategoriesPage from "./components/pages/CategoriesPage"
     import CategoriesExpenses from "./components/blocks/CategoriesExpenses";
     import CategoriesIncome from "./components/blocks/CategoriesIncome";
 
-import HistoryPage from "./components/pages/HistoryPage"
+import OperationsPage from "./components/pages/OperationsPage"
 import AnalyticsPage from "./components/pages/AnalyticsPage";
 import BudgetPage from "./components/pages/BudgetPage";
 
@@ -24,7 +24,7 @@ const router = createRouter( {
                 { path: "income", component: CategoriesIncome },
             ]
         },
-        { path: "/history", component: HistoryPage},
+        { path: "/operations", component: OperationsPage},
         { path: "/analytics", component: AnalyticsPage},
         { path: "/budget", component: BudgetPage},
     ]

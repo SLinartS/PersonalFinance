@@ -46,9 +46,9 @@
 </template>
 
 <script>
-import Account from "../blocks/balance-blocks/Account";
-import Debt from "../blocks/balance-blocks/Debt";
-import Saving from "../blocks/balance-blocks/Saving";
+import Account from "../blocks/balance/Account";
+import Debt from "../blocks/balance/Debt";
+import Saving from "../blocks/balance/Saving";
 
 export default {
     name: "BalancePage",
@@ -60,9 +60,9 @@ export default {
     },
     methods: {
         async loadDateFromDB() {
-            this.$store.commit("loadAccountsFromDB")
-            this.$store.commit("loadDebtsFromDB")
-            this.$store.commit("loadSavingFromDB")
+            this.$store.dispatch("loadAccountsFromDB")
+            this.$store.dispatch("loadDebtsFromDB")
+            this.$store.dispatch("loadSavingFromDB")
         }
     },
     computed: {
