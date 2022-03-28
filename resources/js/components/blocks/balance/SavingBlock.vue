@@ -7,7 +7,7 @@
 
 <script>
 export default {
-    name: "Account",
+    name: "SavingBlock",
     props: {
         id: Number,
         title: String,

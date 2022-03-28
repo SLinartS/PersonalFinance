@@ -1,17 +1,13 @@
 <template>
     <main class="balance-history">
-        <DateBlock v-if="currentOperations.length" v-for="operation in currentOperations"
-              :key="operation.id"
-              :id="operation.id"
-              :description="operation.description"
-              :amount="operation.amount"
-              :datetime="operation.title"
-
+        <DateBlock v-if="currentOperations.length" v-for="operations in currentOperations"
+                   :key="operations.id"
+                   :datetime="operations[0].time"
+                   :operations="operations"
         ></DateBlock>
-        <DateBlock v-else v-for="operation in currentOperations"
-              :key="operation.id"
-              :id="operation.id"
-              :datetime="operation.title"
+        <DateBlock v-else v-for="operations in currentOperations"
+                   :key="operation.id"
+                   :operations="operations"
         ></DateBlock>
     </main>
 </template>
@@ -34,33 +30,8 @@ export default {
     },
     computed: {
         currentOperations() {
-            let allOperation = this.$store.getters.currentOperations;
-            let sortedOperations = [];
-            if (allOperation[1]) {
-                let o = allOperation[1].time;
-                let time = new Date(o)
-                let year = time.getFullYear()
-                let month = time.getMonth()+1
-                let day = time.getDate()
-                console.log(year, month, day)
-            }
-
-            return allOperation
-            let currentDate;
-            let currentPlace = 0;
-            for (let i = 0; i < allOperation.length; i++) {
-                if (i === 0) {
-                    currentDate = allOperation[i].category
-                }
-                if (currentDate === allOperation[i].category) {
-                    sortedOperations.push([])
-                    sortedOperations[currentPlace].push(allOperation[i])
-                } else {
-                    currentPlace++;
-                    currentDate = allOperation[i].category
-                }
-            }
-
+            console.log(this.$store.getters.currentOperations)
+            return this.$store.getters.currentOperations;
         },
     }
 }

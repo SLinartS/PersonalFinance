@@ -1,28 +1,26 @@
 <template>
     <div class="data-block">
-        <h3 class="data-title">{{datetime}}]</h3>
+        <h3 class="data-title">{{datetime}}</h3>
         <div class="data-list">
-<!--            <Operation v-for="operation"-->
-<!--                       :id="operation.id"-->
-<!--                       :description="operation.description"-->
-<!--                       :amount="operation.amount"-->
-<!--                       :datetime="operation.title"-->
-
-<!--            ></Operation>-->
+            <OperationBlock v-for="operation in operations"
+                            :key="operation.id"
+                            :id="operation.id"
+                            :description="operation.description"
+                            :amount="operation.amount"
+                            :datetime="operation.title"
+            ></OperationBlock>
         </div>
     </div>
 </template>
 
 <script>
-import Operation from "./Operation";
+import OperationBlock from "./OperationBlock";
 export default {
-    name: "Date",
-    components: {Operation},
+    name: "DateBlock",
+    components: {OperationBlock},
     props: {
-        id: Number,
-        description: String,
-        amount: String,
-        datetime: Date
+        datetime: String,
+        operations: Array,
     }
 }
 </script>

@@ -209,7 +209,7 @@ class DatabaseSeeder extends Seeder
         DB::table('operations')->insert([
             'description' => 'тестовая операция зачисления 1',
             'amount' => "10000",
-            'time' => "1900-01-01 00:00:00",
+            'time' => "2022-03-29 00:00:00",
             "category_id" => 10,
             "user_id" => 1,
 
@@ -217,21 +217,35 @@ class DatabaseSeeder extends Seeder
         DB::table('operations')->insert([
             'description' => 'тестовая операция зачисления 2',
             'amount' => "500",
-            'time' => "1900-01-01 00:00:00",
+            'time' => "2022-03-28 00:00:00",
             "category_id" => 11,
             "user_id" => 1,
         ]);
         DB::table('operations')->insert([
             'description' => 'тестовая операция расхода 1',
             'amount' => "300",
-            'time' => "1900-01-01 00:00:00",
+            'time' => "2022-01-27 00:00:00",
             "category_id" => 1,
             "user_id" => 1,
         ]);
         DB::table('operations')->insert([
             'description' => 'тестовая операция расхода 2',
             'amount' => "8000",
-            'time' => "1900-01-01 00:00:00",
+            'time' => "2022-01-27 01:00:00",
+            "category_id" => 2,
+            "user_id" => 1,
+        ]);
+        DB::table('operations')->insert([
+            'description' => 'тестовая операция расхода 3',
+            'amount' => "8000",
+            'time' => "2021-04-29 06:00:00",
+            "category_id" => 2,
+            "user_id" => 1,
+        ]);
+        DB::table('operations')->insert([
+            'description' => 'тестовая операция расхода 4',
+            'amount' => "8000",
+            'time' => "2021-04-29 00:00:00",
             "category_id" => 2,
             "user_id" => 1,
         ]);

@@ -3,12 +3,12 @@
         <div class="data-block">
             <h3 class="data-title">Счета</h3>
             <div class="data-list">
-                <Account v-if="currentAccounts.length" v-for="account in currentAccounts"
+                <AccountBlock v-if="currentAccounts.length" v-for="account in currentAccounts"
                          :key="account.id"
                          :id="account.id"
                          :title="account.title"
                          :amount="account.amount"
-                ></Account>
+                ></AccountBlock>
                 <div class="data-stroke--empty" v-else>
                     <p class="data-item--empty">Счетов нет. <a>Добавить</a></p>
                 </div>
@@ -17,12 +17,12 @@
         <div class="data-block">
             <h3 class="data-title">Долги</h3>
             <div class="data-list">
-                <Debt v-if="currentDebts.length" v-for="debt in currentDebts"
+                <DebtBlock v-if="currentDebts.length" v-for="debt in currentDebts"
                       :key="debt.id"
                       :id="debt.id"
                       :title="debt.title"
                       :amount="debt.amount"
-                ></Debt>
+                ></DebtBlock>
                 <div class="data-stroke--empty" v-else>
                     <p class="data-item--empty">Долгов нет. <a>Добавить</a></p>
                 </div>
@@ -31,12 +31,12 @@
         <div class="data-block">
             <h3 class="data-title">Накопления</h3>
             <div class="data-list">
-                <Saving v-if="currentSavings.length" v-for="saving in currentSavings"
+                <SavingBlock v-if="currentSavings.length" v-for="saving in currentSavings"
                         :key="saving.id"
                         :id="saving.id"
                         :title="saving.title"
                         :amount="saving.amount"
-                ></Saving>
+                ></SavingBlock>
                 <div class="data-stroke--empty" v-else>
                     <p class="data-item--empty">Накоплений нет. <a>Добавить</a></p>
                 </div>
@@ -46,13 +46,13 @@
 </template>
 
 <script>
-import Account from "../blocks/balance/Account";
-import Debt from "../blocks/balance/Debt";
-import Saving from "../blocks/balance/Saving";
+import AccountBlock from "../blocks/balance/AccountBlock";
+import DebtBlock from "../blocks/balance/DebtBlock";
+import SavingBlock from "../blocks/balance/SavingBlock";
 
 export default {
     name: "BalancePage",
-    components: {Account, Debt, Saving},
+    components: {AccountBlock, DebtBlock, SavingBlock},
     data() {
         return {}
     }, mounted() {

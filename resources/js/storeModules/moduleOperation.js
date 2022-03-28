@@ -2,11 +2,19 @@ const moduleOperation = {
     state() {
         return {
             operations: [],
+            currentDate: [],
+            dateInQuestion: [],
         };
     },
     mutations: {
         setOperations(state, value) {
             state.operations = value
+        },
+        setCurrentDate(state, value) {
+            state.currentDate = value
+        },
+        setDateInQuestion(state, value) {
+            state.dateInQuestion = value
         }
     },
     getters: {
@@ -15,7 +23,7 @@ const moduleOperation = {
         }
     },
     actions: {
-        async loadOperationFromDB({commit}) {
+        async loadOperationFromDB({commit, dispatch}) {
             let variable
             await fetch("/api/operation")
                 .then(async response => variable = await response.json())
@@ -26,7 +34,51 @@ const moduleOperation = {
             } else {
                 commit("setOperations", 0)
             }
-        }
+            dispatch("packedOperations")
+        },
+        packedOperations({commit, getters}) {
+            if (getters.currentOperations.length !== 0) {
+                let sortedOperations = getters.currentOperations.sort(function (a, b) {
+                    return new Date(b.time) - new Date(a.time);
+                });
+
+                let packagedOperations = [];
+                let currentSubarray = 0;
+                let currentDateTime = new Date(sortedOperations[1].time);
+                let currentDate = [
+                    currentDateTime.getFullYear(),
+                    currentDateTime.getMonth() + 1,
+                    currentDateTime.getDate()
+                ]
+
+                for (let i = 0; i < sortedOperations.length; i++) {
+                    let dateTimeInQuestion = new Date(sortedOperations[i].time)
+                    let dateInQuestion = [
+                        dateTimeInQuestion.getFullYear(),
+                        dateTimeInQuestion.getMonth() + 1,
+                        dateTimeInQuestion.getDate()
+                    ]
+
+                    let equals = true;
+                    for (let i = 0; i < 3; i++) {
+                        if (dateInQuestion[i] !== currentDate[i]) {equals = false; break;}
+                    }
+
+                    if (equals) {
+                        if (packagedOperations.length === 0) packagedOperations.push([]);
+                        packagedOperations[currentSubarray].push(sortedOperations[i]);
+                    } else {
+                        {
+                            if (packagedOperations.length !== 0) currentSubarray++;
+                            packagedOperations.push([]);
+                            packagedOperations[currentSubarray].push(sortedOperations[i]);
+                            currentDate = dateInQuestion;
+                        }
+                    }
+                }
+                commit("setOperations", (packagedOperations))
+            }
+        },
     }
 }
 

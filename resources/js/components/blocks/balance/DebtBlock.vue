@@ -7,7 +7,7 @@
 
 <script>
 export default {
-    name: "Account",
+    name: "DebtBlock",
     props: {
         id: Number,
         title: String,
