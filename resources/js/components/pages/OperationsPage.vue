@@ -30,7 +30,6 @@ export default {
     },
     computed: {
         currentOperations() {
-            console.log(this.$store.getters.currentOperations)
             return this.$store.getters.currentOperations;
         },
     }

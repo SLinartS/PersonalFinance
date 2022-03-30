@@ -23034,6 +23034,24 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     datetime: String,
     operations: Array
+  },
+  computed: {
+    formattedDate: function formattedDate() {
+      var date = new Date(this.datetime);
+      var currentDate = new Date();
+      var options = {
+        day: "numeric",
+        month: "long"
+      };
+      currentDate = currentDate.toLocaleString("ru", options);
+      date = date.toLocaleString("ru", options);
+
+      if (currentDate === date) {
+        return date + " (сегодня)";
+      } else {
+        return date;
+      }
+    }
   }
 });
 
@@ -23051,12 +23069,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      operationClass: "expenses",
+      operationMark: "+"
+    };
+  },
   name: "OperationBlock",
   props: {
     id: Number,
     description: String,
     amount: String,
-    datetime: String
+    type: String
+  },
+  mounted: function mounted() {
+    if (this.type === "income") {
+      this.operationMark = "+";
+      this.operationClass = "income";
+    } else {
+      this.operationMark = "-";
+      this.operationClass = "expenses";
+    }
   }
 });
 
@@ -23278,7 +23311,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   computed: {
     currentOperations: function currentOperations() {
-      console.log(this.$store.getters.currentOperations);
       return this.$store.getters.currentOperations;
     }
   }
@@ -23685,7 +23717,7 @@ var _hoisted_3 = {
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_OperationBlock = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("OperationBlock");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.datetime), 1
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formattedDate), 1
   /* TEXT */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.operations, function (operation) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_OperationBlock, {
@@ -23693,10 +23725,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       id: operation.id,
       description: operation.description,
       amount: operation.amount,
-      datetime: operation.title
+      datetime: operation.title,
+      type: operation.type
     }, null, 8
     /* PROPS */
-    , ["id", "description", "amount", "datetime"]);
+    , ["id", "description", "amount", "datetime", "type"]);
   }), 128
   /* KEYED_FRAGMENT */
   ))])]);
@@ -23723,14 +23756,13 @@ var _hoisted_1 = {
 var _hoisted_2 = {
   "class": "data-item"
 };
-var _hoisted_3 = {
-  "class": "data-item expenses"
-};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.description), 1
   /* TEXT */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.amount) + " ₽", 1
-  /* TEXT */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.operationClass, 'data-item'])
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.operationMark) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.amount) + " ₽", 3
+  /* TEXT, CLASS */
   )]);
 }
 
@@ -24719,11 +24751,12 @@ var moduleOperation = {
                   return function (_x) {
                     return _ref2.apply(this, arguments);
                   };
-                }())["catch"](function (error) {
-                  return alert(error);
-                });
+                }());
 
               case 3:
+                // .catch(error => alert(error))
+                console.log(variable);
+
                 if (variable !== 0) {
                   commit("setOperations", variable);
                 } else {
@@ -24732,7 +24765,7 @@ var moduleOperation = {
 
                 dispatch("packedOperations");
 
-              case 5:
+              case 6:
               case "end":
                 return _context2.stop();
             }

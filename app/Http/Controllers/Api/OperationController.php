@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Operation;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,20 @@ class OperationController extends Controller
      */
     public function index()
     {
-        return Operation::all();
+
+//        return Destination::addSelect(['last_flight' => Flight::select('name')
+//            ->whereColumn('destination_id', 'destinations.id')
+//            ->orderByDesc('arrived_at')
+//            ->limit(1)
+//        ])->get();
+
+        return Operation::where("user_id", 1)
+            ->select("id", "description", "amount", "time")
+            ->addSelect(["type" => Category::select("type")->whereColumn("id", "category_id")->take(1)])
+            ->get();
+
+
+
     }
 
     /**
@@ -31,7 +45,7 @@ class OperationController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -42,7 +56,7 @@ class OperationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -53,7 +67,7 @@ class OperationController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -64,8 +78,8 @@ class OperationController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -76,7 +90,7 @@ class OperationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

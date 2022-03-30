@@ -27,8 +27,9 @@ const moduleOperation = {
             let variable
             await fetch("/api/operation")
                 .then(async response => variable = await response.json())
-                .catch(error => alert(error))
+                // .catch(error => alert(error))
 
+            console.log(variable)
             if (variable !== 0) {
                 commit("setOperations", variable)
             } else {
