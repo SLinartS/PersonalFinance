@@ -15,7 +15,9 @@ class DebtController extends Controller
      */
     public function index()
     {
-        return Debt::all();
+        return Debt::where("user_id", 2)
+            ->select("id", "title", "amount")
+            ->get();
     }
 
     /**

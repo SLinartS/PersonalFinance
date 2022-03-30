@@ -44,6 +44,9 @@ html {
     border-radius: 0.5rem;
     color: var(--main-white);
     font-weight: bold;
+    border: none;
+    background: none;
+    padding: 0;
 }
 
 a {

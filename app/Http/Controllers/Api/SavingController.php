@@ -15,7 +15,9 @@ class SavingController extends Controller
      */
     public function index()
     {
-        return Saving::all();
+        return Saving::where("user_id", 2)
+            ->select("id", "title", "amount")
+            ->get();
     }
 
     /**

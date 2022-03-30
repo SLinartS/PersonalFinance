@@ -51,12 +51,6 @@
     position: relative;
 }
 
-.popup__header a {
-    margin: 1rem 2rem 0 2rem;
-
-    fill: var(--main-yellow);
-}
-
 .icon-bars {
     width: 3.5rem;
     margin-right: 2rem;
@@ -64,10 +58,9 @@
     display: none;
 }
 
-.popup__icon-setting {
-    width: 3.5rem;
-}
-
-.icon-close--popup {
+.icon-setting--popup,
+.icon-close--popup{
     width: 3rem;
+    padding: 0;
+    margin: 1rem 1rem 1rem 1rem;
 }

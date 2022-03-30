@@ -15,7 +15,9 @@ class AccountController extends Controller
      */
     public function index()
     {
-        return Account::all();
+        return Account::where("user_id", 2)
+            ->select("id", "title", "amount")
+            ->get();
     }
 
     /**

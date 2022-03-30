@@ -16,20 +16,10 @@ class OperationController extends Controller
      */
     public function index()
     {
-
-//        return Destination::addSelect(['last_flight' => Flight::select('name')
-//            ->whereColumn('destination_id', 'destinations.id')
-//            ->orderByDesc('arrived_at')
-//            ->limit(1)
-//        ])->get();
-
         return Operation::where("user_id", 1)
             ->select("id", "description", "amount", "time")
             ->addSelect(["type" => Category::select("type")->whereColumn("id", "category_id")->take(1)])
             ->get();
-
-
-
     }
 
     /**
