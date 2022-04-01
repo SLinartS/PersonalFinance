@@ -64,6 +64,12 @@
     background-color: var(--main-yellow);
 }
 
+.button--exit {
+    background-color: var(--main-red);
+    padding: 0.8rem 0 0.8rem 0;
+    width: 25rem;
+}
+
 .icon-main {
     width: 5rem;
     margin-right: 1rem;

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -15,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return User::all();
     }
 
     /**
@@ -36,7 +37,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        echo($request);
         User::query()->insert([
             "name" => $request["name"],
             "email" => $request["email"],

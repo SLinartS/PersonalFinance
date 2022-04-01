@@ -22909,9 +22909,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "PopupAuth",
+  data: function data() {
+    return {
+      fieldEmail: "",
+      fieldPassword: ""
+    };
+  },
+  watch: {
+    fieldEmail: function fieldEmail() {
+      this.$store.commit("setEmailField", this.fieldEmail);
+    },
+    fieldPassword: function fieldPassword() {
+      this.$store.commit("setPasswordField", this.fieldPassword);
+    }
+  },
+  computed: {
+    emailExist: function emailExist() {
+      return this.$store.getters.getEmailExist;
+    },
+    passwordExist: function passwordExist() {
+      return this.$store.getters.getPasswordExist;
+    }
+  },
   methods: {
     togglePopupAuth: function togglePopupAuth() {
       this.$store.commit("togglePopupAuth", false);
+    },
+    submitForm: function submitForm() {
+      this.$store.dispatch("validateFieldsAuthReg", "auth");
     }
   }
 });
@@ -23402,6 +23427,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Header",
   computed: {
+    authStatus: function authStatus() {
+      console.log(this.$store.getters.getAuthStatus);
+      return this.$store.getters.getAuthStatus;
+    },
     popupNav: function popupNav() {
       return this.$store.getters.popupNav;
     },
@@ -23413,6 +23442,9 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    exitAccount: function exitAccount() {
+      this.$store.commit("setAuthStatus", false);
+    },
     togglePopupNav: function togglePopupNav() {
       this.$store.commit("togglePopupNav", true);
     },
@@ -23605,8 +23637,63 @@ var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_5 = [_hoisted_4];
+var _hoisted_6 = {
+  "class": "auth-reg__input-section"
+};
+var _hoisted_7 = {
+  "class": "auth-reg__input-block"
+};
 
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"auth-reg__input-section\"><div class=\"auth-reg__input-block\"><img class=\"auth-reg__image\" src=\"" + _public_assets_files_images_user_solid_svg__WEBPACK_IMPORTED_MODULE_1__["default"] + "\" alt=\"\"><div class=\"auth-reg__input-container\"><input class=\"input\" type=\"text\" name=\"email\" placeholder=\"Электронная почта\"><p class=\"auth-reg__error\"> ошибка </p></div></div><div class=\"auth-reg__input-block\"><img class=\"auth-reg__image\" src=\"" + _public_assets_files_images_key_solid_svg__WEBPACK_IMPORTED_MODULE_2__["default"] + "\" alt=\"\"><div class=\"auth-reg__input-container\"><input class=\"input\" type=\"text\" name=\"password\" placeholder=\"Пароль\"><p class=\"auth-reg__error\"> ошибка </p></div></div><div class=\"auth-reg__input-block\"><a class=\"auth-reg__forgot-password\" href=\"\">Забыли пароль?</a></div></div><div class=\"auth-reg__button-section\"><button class=\"button button--auth auth-reg__button\" href=\"\">Войти в систему</button></div>", 2);
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  "class": "auth-reg__image",
+  src: _public_assets_files_images_user_solid_svg__WEBPACK_IMPORTED_MODULE_1__["default"],
+  alt: ""
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_9 = {
+  "class": "auth-reg__input-container"
+};
+var _hoisted_10 = {
+  "class": "auth-reg__error"
+};
+var _hoisted_11 = {
+  "class": "auth-reg__input-block"
+};
+
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  "class": "auth-reg__image",
+  src: _public_assets_files_images_key_solid_svg__WEBPACK_IMPORTED_MODULE_2__["default"],
+  alt: ""
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_13 = {
+  "class": "auth-reg__input-container"
+};
+var _hoisted_14 = {
+  "class": "auth-reg__error"
+};
+
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "auth-reg__input-block"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  "class": "auth-reg__forgot-password",
+  href: ""
+}, "Забыли пароль?")], -1
+/* HOISTED */
+);
+
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "auth-reg__button-section"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  "class": "button button--auth auth-reg__button",
+  href: ""
+}, "Войти в систему")], -1
+/* HOISTED */
+);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("svg", {
@@ -23616,7 +23703,37 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "icon-close icon-close--auth-reg",
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 320 512"
-  }, _hoisted_5))]), _hoisted_6]);
+  }, _hoisted_5))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+    onSubmit: _cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+      return $options.submitForm && $options.submitForm.apply($options, arguments);
+    }, ["prevent"]))
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+      return $data.fieldEmail = $event;
+    }),
+    "class": "input",
+    type: "text",
+    name: "email",
+    placeholder: "Электронная почта"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.fieldEmail]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.emailExist), 1
+  /* TEXT */
+  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+      return $data.fieldPassword = $event;
+    }),
+    "class": "input",
+    type: "text",
+    name: "password",
+    placeholder: "Пароль"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.fieldPassword]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.passwordExist), 1
+  /* TEXT */
+  )])]), _hoisted_15]), _hoisted_16], 32
+  /* HYDRATE_EVENTS */
+  )]);
 }
 
 /***/ }),
@@ -24437,10 +24554,15 @@ var _hoisted_15 = {
 var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Бюджет");
 
 var _hoisted_17 = {
+  key: 0,
+  "class": "header__buttons-section"
+};
+var _hoisted_18 = {
+  key: 1,
   "class": "header__buttons-section"
 };
 
-var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   type: "button",
   "class": "icon-setting button"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
@@ -24454,7 +24576,7 @@ var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 448 512"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
@@ -24463,7 +24585,7 @@ var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_20 = [_hoisted_19];
+var _hoisted_21 = [_hoisted_20];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
 
@@ -24527,7 +24649,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  })])]), !$options.authStatus ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "button header__button button--auth",
     onClick: _cache[0] || (_cache[0] = function () {
@@ -24539,18 +24661,24 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[1] || (_cache[1] = function () {
       return $options.togglePopupReg && $options.togglePopupReg.apply($options, arguments);
     })
-  }, "Регистрация"), _hoisted_18]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, "Регистрация")])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    type: "button",
+    "class": "button header__button button--exit",
     onClick: _cache[2] || (_cache[2] = function () {
+      return $options.exitAccount && $options.exitAccount.apply($options, arguments);
+    })
+  }, "Выйти из аккаунта"), _hoisted_19])), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: _cache[3] || (_cache[3] = function () {
       return $options.togglePopupNav && $options.togglePopupNav.apply($options, arguments);
     }),
     "class": "icon-bars button",
     type: "button"
-  }, _hoisted_20), $options.popupNav ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_PopupNav, {
-    key: 0
-  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.popupAuth ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_PopupAuth, {
-    key: 1
-  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.popupReg ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_PopupReg, {
+  }, _hoisted_21), $options.popupNav ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_PopupNav, {
     key: 2
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.popupAuth ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_PopupAuth, {
+    key: 3
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.popupReg ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_PopupReg, {
+    key: 4
   })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 }
 
@@ -24766,10 +24894,15 @@ var moduleAuthReg = {
       fieldPassword: "",
       fieldPasswordRepeat: "",
       errors: {},
-      emailIsCorrect: false
+      callbackErrors: {},
+      emailIsCorrect: false,
+      authStatus: true
     };
   },
   mutations: {
+    setAuthStatus: function setAuthStatus(state, value) {
+      state.authStatus = value;
+    },
     changeErrors: function changeErrors(state, value) {
       state.errors = value;
     },
@@ -24792,6 +24925,9 @@ var moduleAuthReg = {
     }
   },
   getters: {
+    getAuthStatus: function getAuthStatus(state) {
+      return state.authStatus;
+    },
     getEmailExist: function getEmailExist(state) {
       if (state.errors.emailExist) {
         return state.errors.emailExist;
@@ -24855,10 +24991,12 @@ var moduleAuthReg = {
         }
       }
 
-      console.log(state.errors);
-
-      if (!state.errors.fieldEmail && !state.errors.fieldPassword && !state.errors.fieldPasswordRepeat) {
-        dispatch("sendUserData");
+      if (!state.errors.emailExist && !state.errors.passwordExist && !state.errors.passwordRepeatExist) {
+        if (typeAction === "reg") {
+          dispatch("regUser");
+        } else {
+          dispatch("authUser");
+        }
       }
     },
     validEmail: function validEmail(_ref3, email) {
@@ -24866,21 +25004,64 @@ var moduleAuthReg = {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       commit("changeEmailIsCorrect", !re.test(email));
     },
-    sendUserData: function sendUserData(_ref4) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var state, data;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+    regUser: function regUser(_ref4) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var state, commit, users, data, i;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
-                state = _ref4.state;
-                console.log("!!!");
+                state = _ref4.state, commit = _ref4.commit;
+                commit("setAuthStatus", false);
+                commit("changeErrors", {});
+                _context2.next = 5;
+                return fetch("/api/users").then( /*#__PURE__*/function () {
+                  var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(response) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+                      while (1) {
+                        switch (_context.prev = _context.next) {
+                          case 0:
+                            _context.next = 2;
+                            return response.json();
+
+                          case 2:
+                            return _context.abrupt("return", users = _context.sent);
+
+                          case 3:
+                          case "end":
+                            return _context.stop();
+                        }
+                      }
+                    }, _callee);
+                  }));
+
+                  return function (_x) {
+                    return _ref5.apply(this, arguments);
+                  };
+                }());
+
+              case 5:
                 data = {
                   name: state.fieldEmail,
                   email: state.fieldEmail,
                   password: state.fieldPassword
                 };
-                _context.next = 5;
+
+                for (i = 0; i < users.length; i++) {
+                  if (users[i].email === data.email) {
+                    commit("changeErrorsAttribute", {
+                      errorType: "emailExist",
+                      value: "Такая почта уже существует"
+                    });
+                  }
+                }
+
+                if (state.errors.emailExist) {
+                  _context2.next = 12;
+                  break;
+                }
+
+                _context2.next = 10;
                 return fetch("/api/users", {
                   method: 'POST',
                   body: JSON.stringify(data),
@@ -24889,12 +25070,86 @@ var moduleAuthReg = {
                   }
                 });
 
-              case 5:
+              case 10:
+                commit("togglePopupReg", false);
+                commit("setAuthStatus", true);
+
+              case 12:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee);
+        }, _callee2);
+      }))();
+    },
+    authUser: function authUser(_ref6) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+        var state, commit, users, data, i;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                state = _ref6.state, commit = _ref6.commit;
+                commit("setAuthStatus", false);
+                commit("changeErrors", {});
+                _context4.next = 5;
+                return fetch("/api/users").then( /*#__PURE__*/function () {
+                  var _ref7 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(response) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+                      while (1) {
+                        switch (_context3.prev = _context3.next) {
+                          case 0:
+                            _context3.next = 2;
+                            return response.json();
+
+                          case 2:
+                            return _context3.abrupt("return", users = _context3.sent);
+
+                          case 3:
+                          case "end":
+                            return _context3.stop();
+                        }
+                      }
+                    }, _callee3);
+                  }));
+
+                  return function (_x2) {
+                    return _ref7.apply(this, arguments);
+                  };
+                }());
+
+              case 5:
+                console.log(users);
+                data = {
+                  name: state.fieldEmail,
+                  email: state.fieldEmail,
+                  password: state.fieldPassword
+                };
+
+                for (i = 0; i < users.length; i++) {
+                  if (users[i].email === data.email) {
+                    if (users[i].password === data.password) {
+                      commit("setAuthStatus", true);
+                      commit("changeErrors", {});
+                    }
+                  } else {
+                    commit("changeErrorsAttribute", {
+                      errorType: "passwordExist",
+                      value: "Неверная почта или пароль"
+                    });
+                  }
+                }
+
+                if (state.authStatus === true) {
+                  commit("togglePopupAuth", false);
+                }
+
+              case 9:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
       }))();
     }
   }
