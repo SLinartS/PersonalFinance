@@ -22953,9 +22953,41 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "PopupReg",
+  data: function data() {
+    return {
+      fieldEmail: "",
+      fieldPassword: "",
+      fieldPasswordRepeat: ""
+    };
+  },
+  watch: {
+    fieldEmail: function fieldEmail() {
+      this.$store.commit("setEmailField", this.fieldEmail);
+    },
+    fieldPassword: function fieldPassword() {
+      this.$store.commit("setPasswordField", this.fieldPassword);
+    },
+    fieldPasswordRepeat: function fieldPasswordRepeat() {
+      this.$store.commit("setPasswordRepeatField", this.fieldPasswordRepeat);
+    }
+  },
+  computed: {
+    emailExist: function emailExist() {
+      return this.$store.getters.getEmailExist;
+    },
+    passwordExist: function passwordExist() {
+      return this.$store.getters.getPasswordExist;
+    },
+    passwordRepeatExist: function passwordRepeatExist() {
+      return this.$store.getters.getPasswordRepeatExist;
+    }
+  },
   methods: {
     togglePopupReg: function togglePopupReg() {
       this.$store.commit("togglePopupReg", false);
+    },
+    submitForm: function submitForm() {
+      this.$store.dispatch("validateFieldsAuthReg", "reg");
     }
   }
 });
@@ -23574,7 +23606,7 @@ var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 
 var _hoisted_5 = [_hoisted_4];
 
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"auth-reg__input-section\"><div class=\"auth-reg__input-block\"><img class=\"auth-reg__image\" src=\"" + _public_assets_files_images_user_solid_svg__WEBPACK_IMPORTED_MODULE_1__["default"] + "\" alt=\"\"><input class=\"input\" type=\"text\" name=\"e-mail\" placeholder=\"Электронная почта\"></div><div class=\"auth-reg__input-block\"><img class=\"auth-reg__image\" src=\"" + _public_assets_files_images_key_solid_svg__WEBPACK_IMPORTED_MODULE_2__["default"] + "\" alt=\"\"><input class=\"input\" type=\"text\" name=\"password\" placeholder=\"Пароль\"></div><div class=\"auth-reg__input-block\"><a class=\"auth-reg__forgot-password\" href=\"\">Забыли пароль?</a></div></div><div class=\"auth-reg__button-section\"><a class=\"button button--auth auth-reg__button\" href=\"\">Войти в систему</a></div>", 2);
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"auth-reg__input-section\"><div class=\"auth-reg__input-block\"><img class=\"auth-reg__image\" src=\"" + _public_assets_files_images_user_solid_svg__WEBPACK_IMPORTED_MODULE_1__["default"] + "\" alt=\"\"><div class=\"auth-reg__input-container\"><input class=\"input\" type=\"text\" name=\"email\" placeholder=\"Электронная почта\"><p class=\"auth-reg__error\"> ошибка </p></div></div><div class=\"auth-reg__input-block\"><img class=\"auth-reg__image\" src=\"" + _public_assets_files_images_key_solid_svg__WEBPACK_IMPORTED_MODULE_2__["default"] + "\" alt=\"\"><div class=\"auth-reg__input-container\"><input class=\"input\" type=\"text\" name=\"password\" placeholder=\"Пароль\"><p class=\"auth-reg__error\"> ошибка </p></div></div><div class=\"auth-reg__input-block\"><a class=\"auth-reg__forgot-password\" href=\"\">Забыли пароль?</a></div></div><div class=\"auth-reg__button-section\"><button class=\"button button--auth auth-reg__button\" href=\"\">Войти в систему</button></div>", 2);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("svg", {
@@ -23685,8 +23717,73 @@ var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_5 = [_hoisted_4];
+var _hoisted_6 = {
+  "class": "auth-reg__input-section"
+};
+var _hoisted_7 = {
+  "class": "auth-reg__input-block"
+};
 
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"auth-reg__input-section\"><div class=\"auth-reg__input-block\"><img class=\"auth-reg__image\" src=\"" + _public_assets_files_images_user_solid_svg__WEBPACK_IMPORTED_MODULE_1__["default"] + "\" alt=\"\"><input class=\"input\" type=\"text\" id=\"e-mail\" name=\"e-mail\" placeholder=\"Электронная почта\"></div><div class=\"auth-reg__input-block\"><img class=\"auth-reg__image\" src=\"" + _public_assets_files_images_key_solid_svg__WEBPACK_IMPORTED_MODULE_2__["default"] + "\" alt=\"\"><input class=\"input\" type=\"text\" id=\"password\" name=\"password\" placeholder=\"Пароль\"></div><div class=\"auth-reg__input-block\"><img class=\"auth-reg__image\" src=\"" + _public_assets_files_images_key_solid_svg__WEBPACK_IMPORTED_MODULE_2__["default"] + "\" alt=\"\"><input class=\"input\" type=\"text\" id=\"repeat-password\" name=\"repeat-password\" placeholder=\"Повторите пароль\"></div></div><div class=\"auth-reg__button-section\"><a class=\"button button--reg auth-reg__button\" href=\"\">Зарегистрироваться</a></div>", 2);
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  "class": "auth-reg__image",
+  src: _public_assets_files_images_user_solid_svg__WEBPACK_IMPORTED_MODULE_1__["default"],
+  alt: ""
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_9 = {
+  "class": "auth-reg__input-container"
+};
+var _hoisted_10 = {
+  "class": "auth-reg__error"
+};
+var _hoisted_11 = {
+  "class": "auth-reg__input-block"
+};
+
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  "class": "auth-reg__image",
+  src: _public_assets_files_images_key_solid_svg__WEBPACK_IMPORTED_MODULE_2__["default"],
+  alt: ""
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_13 = {
+  "class": "auth-reg__input-container"
+};
+var _hoisted_14 = {
+  "class": "auth-reg__error"
+};
+var _hoisted_15 = {
+  "class": "auth-reg__input-block"
+};
+
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  "class": "auth-reg__image",
+  src: _public_assets_files_images_key_solid_svg__WEBPACK_IMPORTED_MODULE_2__["default"],
+  alt: ""
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_17 = {
+  "class": "auth-reg__input-container"
+};
+var _hoisted_18 = {
+  "class": "auth-reg__error"
+};
+
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "auth-reg__button-section"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  type: "submit",
+  "class": "button button--reg auth-reg__button",
+  href: ""
+}, "Зарегистрироваться")], -1
+/* HOISTED */
+);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("svg", {
@@ -23696,7 +23793,53 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "icon-close icon-close--auth-reg",
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 320 512"
-  }, _hoisted_5))]), _hoisted_6]);
+  }, _hoisted_5))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+    action: "",
+    onSubmit: _cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+      return $options.submitForm && $options.submitForm.apply($options, arguments);
+    }, ["prevent"]))
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+      return $data.fieldEmail = $event;
+    }),
+    "class": "input",
+    type: "text",
+    id: "e-mail",
+    name: "e-mail",
+    placeholder: "Электронная почта"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.fieldEmail]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.emailExist), 1
+  /* TEXT */
+  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+      return $data.fieldPassword = $event;
+    }),
+    "class": "input",
+    type: "text",
+    id: "password",
+    name: "password",
+    placeholder: "Пароль"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.fieldPassword]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.passwordExist), 1
+  /* TEXT */
+  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+      return $data.fieldPasswordRepeat = $event;
+    }),
+    "class": "input",
+    type: "text",
+    id: "repeat-password",
+    name: "repeat-password",
+    placeholder: "Повторите пароль"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.fieldPasswordRepeat]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.passwordRepeatExist), 1
+  /* TEXT */
+  )])])]), _hoisted_19], 32
+  /* HYDRATE_EVENTS */
+  )]);
 }
 
 /***/ }),
@@ -24562,46 +24705,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
 /* harmony import */ var _storeModules_moduleBalance__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./storeModules/moduleBalance */ "./resources/js/storeModules/moduleBalance.js");
 /* harmony import */ var _storeModules_moduleOperation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./storeModules/moduleOperation */ "./resources/js/storeModules/moduleOperation.js");
+/* harmony import */ var _storeModules_moduleAuthReg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./storeModules/moduleAuthReg */ "./resources/js/storeModules/moduleAuthReg.js");
+/* harmony import */ var _storeModules_modulePopupControl__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./storeModules/modulePopupControl */ "./resources/js/storeModules/modulePopupControl.js");
 
 
 
-var store = (0,vuex__WEBPACK_IMPORTED_MODULE_2__.createStore)({
+
+
+var store = (0,vuex__WEBPACK_IMPORTED_MODULE_4__.createStore)({
   modules: {
     moduleBalance: _storeModules_moduleBalance__WEBPACK_IMPORTED_MODULE_0__["default"],
-    moduleOperation: _storeModules_moduleOperation__WEBPACK_IMPORTED_MODULE_1__["default"]
+    moduleOperation: _storeModules_moduleOperation__WEBPACK_IMPORTED_MODULE_1__["default"],
+    moduleAuthReg: _storeModules_moduleAuthReg__WEBPACK_IMPORTED_MODULE_2__["default"],
+    modulePopupControl: _storeModules_modulePopupControl__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   state: function state() {
-    return {
-      popupNav: false,
-      popupAuth: false,
-      popupReg: false
-    };
+    return {};
   },
-  mutations: {
-    togglePopupNav: function togglePopupNav(state, value) {
-      state.popupNav = value;
-    },
-    togglePopupAuth: function togglePopupAuth(state, value) {
-      state.popupAuth = value;
-    },
-    togglePopupReg: function togglePopupReg(state, value) {
-      state.popupReg = value;
-    }
-  },
-  getters: {
-    popupNav: function popupNav(state) {
-      return state.popupNav;
-    },
-    popupAuth: function popupAuth(state) {
-      return state.popupAuth;
-    },
-    popupReg: function popupReg(state) {
-      return state.popupReg;
-    }
-  },
+  mutations: {},
+  getters: {},
   actions: {
     startDataLoad: function startDataLoad(_ref) {
       var dispatch = _ref.dispatch;
@@ -24612,6 +24737,169 @@ var store = (0,vuex__WEBPACK_IMPORTED_MODULE_2__.createStore)({
   }
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
+
+/***/ }),
+
+/***/ "./resources/js/storeModules/moduleAuthReg.js":
+/*!****************************************************!*\
+  !*** ./resources/js/storeModules/moduleAuthReg.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+var moduleAuthReg = {
+  state: function state() {
+    return {
+      fieldEmail: "",
+      fieldPassword: "",
+      fieldPasswordRepeat: "",
+      errors: {},
+      emailIsCorrect: false
+    };
+  },
+  mutations: {
+    changeErrors: function changeErrors(state, value) {
+      state.errors = value;
+    },
+    changeErrorsAttribute: function changeErrorsAttribute(state, _ref) {
+      var errorType = _ref.errorType,
+          value = _ref.value;
+      state.errors[errorType] = value;
+    },
+    changeEmailIsCorrect: function changeEmailIsCorrect(state, value) {
+      state.emailIsCorrect = value;
+    },
+    setEmailField: function setEmailField(state, value) {
+      state.fieldEmail = value;
+    },
+    setPasswordField: function setPasswordField(state, value) {
+      state.fieldPassword = value;
+    },
+    setPasswordRepeatField: function setPasswordRepeatField(state, value) {
+      state.fieldPasswordRepeat = value;
+    }
+  },
+  getters: {
+    getEmailExist: function getEmailExist(state) {
+      if (state.errors.emailExist) {
+        return state.errors.emailExist;
+      }
+    },
+    getPasswordExist: function getPasswordExist(state) {
+      if (state.errors.passwordExist) {
+        return state.errors.passwordExist;
+      }
+    },
+    getPasswordRepeatExist: function getPasswordRepeatExist(state) {
+      if (state.errors.passwordRepeatExist) {
+        return state.errors.passwordRepeatExist;
+      }
+    }
+  },
+  actions: {
+    validateFieldsAuthReg: function validateFieldsAuthReg(_ref2, typeAction) {
+      var commit = _ref2.commit,
+          state = _ref2.state,
+          dispatch = _ref2.dispatch;
+      commit("changeErrors", {});
+      commit("changeEmailIsCorrect", false);
+
+      if (state.fieldEmail === "") {
+        commit("changeErrorsAttribute", {
+          errorType: "emailExist",
+          value: "Укажите эл. почту"
+        });
+      } else {
+        dispatch("validEmail", state.fieldEmail);
+
+        if (state.emailIsCorrect) {
+          commit("changeErrorsAttribute", {
+            errorType: "emailExist",
+            value: "Неверный формат эл. почты"
+          });
+        }
+      }
+
+      if (state.fieldPassword === "") {
+        commit("changeErrorsAttribute", {
+          errorType: "passwordExist",
+          value: "Укажите пароль"
+        });
+      }
+
+      if (typeAction === "reg") {
+        if (state.fieldPasswordRepeat === "") {
+          commit("changeErrorsAttribute", {
+            errorType: "passwordRepeatExist",
+            value: "Укажите пароль ещё раз"
+          });
+        } else {
+          if (state.fieldPassword !== state.fieldPasswordRepeat) {
+            commit("changeErrorsAttribute", {
+              errorType: "passwordRepeatExist",
+              value: "Пароли не совпадают"
+            });
+          }
+        }
+      }
+
+      console.log(state.errors);
+
+      if (!state.errors.fieldEmail && !state.errors.fieldPassword && !state.errors.fieldPasswordRepeat) {
+        dispatch("sendUserData");
+      }
+    },
+    validEmail: function validEmail(_ref3, email) {
+      var commit = _ref3.commit;
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      commit("changeEmailIsCorrect", !re.test(email));
+    },
+    sendUserData: function sendUserData(_ref4) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var state, data;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                state = _ref4.state;
+                console.log("!!!");
+                data = {
+                  name: state.fieldEmail,
+                  email: state.fieldEmail,
+                  password: state.fieldPassword
+                };
+                _context.next = 5;
+                return fetch("/api/users", {
+                  method: 'POST',
+                  body: JSON.stringify(data),
+                  headers: {
+                    'Content-Type': 'application/json;charset=UTF-8'
+                  }
+                });
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    }
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (moduleAuthReg);
 
 /***/ }),
 
@@ -24964,6 +25252,60 @@ var moduleOperation = {
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (moduleOperation);
+
+/***/ }),
+
+/***/ "./resources/js/storeModules/modulePopupControl.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/storeModules/modulePopupControl.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var modulePopupControl = {
+  state: function state() {
+    return {
+      popupNav: false,
+      popupAuth: false,
+      popupReg: false
+    };
+  },
+  mutations: {
+    togglePopupNav: function togglePopupNav(state, value) {
+      state.popupNav = value;
+    },
+    togglePopupAuth: function togglePopupAuth(state, value) {
+      if (state.popupReg) {
+        state.popupAuth = false;
+      } else {
+        state.popupAuth = value;
+      }
+    },
+    togglePopupReg: function togglePopupReg(state, value) {
+      if (state.popupAuth) {
+        state.popupReg = false;
+      } else {
+        state.popupReg = value;
+      }
+    }
+  },
+  getters: {
+    popupNav: function popupNav(state) {
+      return state.popupNav;
+    },
+    popupAuth: function popupAuth(state) {
+      return state.popupAuth;
+    },
+    popupReg: function popupReg(state) {
+      return state.popupReg;
+    }
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (modulePopupControl);
 
 /***/ }),
 

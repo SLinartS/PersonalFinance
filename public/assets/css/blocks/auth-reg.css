@@ -3,7 +3,7 @@
 */
 
 .auth-reg {
-    height: 39rem;
+    height: 40rem;
     width: 75rem;
     z-index: 2;
     box-shadow: 0 0 20px rgb(34, 34, 34);
@@ -45,8 +45,7 @@
 
 .auth-reg__input-block {
     display: flex;
-    align-items: center;
-    margin-bottom: 2rem;
+    align-items: start;
 }
 
 .auth-reg__forgot-password {
@@ -58,11 +57,12 @@
 .auth-reg__button-section {
     display: flex;
     justify-content: right;
-    margin: 1rem 6rem 0 0;
+    margin: 2rem 6rem 0 0;
 }
 
 .auth-reg__button {
     padding: 1rem 2rem 1rem 2rem;
+    font-size: 2.4rem;
 }
 
 .auth-reg__image {
@@ -76,6 +76,20 @@
     border: 0.1rem solid var(--main-black);
     height: 4rem;
     width: 60rem;
+}
+
+.auth-reg__input-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-reg__error {
+    font-weight: 500;
+    height: 2.2rem;
+    margin: 0.2rem 0 0.2rem 2rem;
+    display: inline-block;
+    color: var(--main-red);
+    font-size: 1.6rem;
 }
 
 /*.input::-webkit-input-placeholder,*/

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -35,7 +36,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        echo($request);
+        User::query()->insert([
+            "name" => $request["name"],
+            "email" => $request["email"],
+            "password" => $request["password"],
+            "avatar_url" => "none",
+        ]);
     }
 
     /**
