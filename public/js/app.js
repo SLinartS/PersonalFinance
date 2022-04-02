@@ -22934,6 +22934,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     togglePopupAuth: function togglePopupAuth() {
       this.$store.commit("togglePopupAuth", false);
+      this.$store.commit("changeErrors", {});
     },
     submitForm: function submitForm() {
       this.$store.dispatch("validateFieldsAuthReg", "auth");
@@ -22980,12 +22981,16 @@ __webpack_require__.r(__webpack_exports__);
   name: "PopupReg",
   data: function data() {
     return {
+      fieldName: "",
       fieldEmail: "",
       fieldPassword: "",
       fieldPasswordRepeat: ""
     };
   },
   watch: {
+    fieldName: function fieldName() {
+      this.$store.commit("setNameField", this.fieldName);
+    },
     fieldEmail: function fieldEmail() {
       this.$store.commit("setEmailField", this.fieldEmail);
     },
@@ -22997,6 +23002,9 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   computed: {
+    nameExist: function nameExist() {
+      return this.$store.getters.getNameExist;
+    },
     emailExist: function emailExist() {
       return this.$store.getters.getEmailExist;
     },
@@ -23010,6 +23018,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     togglePopupReg: function togglePopupReg() {
       this.$store.commit("togglePopupReg", false);
+      this.$store.commit("changeErrors", {});
     },
     submitForm: function submitForm() {
       this.$store.dispatch("validateFieldsAuthReg", "reg");
@@ -23421,14 +23430,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _blocks_PopupNav__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../blocks/PopupNav */ "./resources/js/components/blocks/PopupNav.vue");
 /* harmony import */ var _blocks_PopupAuth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../blocks/PopupAuth */ "./resources/js/components/blocks/PopupAuth.vue");
 /* harmony import */ var _blocks_PopupReg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../blocks/PopupReg */ "./resources/js/components/blocks/PopupReg.vue");
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../router */ "./resources/js/router.js");
+
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Header",
   computed: {
+    userName: function userName() {
+      return this.$store.getters.getAuthStatus.userName;
+    },
     authStatus: function authStatus() {
-      console.log(this.$store.getters.getAuthStatus);
       return this.$store.getters.getAuthStatus;
     },
     popupNav: function popupNav() {
@@ -23443,15 +23456,25 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     exitAccount: function exitAccount() {
-      this.$store.commit("setAuthStatus", false);
+      this.$router.push({
+        name: 'main',
+        params: {}
+      });
+      this.$store.commit("setAuthStatus", {
+        field: "status",
+        value: false
+      });
     },
     togglePopupNav: function togglePopupNav() {
+      this.$store.commit("changeErrors", {});
       this.$store.commit("togglePopupNav", true);
     },
     togglePopupAuth: function togglePopupAuth() {
+      this.$store.commit("changeErrors", {});
       this.$store.commit("togglePopupAuth", true);
     },
     togglePopupReg: function togglePopupReg() {
+      this.$store.commit("changeErrors", {});
       this.$store.commit("togglePopupReg", true);
     }
   },
@@ -23782,17 +23805,106 @@ var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_5 = [_hoisted_4];
+var _hoisted_6 = {
+  "class": "popup__navigation-list"
+};
+var _hoisted_7 = {
+  "class": "navigation-item"
+};
 
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<ul class=\"popup__navigation-list\"><li class=\"popup__navigation-item\">Баланс</li><li class=\"popup__navigation-item\">Категории</li><li class=\"popup__navigation-item\">История</li><li class=\"popup__navigation-item\">Аналитика</li><li class=\"popup__navigation-item\">Бюджет</li></ul><div class=\"popup__buttons-section\"><a class=\"button popup__button button--auth\" href=\"\">Войти</a><a class=\"button popup__button button--reg\" href=\"\">Регистрация</a></div>", 2);
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Баланс");
+
+var _hoisted_9 = {
+  "class": "navigation-item"
+};
+
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Категории");
+
+var _hoisted_11 = {
+  "class": "navigation-item"
+};
+
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("История");
+
+var _hoisted_13 = {
+  "class": "navigation-item"
+};
+
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Аналитика");
+
+var _hoisted_15 = {
+  "class": "navigation-item"
+};
+
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Бюджет");
+
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "popup__buttons-section"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  "class": "button popup__button button--auth",
+  href: ""
+}, "Войти"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  "class": "button popup__button button--reg",
+  href: ""
+}, "Регистрация")], -1
+/* HOISTED */
+);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
+
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[0] || (_cache[0] = function () {
       return $options.togglePopupNav && $options.togglePopupNav.apply($options, arguments);
     }),
     type: "button",
     "class": "icon-close icon-close--popup button"
-  }, _hoisted_5)]), _hoisted_6]);
+  }, _hoisted_5)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    to: "/balance"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_8];
+    }),
+    _: 1
+    /* STABLE */
+
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    to: "/categories/expenses"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_10];
+    }),
+    _: 1
+    /* STABLE */
+
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    to: "/operations"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_12];
+    }),
+    _: 1
+    /* STABLE */
+
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    to: "/analytics"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_14];
+    }),
+    _: 1
+    /* STABLE */
+
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    to: "/budget"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_16];
+    }),
+    _: 1
+    /* STABLE */
+
+  })])]), _hoisted_17]);
 }
 
 /***/ }),
@@ -23861,7 +23973,7 @@ var _hoisted_11 = {
 
 var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
   "class": "auth-reg__image",
-  src: _public_assets_files_images_key_solid_svg__WEBPACK_IMPORTED_MODULE_2__["default"],
+  src: _public_assets_files_images_user_solid_svg__WEBPACK_IMPORTED_MODULE_1__["default"],
   alt: ""
 }, null, -1
 /* HOISTED */
@@ -23891,8 +24003,26 @@ var _hoisted_17 = {
 var _hoisted_18 = {
   "class": "auth-reg__error"
 };
+var _hoisted_19 = {
+  "class": "auth-reg__input-block"
+};
 
-var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  "class": "auth-reg__image",
+  src: _public_assets_files_images_key_solid_svg__WEBPACK_IMPORTED_MODULE_2__["default"],
+  alt: ""
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_21 = {
+  "class": "auth-reg__input-container"
+};
+var _hoisted_22 = {
+  "class": "auth-reg__error"
+};
+
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "auth-reg__button-section"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   type: "submit",
@@ -23912,24 +24042,37 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     viewBox: "0 0 320 512"
   }, _hoisted_5))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
     action: "",
-    onSubmit: _cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+    onSubmit: _cache[5] || (_cache[5] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.submitForm && $options.submitForm.apply($options, arguments);
     }, ["prevent"]))
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+      return $data.fieldName = $event;
+    }),
+    "class": "input",
+    type: "text",
+    id: "name",
+    name: "name",
+    placeholder: "Имя пользователя"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.fieldName]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.nameExist), 1
+  /* TEXT */
+  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
       return $data.fieldEmail = $event;
     }),
     "class": "input",
     type: "text",
-    id: "e-mail",
-    name: "e-mail",
+    id: "email",
+    name: "email",
     placeholder: "Электронная почта"
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.fieldEmail]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.emailExist), 1
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.fieldEmail]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.emailExist), 1
   /* TEXT */
-  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
       return $data.fieldPassword = $event;
     }),
     "class": "input",
@@ -23939,10 +24082,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     placeholder: "Пароль"
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.fieldPassword]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.passwordExist), 1
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.fieldPassword]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.passwordExist), 1
   /* TEXT */
-  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
       return $data.fieldPasswordRepeat = $event;
     }),
     "class": "input",
@@ -23952,9 +24095,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     placeholder: "Повторите пароль"
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.fieldPasswordRepeat]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.passwordRepeatExist), 1
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.fieldPasswordRepeat]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.passwordRepeatExist), 1
   /* TEXT */
-  )])])]), _hoisted_19], 32
+  )])])]), _hoisted_23], 32
   /* HYDRATE_EVENTS */
   )]);
 }
@@ -24425,6 +24568,28 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "balance-history"
 };
+var _hoisted_2 = {
+  key: 1,
+  "class": "data-block"
+};
+
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
+  "class": "data-title"
+}, "Операции нет", -1
+/* HOISTED */
+);
+
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "data-list"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "data-stroke"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "data-item"
+}, "Операции осутствуют")])], -1
+/* HOISTED */
+);
+
+var _hoisted_5 = [_hoisted_3, _hoisted_4];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_DateBlock = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("DateBlock");
 
@@ -24440,18 +24605,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     , ["datetime", "operations"]);
   }), 128
   /* KEYED_FRAGMENT */
-  )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-    key: 1
-  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.currentOperations, function (operations) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_DateBlock, {
-      key: _ctx.operation.id,
-      operations: operations
-    }, null, 8
-    /* PROPS */
-    , ["operations"]);
-  }), 128
-  /* KEYED_FRAGMENT */
-  ))]);
+  )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_2, _hoisted_5))]);
 }
 
 /***/ }),
@@ -24561,8 +24715,11 @@ var _hoisted_18 = {
   key: 1,
   "class": "header__buttons-section"
 };
+var _hoisted_19 = {
+  "class": "header__buttons-section__user-name"
+};
 
-var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   type: "button",
   "class": "icon-setting button"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
@@ -24576,7 +24733,7 @@ var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
   xmlns: "http://www.w3.org/2000/svg",
   viewBox: "0 0 448 512"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
@@ -24585,7 +24742,7 @@ var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_21 = [_hoisted_20];
+var _hoisted_22 = [_hoisted_21];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
 
@@ -24649,7 +24806,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  })])]), !$options.authStatus ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  })])]), !$options.authStatus.status ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "button header__button button--auth",
     onClick: _cache[0] || (_cache[0] = function () {
@@ -24661,19 +24818,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[1] || (_cache[1] = function () {
       return $options.togglePopupReg && $options.togglePopupReg.apply($options, arguments);
     })
-  }, "Регистрация")])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, "Регистрация")])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.userName), 1
+  /* TEXT */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "button header__button button--exit",
     onClick: _cache[2] || (_cache[2] = function () {
       return $options.exitAccount && $options.exitAccount.apply($options, arguments);
     })
-  }, "Выйти из аккаунта"), _hoisted_19])), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, "Выйти из аккаунта"), _hoisted_20])), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[3] || (_cache[3] = function () {
       return $options.togglePopupNav && $options.togglePopupNav.apply($options, arguments);
     }),
     "class": "icon-bars button",
     type: "button"
-  }, _hoisted_21), $options.popupNav ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_PopupNav, {
+  }, _hoisted_22), $options.popupNav ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_PopupNav, {
     key: 2
   })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.popupAuth ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_PopupAuth, {
     key: 3
@@ -24793,6 +24952,7 @@ var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_8__.createRouter)({
   history: (0,vue_router__WEBPACK_IMPORTED_MODULE_8__.createWebHistory)(),
   routes: [{
     path: "/",
+    name: "main",
     component: _components_pages_MainPage__WEBPACK_IMPORTED_MODULE_0__["default"]
   }, {
     path: "/balance",
@@ -24881,38 +25041,52 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../router */ "./resources/js/router.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+
 var moduleAuthReg = {
   state: function state() {
     return {
+      fieldName: "",
       fieldEmail: "",
       fieldPassword: "",
       fieldPasswordRepeat: "",
       errors: {},
       callbackErrors: {},
       emailIsCorrect: false,
-      authStatus: true
+      authStatus: {
+        status: false,
+        userId: 0,
+        userName: "Андрей",
+        userEmail: "6ENvmbRdSU@gmail.com"
+      }
     };
   },
   mutations: {
-    setAuthStatus: function setAuthStatus(state, value) {
-      state.authStatus = value;
+    setAuthStatus: function setAuthStatus(state, _ref) {
+      var field = _ref.field,
+          value = _ref.value;
+      state.authStatus[field] = value;
     },
     changeErrors: function changeErrors(state, value) {
       state.errors = value;
     },
-    changeErrorsAttribute: function changeErrorsAttribute(state, _ref) {
-      var errorType = _ref.errorType,
-          value = _ref.value;
+    changeErrorsAttribute: function changeErrorsAttribute(state, _ref2) {
+      var errorType = _ref2.errorType,
+          value = _ref2.value;
       state.errors[errorType] = value;
+      console.log(state.errors);
     },
     changeEmailIsCorrect: function changeEmailIsCorrect(state, value) {
       state.emailIsCorrect = value;
+    },
+    setNameField: function setNameField(state, value) {
+      state.fieldName = value;
     },
     setEmailField: function setEmailField(state, value) {
       state.fieldEmail = value;
@@ -24927,6 +25101,11 @@ var moduleAuthReg = {
   getters: {
     getAuthStatus: function getAuthStatus(state) {
       return state.authStatus;
+    },
+    getNameExist: function getNameExist(state) {
+      if (state.errors.nameExist) {
+        return state.errors.nameExist;
+      }
     },
     getEmailExist: function getEmailExist(state) {
       if (state.errors.emailExist) {
@@ -24945,12 +25124,11 @@ var moduleAuthReg = {
     }
   },
   actions: {
-    validateFieldsAuthReg: function validateFieldsAuthReg(_ref2, typeAction) {
-      var commit = _ref2.commit,
-          state = _ref2.state,
-          dispatch = _ref2.dispatch;
+    validateFieldsAuthReg: function validateFieldsAuthReg(_ref3, typeAction) {
+      var commit = _ref3.commit,
+          state = _ref3.state,
+          dispatch = _ref3.dispatch;
       commit("changeErrors", {});
-      commit("changeEmailIsCorrect", false);
 
       if (state.fieldEmail === "") {
         commit("changeErrorsAttribute", {
@@ -24976,6 +25154,20 @@ var moduleAuthReg = {
       }
 
       if (typeAction === "reg") {
+        if (state.fieldName === "") {
+          commit("changeErrorsAttribute", {
+            errorType: "nameExist",
+            value: "Укажите имя пользователя"
+          });
+        } else {
+          if (state.fieldName.length < 6) {
+            commit("changeErrorsAttribute", {
+              errorType: "nameExist",
+              value: "Имя пользователя должно быть не короче 6 символов"
+            });
+          }
+        }
+
         if (state.fieldPasswordRepeat === "") {
           commit("changeErrorsAttribute", {
             errorType: "passwordRepeatExist",
@@ -24991,7 +25183,7 @@ var moduleAuthReg = {
         }
       }
 
-      if (!state.errors.emailExist && !state.errors.passwordExist && !state.errors.passwordRepeatExist) {
+      if (!state.errors.emailExist && !state.errors.passwordExist && !state.errors.passwordRepeatExist && !state.errors.nameExist) {
         if (typeAction === "reg") {
           dispatch("regUser");
         } else {
@@ -24999,22 +25191,16 @@ var moduleAuthReg = {
         }
       }
     },
-    validEmail: function validEmail(_ref3, email) {
-      var commit = _ref3.commit;
-      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      commit("changeEmailIsCorrect", !re.test(email));
-    },
     regUser: function regUser(_ref4) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var state, commit, users, data, i;
+        var state, commit, dispatch, users, data, i;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                state = _ref4.state, commit = _ref4.commit;
-                commit("setAuthStatus", false);
+                state = _ref4.state, commit = _ref4.commit, dispatch = _ref4.dispatch;
                 commit("changeErrors", {});
-                _context2.next = 5;
+                _context2.next = 4;
                 return fetch("/api/users").then( /*#__PURE__*/function () {
                   var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(response) {
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
@@ -25040,9 +25226,10 @@ var moduleAuthReg = {
                   };
                 }());
 
-              case 5:
+              case 4:
+                console.log(users);
                 data = {
-                  name: state.fieldEmail,
+                  name: state.fieldName,
                   email: state.fieldEmail,
                   password: state.fieldPassword
                 };
@@ -25054,14 +25241,25 @@ var moduleAuthReg = {
                       value: "Такая почта уже существует"
                     });
                   }
+
+                  if (users[i].name === data.name) {
+                    commit("changeErrorsAttribute", {
+                      errorType: "nameExist",
+                      value: "Такое имя пользователя уже существует"
+                    });
+                  }
                 }
 
-                if (state.errors.emailExist) {
-                  _context2.next = 12;
+                if (!(!state.errors.emailExist && !state.errors.nameExist)) {
+                  _context2.next = 13;
                   break;
                 }
 
-                _context2.next = 10;
+                commit("setAuthStatus", {
+                  field: "status",
+                  value: false
+                });
+                _context2.next = 11;
                 return fetch("/api/users", {
                   method: 'POST',
                   body: JSON.stringify(data),
@@ -25070,11 +25268,17 @@ var moduleAuthReg = {
                   }
                 });
 
-              case 10:
+              case 11:
                 commit("togglePopupReg", false);
-                commit("setAuthStatus", true);
+                commit("setAuthStatus", {
+                  field: "status",
+                  value: true
+                });
 
-              case 12:
+              case 13:
+                dispatch("changeAuthStatus", data);
+
+              case 14:
               case "end":
                 return _context2.stop();
             }
@@ -25084,13 +25288,16 @@ var moduleAuthReg = {
     },
     authUser: function authUser(_ref6) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
-        var state, commit, users, data, i;
+        var state, commit, dispatch, users, data, i;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                state = _ref6.state, commit = _ref6.commit;
-                commit("setAuthStatus", false);
+                state = _ref6.state, commit = _ref6.commit, dispatch = _ref6.dispatch;
+                commit("setAuthStatus", {
+                  field: "status",
+                  value: false
+                });
                 commit("changeErrors", {});
                 _context4.next = 5;
                 return fetch("/api/users").then( /*#__PURE__*/function () {
@@ -25119,38 +25326,138 @@ var moduleAuthReg = {
                 }());
 
               case 5:
-                console.log(users);
                 data = {
-                  name: state.fieldEmail,
+                  name: state.fieldName,
                   email: state.fieldEmail,
                   password: state.fieldPassword
                 };
+                i = 0;
 
-                for (i = 0; i < users.length; i++) {
-                  if (users[i].email === data.email) {
-                    if (users[i].password === data.password) {
-                      commit("setAuthStatus", true);
-                      commit("changeErrors", {});
-                    }
-                  } else {
-                    commit("changeErrorsAttribute", {
-                      errorType: "passwordExist",
-                      value: "Неверная почта или пароль"
-                    });
-                  }
+              case 7:
+                if (!(i < users.length)) {
+                  _context4.next = 18;
+                  break;
                 }
 
-                if (state.authStatus === true) {
+                if (!(users[i].email === data.email)) {
+                  _context4.next = 14;
+                  break;
+                }
+
+                if (!(users[i].password === data.password)) {
+                  _context4.next = 12;
+                  break;
+                }
+
+                commit("setAuthStatus", {
+                  field: "status",
+                  value: true
+                });
+                return _context4.abrupt("break", 18);
+
+              case 12:
+                _context4.next = 15;
+                break;
+
+              case 14:
+                commit("changeErrorsAttribute", {
+                  errorType: "passwordExist",
+                  value: "Неверная почта или пароль"
+                });
+
+              case 15:
+                i++;
+                _context4.next = 7;
+                break;
+
+              case 18:
+                if (state.authStatus.status === true) {
                   commit("togglePopupAuth", false);
+                  dispatch("changeAuthStatus", data);
                 }
 
-              case 9:
+              case 19:
               case "end":
                 return _context4.stop();
             }
           }
         }, _callee4);
       }))();
+    },
+    changeAuthStatus: function changeAuthStatus(_ref8, data) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
+        var state, commit, user, i;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                state = _ref8.state, commit = _ref8.commit;
+                _context6.next = 3;
+                return fetch("/api/users").then( /*#__PURE__*/function () {
+                  var _ref9 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5(response) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+                      while (1) {
+                        switch (_context5.prev = _context5.next) {
+                          case 0:
+                            _context5.next = 2;
+                            return response.json();
+
+                          case 2:
+                            return _context5.abrupt("return", user = _context5.sent);
+
+                          case 3:
+                          case "end":
+                            return _context5.stop();
+                        }
+                      }
+                    }, _callee5);
+                  }));
+
+                  return function (_x3) {
+                    return _ref9.apply(this, arguments);
+                  };
+                }());
+
+              case 3:
+                for (i = 0; i < user.length; i++) {
+                  if (user[i].email === data.email) {
+                    commit("setAuthStatus", {
+                      field: "userName",
+                      value: user[i].name
+                    });
+                    commit("setAuthStatus", {
+                      field: "userId",
+                      value: user[i].id
+                    });
+                    commit("setAuthStatus", {
+                      field: "userEmail",
+                      value: user[i].email
+                    });
+                  }
+                }
+
+                commit("setNameField", "");
+                commit("setPasswordField", "");
+                commit("setEmailField", "");
+                commit("setPasswordRepeatField", "");
+                _router__WEBPACK_IMPORTED_MODULE_1__["default"].push({
+                  name: 'main',
+                  params: {}
+                });
+                console.log(state.authStatus);
+
+              case 10:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6);
+      }))();
+    },
+    validEmail: function validEmail(_ref10, email) {
+      var commit = _ref10.commit;
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      commit("changeEmailIsCorrect", !re.test(email));
     }
   }
 };
@@ -25210,14 +25517,14 @@ var moduleBalance = {
   actions: {
     loadAccountsFromDB: function loadAccountsFromDB(_ref) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var commit, variable;
+        var commit, getters, variable;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                commit = _ref.commit;
+                commit = _ref.commit, getters = _ref.getters;
                 _context2.next = 3;
-                return fetch("/api/account").then( /*#__PURE__*/function () {
+                return fetch("/api/account/" + getters.getAuthStatus.userId).then( /*#__PURE__*/function () {
                   var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(response) {
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
                       while (1) {
@@ -25261,14 +25568,14 @@ var moduleBalance = {
     },
     loadDebtsFromDB: function loadDebtsFromDB(_ref3) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
-        var commit, variable;
+        var commit, getters, variable;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                commit = _ref3.commit;
+                commit = _ref3.commit, getters = _ref3.getters;
                 _context4.next = 3;
-                return fetch("/api/debt").then( /*#__PURE__*/function () {
+                return fetch("/api/debt/" + getters.getAuthStatus.userId).then( /*#__PURE__*/function () {
                   var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(response) {
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
                       while (1) {
@@ -25312,14 +25619,14 @@ var moduleBalance = {
     },
     loadSavingFromDB: function loadSavingFromDB(_ref5) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
-        var commit, variable;
+        var commit, getters, variable;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
-                commit = _ref5.commit;
+                commit = _ref5.commit, getters = _ref5.getters;
                 _context6.next = 3;
-                return fetch("/api/saving").then( /*#__PURE__*/function () {
+                return fetch("/api/saving/" + getters.getAuthStatus.userId).then( /*#__PURE__*/function () {
                   var _ref6 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5(response) {
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
                       while (1) {
@@ -25413,14 +25720,14 @@ var moduleOperation = {
   actions: {
     loadOperationFromDB: function loadOperationFromDB(_ref) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var commit, dispatch, variable;
+        var commit, dispatch, getters, variable;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                commit = _ref.commit, dispatch = _ref.dispatch;
+                commit = _ref.commit, dispatch = _ref.dispatch, getters = _ref.getters;
                 _context2.next = 3;
-                return fetch("/api/operation").then( /*#__PURE__*/function () {
+                return fetch("/api/operation/" + getters.getAuthStatus.userId).then( /*#__PURE__*/function () {
                   var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(response) {
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
                       while (1) {

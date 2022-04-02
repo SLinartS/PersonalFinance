@@ -23,9 +23,9 @@ const moduleOperation = {
         }
     },
     actions: {
-        async loadOperationFromDB({commit, dispatch}) {
+        async loadOperationFromDB({commit, dispatch, getters}) {
             let variable
-            await fetch("/api/operation")
+            await fetch("/api/operation/" + (getters.getAuthStatus).userId)
                 .then(async response => variable = await response.json())
                 // .catch(error => alert(error))
             if (variable !== 0) {
@@ -33,6 +33,7 @@ const moduleOperation = {
             } else {
                 commit("setOperations", 0)
             }
+
             dispatch("packedOperations")
         },
         packedOperations({commit, getters}) {

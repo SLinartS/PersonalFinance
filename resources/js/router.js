@@ -16,7 +16,7 @@ import BudgetPage from "./components/pages/BudgetPage";
 const router = createRouter( {
     history: createWebHistory(),
     routes: [
-        { path: "/", component: MainPage},
+        { path: "/", name: "main", component: MainPage},
         { path: "/balance", component: BalancePage},
         { path: "/categories", component: CategoriesPage,
             children: [

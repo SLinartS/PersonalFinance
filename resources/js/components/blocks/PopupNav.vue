@@ -14,11 +14,11 @@
             </button>
         </div>
         <ul class="popup__navigation-list">
-            <li class="popup__navigation-item">Баланс</li>
-            <li class="popup__navigation-item">Категории</li>
-            <li class="popup__navigation-item">История</li>
-            <li class="popup__navigation-item">Аналитика</li>
-            <li class="popup__navigation-item">Бюджет</li>
+            <li class="navigation-item"><router-link to="/balance">Баланс</router-link></li>
+            <li class="navigation-item"><router-link to="/categories/expenses">Категории</router-link></li>
+            <li class="navigation-item"><router-link to="/operations">История</router-link></li>
+            <li class="navigation-item"><router-link to="/analytics">Аналитика</router-link></li>
+            <li class="navigation-item"><router-link to="/budget">Бюджет</router-link></li>
         </ul>
         <div class="popup__buttons-section ">
             <a class="button popup__button button--auth" href="">Войти</a>

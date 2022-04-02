@@ -11,11 +11,14 @@
             <li class="navigation-item"><router-link to="/analytics">Аналитика</router-link></li>
             <li class="navigation-item"><router-link to="/budget">Бюджет</router-link></li>
         </ul>
-        <div v-if="!authStatus" class="header__buttons-section">
+        <div v-if="!authStatus.status" class="header__buttons-section">
             <button type="button" class="button header__button button--auth" @click="togglePopupAuth">Войти</button>
             <button type="button" class="button header__button button--reg"  @click="togglePopupReg" >Регистрация</button>
         </div>
         <div v-else class="header__buttons-section">
+            <p class="header__buttons-section__user-name">
+                {{userName}}
+            </p>
             <button type="button" class="button header__button button--exit" @click="exitAccount">Выйти из аккаунта</button>
             <button type="button" class="icon-setting button">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
@@ -28,6 +31,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                 <path d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 113.7 433.7 128 416 128H32C14.33 128 0 113.7 0 96zM0 256C0 238.3 14.33 224 32 224H416C433.7 224 448 238.3 448 256C448 273.7 433.7 288 416 288H32C14.33 288 0 273.7 0 256zM416 448H32C14.33 448 0 433.7 0 416C0 398.3 14.33 384 32 384H416C433.7 384 448 398.3 448 416C448 433.7 433.7 448 416 448z"/>
             </svg>
+
         </button>
         <PopupNav v-if="popupNav"></PopupNav>
         <PopupAuth v-if="popupAuth"></PopupAuth>
@@ -39,11 +43,14 @@
 import PopupNav from "../blocks/PopupNav";
 import PopupAuth from "../blocks/PopupAuth";
 import PopupReg from "../blocks/PopupReg";
+import router from "../../router";
 export default {
     name: "Header",
     computed: {
+        userName() {
+            return this.$store.getters.getAuthStatus.userName;
+        },
         authStatus() {
-            console.log(this.$store.getters.getAuthStatus)
             return this.$store.getters.getAuthStatus;
         },
         popupNav() {
@@ -58,15 +65,19 @@ export default {
     },
     methods: {
         exitAccount() {
-            this.$store.commit("setAuthStatus", false)
+            this.$router.push({ name: 'main', params: {} })
+            this.$store.commit("setAuthStatus", {field: "status", value: false})
         },
         togglePopupNav() {
+            this.$store.commit("changeErrors", {})
             this.$store.commit("togglePopupNav", true)
         },
         togglePopupAuth() {
+            this.$store.commit("changeErrors", {})
             this.$store.commit("togglePopupAuth", true)
         },
         togglePopupReg() {
+            this.$store.commit("changeErrors", {})
             this.$store.commit("togglePopupReg", true)
         }
     },

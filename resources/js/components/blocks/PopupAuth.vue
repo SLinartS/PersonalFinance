@@ -63,6 +63,7 @@ export default {
     methods: {
         togglePopupAuth() {
             this.$store.commit("togglePopupAuth", false)
+            this.$store.commit("changeErrors", {})
         },
         submitForm() {
             this.$store.dispatch("validateFieldsAuthReg", "auth")

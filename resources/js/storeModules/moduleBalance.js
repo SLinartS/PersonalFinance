@@ -29,9 +29,9 @@ const moduleBalance = {
         }
     },
     actions: {
-        async loadAccountsFromDB({commit}) {
+        async loadAccountsFromDB({commit, getters}) {
             let variable;
-            await fetch("/api/account")
+            await fetch("/api/account/" + (getters.getAuthStatus).userId)
                 .then(async response => variable = await response.json())
                 .catch(error => alert(error))
 
@@ -41,9 +41,9 @@ const moduleBalance = {
                 commit("setAccounts", 0)
             }
         },
-        async loadDebtsFromDB({commit}) {
+        async loadDebtsFromDB({commit, getters}) {
             let variable;
-            await fetch("/api/debt")
+            await fetch("/api/debt/" + (getters.getAuthStatus).userId)
                 .then(async response => variable = await response.json())
                 .catch(error => alert(error))
 
@@ -53,9 +53,9 @@ const moduleBalance = {
                 commit("setDebts", 0)
             }
         },
-        async loadSavingFromDB({commit}) {
+        async loadSavingFromDB({commit, getters}) {
             let variable;
-            await fetch("/api/saving")
+            await fetch("/api/saving/" + (getters.getAuthStatus).userId)
                 .then(async response => variable = await response.json())
                 .catch(error => alert(error))
 

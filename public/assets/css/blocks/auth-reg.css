@@ -17,6 +17,10 @@
     overflow: hidden;
 }
 
+.auth-reg--reg {
+    height: 48rem;
+}
+
 .auth-reg__header {
     height: 5rem;
     font-size: 2.8rem;

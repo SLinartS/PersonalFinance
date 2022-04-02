@@ -16,10 +16,7 @@ class OperationController extends Controller
      */
     public function index()
     {
-        return Operation::where("user_id", 1)
-            ->select("id", "description", "amount", "time")
-            ->addSelect(["type" => Category::select("type")->whereColumn("id", "category_id")->take(1)])
-            ->get();
+        //
     }
 
     /**
@@ -51,7 +48,10 @@ class OperationController extends Controller
      */
     public function show($id)
     {
-        //
+        return Operation::where("user_id", $id)
+            ->select("id", "description", "amount", "time")
+            ->addSelect(["type" => Category::select("type")->whereColumn("id", "category_id")->take(1)])
+            ->get();
     }
 
     /**

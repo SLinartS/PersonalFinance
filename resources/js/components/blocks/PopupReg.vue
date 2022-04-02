@@ -13,7 +13,15 @@
                 <div class="auth-reg__input-block">
                     <img class="auth-reg__image" src="../../../../public/assets/files/images/user-solid.svg" alt="">
                     <div class="auth-reg__input-container">
-                        <input v-model="fieldEmail" class="input" type="text" id="e-mail" name="e-mail"
+                        <input v-model="fieldName" class="input" type="text" id="name" name="name"
+                               placeholder="Имя пользователя">
+                        <p class="auth-reg__error">{{ nameExist }} </p>
+                    </div>
+                </div>
+                <div class="auth-reg__input-block">
+                    <img class="auth-reg__image" src="../../../../public/assets/files/images/user-solid.svg" alt="">
+                    <div class="auth-reg__input-container">
+                        <input v-model="fieldEmail" class="input" type="text" id="email" name="email"
                                placeholder="Электронная почта">
                         <p class="auth-reg__error">{{ emailExist }} </p>
                     </div>
@@ -48,12 +56,16 @@ export default {
     name: "PopupReg",
     data() {
         return {
+            fieldName: "",
             fieldEmail: "",
             fieldPassword: "",
             fieldPasswordRepeat: "",
         }
     },
     watch: {
+        fieldName() {
+            this.$store.commit("setNameField", this.fieldName)
+        },
         fieldEmail() {
             this.$store.commit("setEmailField", this.fieldEmail)
         },
@@ -65,6 +77,9 @@ export default {
         }
     },
     computed: {
+        nameExist() {
+            return this.$store.getters.getNameExist
+        },
         emailExist() {
             return this.$store.getters.getEmailExist
         },
@@ -78,6 +93,8 @@ export default {
     methods: {
         togglePopupReg() {
             this.$store.commit("togglePopupReg", false)
+            this.$store.commit("changeErrors", {})
+
         },
         submitForm() {
             this.$store.dispatch("validateFieldsAuthReg", "reg")

@@ -15,9 +15,7 @@ class SavingController extends Controller
      */
     public function index()
     {
-        return Saving::where("user_id", 2)
-            ->select("id", "title", "amount")
-            ->get();
+        //
     }
 
     /**
@@ -49,7 +47,9 @@ class SavingController extends Controller
      */
     public function show($id)
     {
-        //
+        return Saving::where("user_id", $id)
+            ->select("id", "title", "amount")
+            ->get();
     }
 
     /**

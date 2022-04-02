@@ -15,9 +15,7 @@ class DebtController extends Controller
      */
     public function index()
     {
-        return Debt::where("user_id", 2)
-            ->select("id", "title", "amount")
-            ->get();
+        //
     }
 
     /**
@@ -49,7 +47,9 @@ class DebtController extends Controller
      */
     public function show($id)
     {
-        //
+        return Debt::where("user_id", $id)
+            ->select("id", "title", "amount")
+            ->get();
     }
 
     /**

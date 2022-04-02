@@ -18,16 +18,23 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
+            'name' => 'unaccounted',
+            'email' => "unaccounted" . '@gmail.com',
+            'password' => 'Str::random(20)',
+            'avatar_url' => 'unaccounted'
+        ]);
+
+        DB::table('users')->insert([
             'name' => 'Андрей',
-            'email' => Str::random(10) . '@gmail.com',
-//            'password' => Hash::make('password'),
-            'password' => 'qwerty',
+//            'email' => Str::random(10) . '@gmail.com',
+            'email' => 'test1@gmail.com',
+            'password' => "test1password",
             'avatar_url' => 'link1'
         ]);
         DB::table('users')->insert([
             'name' => 'Маша',
-            'email' => Str::random(10) . '@mail.com',
-            'password' => 'ytrewq',
+            'email' => 'test2@gmail.com',
+            'password' => "test2password",
             'avatar_url' => 'link2'
         ]);
 
@@ -36,17 +43,17 @@ class DatabaseSeeder extends Seeder
         DB::table('accounts')->insert([
             'title' => 'Наличные',
             'amount' => '194.5',
-            'user_id' => 1,
+            'user_id' => 2,
         ]);
         DB::table('accounts')->insert([
             'title' => 'Карта ВТБ',
             'amount' => '0',
-            'user_id' => 1,
+            'user_id' => 2,
         ]);
         DB::table('accounts')->insert([
             'title' => 'Карта Альфа Банк',
             'amount' => '76.05',
-            'user_id' => 2,
+            'user_id' => 3,
         ]);
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -54,12 +61,12 @@ class DatabaseSeeder extends Seeder
         DB::table('debts')->insert([
             'title' => 'Кредит',
             'amount' => '197494.72',
-            'user_id' => 1,
+            'user_id' => 2,
         ]);
         DB::table('debts')->insert([
             'title' => 'Долг Андрею',
             'amount' => '1000',
-            'user_id' => 2,
+            'user_id' => 3,
         ]);
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -207,47 +214,47 @@ class DatabaseSeeder extends Seeder
 //----------------------------------------------------------------------------------------------------------------------
 
         DB::table('operations')->insert([
-            'description' => 'тестовая операция зачисления 1',
+            'description' => 'Зарплата',
             'amount' => "10000",
             'time' => "2022-03-29 00:00:00",
             "category_id" => 10,
-            "user_id" => 1,
+            "user_id" => 2,
 
         ]);
         DB::table('operations')->insert([
-            'description' => 'тестовая операция зачисления 2',
+            'description' => 'Подарок от друга',
             'amount' => "500",
             'time' => "2022-03-28 00:00:00",
             "category_id" => 11,
+            "user_id" => 3,
+        ]);
+        DB::table('operations')->insert([
+            'description' => 'Корм коту',
+            'amount' => "300",
+            'time' => "2022-04-03 00:00:00",
+            "category_id" => 1,
             "user_id" => 2,
         ]);
         DB::table('operations')->insert([
-            'description' => 'тестовая операция расхода 1',
-            'amount' => "300",
-            'time' => "2022-01-27 00:00:00",
-            "category_id" => 1,
-            "user_id" => 1,
-        ]);
-        DB::table('operations')->insert([
-            'description' => 'тестовая операция расхода 2',
+            'description' => 'Еда для дома',
             'amount' => "8000",
-            'time' => "2022-01-27 01:00:00",
+            'time' => "2022-04-03 01:00:00",
             "category_id" => 2,
-            "user_id" => 1,
+            "user_id" => 2,
         ]);
         DB::table('operations')->insert([
-            'description' => 'тестовая операция расхода 3',
-            'amount' => "8000",
+            'description' => 'Потерял деньги',
+            'amount' => "2000",
             'time' => "2021-04-29 06:00:00",
             "category_id" => 2,
-            "user_id" => 2,
+            "user_id" => 3,
         ]);
         DB::table('operations')->insert([
-            'description' => 'тестовая операция расхода 4',
-            'amount' => "8000",
+            'description' => 'Купил попить',
+            'amount' => "50",
             'time' => "2021-04-29 00:00:00",
             "category_id" => 2,
-            "user_id" => 2,
+            "user_id" => 3,
         ]);
 
     }
