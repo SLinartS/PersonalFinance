@@ -34,4 +34,8 @@ class User extends Model
     public function options() {
         return $this->hasOne(Option::class);
     }
+
+    public function categories() {
+        return $this->belongsToMany(Category::class, "user_category");
+    }
 }
