@@ -26,9 +26,8 @@ class DatabaseSeeder extends Seeder
 
         DB::table('users')->insert([
             'name' => 'Андрей',
-//            'email' => Str::random(10) . '@gmail.com',
             'email' => 'test1@gmail.com',
-            'password' => "test1password",
+            'password' => "\$2y\$10\$z1qSA9R8NxTaMWMy6o8/IuvJFqjMR11H6prY2BIhC/oCRYriQyrva",
             'avatar_url' => 'link1'
         ]);
         DB::table('users')->insert([
@@ -37,7 +36,6 @@ class DatabaseSeeder extends Seeder
             'password' => "test2password",
             'avatar_url' => 'link2'
         ]);
-
 //----------------------------------------------------------------------------------------------------------------------
 
         DB::table('accounts')->insert([

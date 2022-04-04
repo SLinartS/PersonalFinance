@@ -8,13 +8,11 @@ const moduleAuthReg = {
             fieldPassword: "",
             fieldPasswordRepeat: "",
             errors: {},
-            callbackErrors: {},
-            emailIsCorrect: false,
             authStatus: {
                 status: false,
-                userId: 0,
+                userId: 2,
                 userName: "Андрей",
-                userEmail: "6ENvmbRdSU@gmail.com",
+                userEmail: "test1@gmail.com",
             },
         };
     },
@@ -25,11 +23,8 @@ const moduleAuthReg = {
         changeErrors(state, value) {
             state.errors = value
         },
-        changeErrorsAttribute(state, { errorType, value }) {
+        changeErrorsAttribute(state, { errorType, value}) {
             state.errors[errorType] = value
-        },
-        changeEmailIsCorrect(state, value) {
-            state.emailIsCorrect = value
         },
         setNameField(state, value) {
             state.fieldName = value
@@ -42,6 +37,12 @@ const moduleAuthReg = {
         },
         setPasswordRepeatField(state, value) {
             state.fieldPasswordRepeat = value
+        },
+        clearFields(state) {
+            state.fieldName = ""
+            state.fieldEmail = ""
+            state.fieldPassword = ""
+            state.fieldPasswordRepeat = ""
         }
     },
     getters: {
@@ -71,26 +72,29 @@ const moduleAuthReg = {
     },
     actions: {
         async validateFieldsAuthReg({ commit, state, dispatch }, typeAction) {
+            commit("setAuthStatus", {field: "status", value: false })
+            commit("changeErrors", {})
             let inputData
-            if (typeAction === "auth") {
-                inputData = {
-                    actionType: typeAction,
-
-                    email: state.fieldEmail,
-                    password: state.fieldPassword,
-                    repPassword: state.fieldPasswordRepeat,
-                }
-            } else if (typeAction === "reg") {
-                inputData = {
-                    actionType: typeAction,
-                    name: state.fieldName,
-                    email: state.fieldEmail,
-                    password: state.fieldPassword,
-                    repPassword: state.fieldPasswordRepeat,
-                }
+            switch (typeAction) {
+                case "auth":
+                    inputData = {
+                        actionType: typeAction,
+                        email: state.fieldEmail,
+                        password: state.fieldPassword,
+                    }
+                    break;
+                case "reg":
+                    inputData = {
+                        actionType: typeAction,
+                        name: state.fieldName,
+                        email: state.fieldEmail,
+                        password: state.fieldPassword,
+                        repPassword: state.fieldPasswordRepeat,
+                    }
+                    break;
+                default:
+                    break;
             }
-
-            console.log(inputData)
 
             let validate
             await fetch("/api/userCheck", {
@@ -99,147 +103,134 @@ const moduleAuthReg = {
                 headers: {
                     'Content-Type': 'application/json;charset=UTF-8'
                 }
-            }).then(async response => validate = await response.text())
+            }).then(async response => validate = await response.json())
 
-            console.log(validate)
+            let errorsExist = false;
+            Object.keys(validate).forEach(function (key) {
+                const errorStackByType = validate[key]
+                for (let i = 0; i < errorStackByType.length; i++) {
+                    errorsExist = true
+                    switch (errorStackByType[i]) {
+                        // NAME VALIDATE ------------------------------------------
+                        case "The name field is required.":
+                            commit("changeErrorsAttribute", {
+                                errorType: "nameExist",
+                                value: "Укажите имя пользователя"
+                            })
+                            break;
+                        case "The name must be at least 6 characters.":
+                            commit("changeErrorsAttribute", {
+                                errorType: "nameExist",
+                                value: "Имя пользователя должно быть не короче 6 символов"
+                            })
+                            break;
 
+                        // EMAIL VALIDATE ------------------------------------------
+                        case "The email field is required.":
+                            commit("changeErrorsAttribute", {
+                                errorType: "emailExist",
+                                value: "Укажите эл. почту"
+                            })
+                            break;
+                        case "The email must be a valid email address.":
+                            commit("changeErrorsAttribute", {
+                                errorType: "emailExist",
+                                value: "Неверный формат эл. почты"
+                            })
+                            break;
 
-            // commit("changeErrors", {})
+                        // PASSWORD VALIDATE ------------------------------------------
+                        case "The password field is required.":
+                            commit("changeErrorsAttribute", {
+                                errorType: "passwordExist",
+                                value: "Укажите пароль"
+                            })
+                            break;
 
-            // if (state.fieldEmail === "") {
-            //     commit("changeErrorsAttribute", { errorType: "emailExist", value: "Укажите эл. почту" })
-            // } else {
-            //     dispatch("validEmail", state.fieldEmail)
-            //     if (state.emailIsCorrect) {
-            //         commit("changeErrorsAttribute", { errorType: "emailExist", value: "Неверный формат эл. почты" })
-            //     }
-            // }
-            // if (state.fieldPassword === "") {
-            //     commit("changeErrorsAttribute", { errorType: "passwordExist", value: "Укажите пароль" })
-            // }
-            // if (typeAction === "reg") {
-            //     if (state.fieldName === "") {
-            //         commit("changeErrorsAttribute", { errorType: "nameExist", value: "Укажите имя пользователя" })
-            //     } else {
-            //         if (state.fieldName.length < 6) {
-            //             commit("changeErrorsAttribute", {
-            //                 errorType: "nameExist",
-            //                 value: "Имя пользователя должно быть не короче 6 символов"
-            //             })
-            //         }
-            //     }
+                        case "The password must be at least 8 characters.":
+                            commit("changeErrorsAttribute", {
+                                errorType: "passwordExist",
+                                value: "Пароль должен быть не короче 8 символов"
+                            })
+                            break;
 
-            //     if (state.fieldPasswordRepeat === "") {
-            //         commit("changeErrorsAttribute", { errorType: "passwordRepeatExist", value: "Укажите пароль ещё раз" })
-            //     } else {
-            //         if (state.fieldPassword !== state.fieldPasswordRepeat) {
-            //             commit("changeErrorsAttribute", {
-            //                 errorType: "passwordRepeatExist",
-            //                 value: "Пароли не совпадают"
-            //             })
-            //         }
-            //     }
-            // }
-            // if (!state.errors.emailExist &&
-            //     !state.errors.passwordExist &&
-            //     !state.errors.passwordRepeatExist &&
-            //     !state.errors.nameExist) {
-            //     if (typeAction === "reg") {
-            //         dispatch("regUser")
-            //     } else {
-            //         dispatch("authUser")
-            //     }
-            // }
-        },
-        async regUser({ state, commit, dispatch }) {
-            let users;
-            commit("changeErrors", {})
-            await fetch("/api/users")
-                .then(async response => users = await response.json())
+                        case "The password and rep password must match.":
+                            commit("changeErrorsAttribute", {
+                                errorType: "passwordRepeatExist",
+                                value: "Пароли должны совпадать"
+                            })
+                            break;
 
-            console.log(users)
+                        case "The rep password field is required.":
+                            commit("changeErrorsAttribute", {
+                                errorType: "passwordRepeatExist",
+                                value: "Повторите пароль"
+                            })
+                            break;
 
-            const data = {
-                name: state.fieldName,
-                email: state.fieldEmail,
-                password: state.fieldPassword,
-            }
+                        // AUTH VALIDATE ------------------------------------------
+                        case "Invalid email or password":
+                            commit("changeErrorsAttribute", {
+                                errorType: "passwordExist",
+                                value: "Неверная почта или пароль"
+                            })
+                            break;
 
-            for (let i = 0; i < users.length; i++) {
-                if (users[i].email === data.email) {
-                    commit("changeErrorsAttribute", { errorType: "emailExist", value: "Такая почта уже существует" })
-                }
-                if (users[i].name === data.name) {
-                    commit("changeErrorsAttribute", { errorType: "nameExist", value: "Такое имя пользователя уже существует" })
-                }
-            }
-            if (!state.errors.emailExist && !state.errors.nameExist) {
-                commit("setAuthStatus", { field: "status", value: false })
-                await fetch("/api/users", {
-                    method: 'POST',
-                    body: JSON.stringify(data),
-                    headers: {
-                        'Content-Type': 'application/json;charset=UTF-8'
+                        // REG VALIDATE ------------------------------------------
+                        case "This mail already exists":
+                            commit("changeErrorsAttribute", {
+                                errorType: "emailExist",
+                                value: "Такая почта уже существует"
+                            })
+                            break;
                     }
-                })
-                commit("togglePopupReg", false)
-                commit("setAuthStatus", { field: "status", value: true })
-            }
-            dispatch("changeAuthStatus", data)
+                }
+            });
 
-        },
-        async authUser({ state, commit, dispatch }) {
-            console.log(valuess)
-            let users;
-            commit("setAuthStatus", { field: "status", value: false })
-            commit("changeErrors", {})
-            await fetch("/api/users")
-                .then(async response => users = await response.json())
-
-            const data = {
-                name: state.fieldName,
-                email: state.fieldEmail,
-                password: state.fieldPassword,
-            }
-
-            for (let i = 0; i < users.length; i++) {
-                if (users[i].email === data.email) {
-                    if (users[i].password === data.password) {
-                        commit("setAuthStatus", { field: "status", value: true })
-                        break
-                    }
+            if (!errorsExist) {
+                if (typeAction === "reg") {
+                    dispatch("regUser", inputData)
                 } else {
-                    commit("changeErrorsAttribute", { errorType: "passwordExist", value: "Неверная почта или пароль" })
+                    dispatch("changeAuthStatus", inputData)
                 }
             }
-            if (state.authStatus.status === true) {
-                commit("togglePopupAuth", false)
-                dispatch("changeAuthStatus", data)
-            }
-
         },
-        async changeAuthStatus({ state, commit }, data) {
+
+        async regUser({commit, dispatch }, inputData) {
+
+            await fetch("/api/users", {
+                method: 'POST',
+                body: JSON.stringify(inputData),
+                headers: {
+                    'Content-Type': 'application/json;charset=UTF-8'
+                }
+            })
+
+
+            dispatch("changeAuthStatus", inputData)
+        },
+        async changeAuthStatus({ state, commit }, inputData) {
+
+            commit("togglePopupAuth", false)
+            commit("togglePopupReg", false)
+
+            commit("setAuthStatus", { field: "status", value: true })
+
             let user
             await fetch("/api/users")
                 .then(async response => user = await response.json())
 
             for (let i = 0; i < user.length; i++) {
-                if (user[i].email === data.email) {
+                if (user[i].email === inputData.email) {
                     commit("setAuthStatus", { field: "userName", value: user[i].name })
                     commit("setAuthStatus", { field: "userId", value: user[i].id })
                     commit("setAuthStatus", { field: "userEmail", value: user[i].email })
                 }
             }
-            commit("setNameField", "")
-            commit("setPasswordField", "")
-            commit("setEmailField", "")
-            commit("setPasswordRepeatField", "")
+
+            commit("clearFields")
             router.push({ name: 'main', params: {} })
             console.log(state.authStatus)
-        },
-        validEmail({ commit }, email) {
-            let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            commit("changeEmailIsCorrect", !re.test(email))
         },
     }
 }
