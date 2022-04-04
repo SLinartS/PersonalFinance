@@ -26,8 +26,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post("userCheck", [UserController::class, "userCheck"]);
+
 Route::apiResources([
-    "users" => UserController::class,
+    'users' => UserController::class,
     'account' => AccountController::class,
     'debt' => DebtController::class,
     'saving' => SavingController::class,
