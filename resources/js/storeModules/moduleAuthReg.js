@@ -103,7 +103,9 @@ const moduleAuthReg = {
                 headers: {
                     'Content-Type': 'application/json;charset=UTF-8'
                 }
-            }).then(async response => validate = await response.json())
+            })
+            .then(async response => validate = await response.json())
+            .catch(error => alert(error))
 
             let errorsExist = false;
             Object.keys(validate).forEach(function (key) {
@@ -204,7 +206,7 @@ const moduleAuthReg = {
                 headers: {
                     'Content-Type': 'application/json;charset=UTF-8'
                 }
-            })
+            }).catch(error => alert(error))
 
 
             dispatch("changeAuthStatus", inputData)
@@ -219,6 +221,7 @@ const moduleAuthReg = {
             let user
             await fetch("/api/users")
                 .then(async response => user = await response.json())
+                .catch(error => alert(error))
 
             for (let i = 0; i < user.length; i++) {
                 if (user[i].email === inputData.email) {

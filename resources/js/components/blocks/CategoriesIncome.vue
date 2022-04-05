@@ -4,19 +4,15 @@
     </div>
 
     <div class="categories__list categories__list--income">
-        <div class="categories__item">
-            <h4 class="categories__item__title">Зарплата</h4>
-            <div class="categories__item__background bgcolor-9">
-                <img class="categories__item__image" src="../../../../public/assets/files/images/categories/money-bill-wave.svg" alt="icon-item">
-            </div>
-            <p class="categories__item__price color-9">17 003,26 ₽</p>
-        </div>
-        <div class="categories__item">
-            <h4 class="categories__item__title">Подарок</h4>
-            <div class="categories__item__background bgcolor-10">
-                <img class="categories__item__image" src="../../../../public/assets/files/images/categories/sack-dollar.svg" alt="icon-item">
-            </div>
-            <p class="categories__item__price color-10">467,02 ₽</p>
+        <div class="container-for-vue">
+            <CategoryItem v-for="category in currentCategories"
+            :key="category.id"
+            :id="category.id"
+            :type="category.type"
+            :title="category.title"
+            :color="category.color"
+
+            ></CategoryItem>
         </div>
         <div class="categories__item categories__item--empty">
             <div class="categories__item__background categories__item__background--empty color-empty">
@@ -28,8 +24,24 @@
 </template>
 
 <script>
+import CategoryItem from "./category/CategoryItem"
+
 export default {
-    name: "CategoriesExpenses"
+    components: {CategoryItem},
+    name: "CategoriesExpenses",
+    mounted() {
+    this.loadDateFromDB();
+  },
+  methods: {
+      loadDateFromDB() {
+          this.$store.dispatch("loadIncomeCategoriesFromDB");
+    },
+  },
+    computed: {
+      currentCategories() {
+          return this.$store.getters.getCategories
+      }
+  }
 }
 </script>
 

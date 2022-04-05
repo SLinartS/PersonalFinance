@@ -1,4 +1,8 @@
 
+.container-for-vue {
+    display: contents;
+}
+
 .general,
 .balance-history,
 .categories,

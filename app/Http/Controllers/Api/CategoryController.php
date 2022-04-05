@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -38,6 +39,18 @@ class CategoryController extends Controller
         //
     }
 
+
+    public function reqCatTypes($id, $type)
+    {
+        return Category::query()
+        ->join("colors", "categories.color_id", "colors.id")
+        // where("user_id", $id)
+        ->select("categories.id", "categories.type", "categories.title", "colors.value as color")
+        ->where("categories.type", $type)
+        ->get();
+    }
+
+
     /**
      * Display the specified resource.
      *
@@ -46,7 +59,7 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**

@@ -27,7 +27,7 @@ const moduleOperation = {
             let variable
             await fetch("/api/operation/" + (getters.getAuthStatus).userId)
                 .then(async response => variable = await response.json())
-                // .catch(error => alert(error))
+                .catch(error => alert(error))
             if (variable !== 0) {
                 commit("setOperations", variable)
             } else {
