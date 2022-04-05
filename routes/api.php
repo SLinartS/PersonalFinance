@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get("reqCatTypes/{id}/{type}", [CategoryController::class, "reqCatTypes"]);
+Route::get("reqCatOperations/{id}/{type}", [CategoryController::class, "reqCatOperations"]);
 
 Route::post("userCheck", [UserController::class, "userCheck"]);
 

@@ -10,6 +10,7 @@ class Option extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'options';
+    protected $hidden = ['pivot'];
 
     public function user()
     {

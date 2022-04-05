@@ -43,11 +43,34 @@ class CategoryController extends Controller
     public function reqCatTypes($id, $type)
     {
         return Category::query()
-        ->join("colors", "categories.color_id", "colors.id")
-        // where("user_id", $id)
-        ->select("categories.id", "categories.type", "categories.title", "colors.value as color")
-        ->where("categories.type", $type)
-        ->get();
+            ->join("colors", "categories.color_id", "colors.id")
+            ->join("users_categories", "categories.id", "users_categories.category_id")
+            ->join("users", "users_categories.user_id", "users.id")
+            ->select("categories.id", "categories.type",
+             "categories.title", "categories.img_url", "colors.value as color")
+            ->where("categories.type", $type)
+            ->where("users.id", $id)
+            ->get();
+
+    }
+
+    public function reqCatOperations($id, $type)
+    {
+        return Category::query()
+            ->join("colors", "categories.color_id", "colors.id")
+            ->join("users_categories", "categories.id", "users_categories.category_id")
+            ->join("users", "users_categories.user_id", "users.id")
+            ->join("operations", "operations.category_id", "categories.id")
+            ->join("users as users_ap", "operations.user_id", "users.id")
+            ->select("categories.id", "categories.type",
+             "categories.title", "categories.img_url", "colors.value as color",
+             "operations.amount as operation_amount", "operations.time as operation_time",
+             "users.id as user_id")
+            ->where("categories.type", $type)
+            ->where("users.id", $id)
+            ->where("users_ap.id", $id)
+            ->get();
+
     }
 
 
@@ -59,7 +82,6 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-
     }
 
     /**

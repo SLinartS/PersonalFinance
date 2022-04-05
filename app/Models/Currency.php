@@ -10,6 +10,7 @@ class Currency extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'currencies';
+    protected $hidden = ['pivot'];
 
     public function options() {
         return $this->hasMany(Option::class);

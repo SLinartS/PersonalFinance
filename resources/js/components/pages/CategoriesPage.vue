@@ -7,9 +7,7 @@
       </div>
       <div class="current-balance__elem current-balance__elem--result">
         <h3 class="current-balance__title">Итог</h3>
-        <p class="current-balance__amount current-balance__amount--result">
-          16 417,72 ₽
-        </p>
+        <p class="current-balance__amount current-balance__amount--result">16 417,72 ₽</p>
       </div>
       <div class="current-balance__elem current-balance__elem--expenses">
         <h3 class="current-balance__title">Расходы</h3>
@@ -30,5 +28,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

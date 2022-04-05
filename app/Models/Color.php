@@ -10,6 +10,7 @@ class Color extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'colors';
+    protected $hidden = ['pivot'];
 
     public function categories() {
         return $this->hasMany(Category::class);

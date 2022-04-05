@@ -10,32 +10,40 @@ class User extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'users';
+    protected $hidden = ['pivot'];
 
-    public function accounts() {
+    public function accounts()
+    {
         return $this->hasMany(Account::class);
     }
 
-    public function debts() {
+    public function debts()
+    {
         return $this->hasMany(Debt::class);
     }
 
-    public function savings() {
+    public function savings()
+    {
         return $this->hasMany(Saving::class);
     }
 
-    public function operations() {
+    public function operations()
+    {
         return $this->hasMany(Operation::class);
     }
 
-    public function budgets() {
+    public function budgets()
+    {
         return $this->hasMany(Budget::class);
     }
 
-    public function options() {
+    public function options()
+    {
         return $this->hasOne(Option::class);
     }
-
-    public function categories() {
-        return $this->belongsToMany(Category::class, "user_category");
+    
+    public function category()
+    {
+        return $this->belongsToMany(Category::class, "users_categories");
     }
 }

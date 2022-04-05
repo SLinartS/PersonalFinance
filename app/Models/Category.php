@@ -10,12 +10,15 @@ class Category extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'categories';
+    protected $hidden = ['pivot'];
 
-    public function operations() {
+    public function operations()
+    {
         return $this->hasMany(Operation::class);
     }
 
-    public function budgets() {
+    public function budgets()
+    {
         return $this->hasMany(Budget::class);
     }
 
@@ -24,7 +27,8 @@ class Category extends Model
         return $this->belongsTo(Color::class);
     }
 
-    public function users() {
-        return $this->belongsToMany(User::class, "user_category");
+    public function user()
+    {
+        return $this->belongsToMany(User::class, "users_categories");
     }
 }

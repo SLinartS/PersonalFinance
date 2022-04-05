@@ -10,6 +10,7 @@ class Operation extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'operations';
+    protected $hidden = ['pivot'];
 
     public function user()
     {

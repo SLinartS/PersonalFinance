@@ -10,6 +10,7 @@ class Saving extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'savings';
+    protected $hidden = ['pivot'];
 
     public function user()
     {

@@ -10,6 +10,7 @@ class Separator extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'separators';
+    protected $hidden = ['pivot'];
 
     public function options() {
         return $this->hasMany(Option::class);

@@ -10,6 +10,7 @@ class Space extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'spaces';
+    protected $hidden = ['pivot'];
 
     public function options() {
         return $this->hasMany(Option::class);

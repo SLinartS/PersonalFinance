@@ -9,8 +9,8 @@ const moduleAuthReg = {
             fieldPasswordRepeat: "",
             errors: {},
             authStatus: {
-                status: false,
-                userId: 2,
+                status: true,
+                userId: 3,
                 userName: "Андрей",
                 userEmail: "test1@gmail.com",
             },

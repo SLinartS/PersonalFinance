@@ -10,6 +10,7 @@ class Account extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'accounts';
+    protected $hidden = ['pivot'];
 
     public function user()
     {

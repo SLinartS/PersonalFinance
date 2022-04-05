@@ -10,6 +10,7 @@ class Budget extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'budgets';
+    protected $hidden = ['pivot'];
 
     public function user()
     {

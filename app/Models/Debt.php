@@ -10,6 +10,7 @@ class Debt extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'debts';
+    protected $hidden = ['pivot'];
 
     public function user()
     {

@@ -9,5 +9,6 @@ class UserCategory extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $table = 'user_category';
+    protected $table = 'users_categories';
+    protected $hidden = ['pivot'];
 }
