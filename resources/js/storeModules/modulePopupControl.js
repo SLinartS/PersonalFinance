@@ -1,9 +1,11 @@
+
 const modulePopupControl = {
     state() {
         return {
             popupNav: false,
             popupAuth: false,
             popupReg: false,
+            popupBalanceChange: true,
         };
     },
     mutations: {
@@ -23,6 +25,9 @@ const modulePopupControl = {
             } else {
                 state.popupReg = value
             }
+        },
+        togglePopupBalanceChange(state, value) {
+            state.popupBalanceChange = value
         }
     },
     getters: {
@@ -34,6 +39,9 @@ const modulePopupControl = {
         },
         popupReg(state) {
             return state.popupReg
+        },
+        popupBalanceChange(state) {
+            return state.popupBalanceChange
         },
     },
 }

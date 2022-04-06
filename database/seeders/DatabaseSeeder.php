@@ -264,9 +264,17 @@ class DatabaseSeeder extends Seeder
             "user_id" => 3,
         ]);
         DB::table('operations')->insert([
+            'description' => 'Поел в столовой',
+            'amount' => "1000",
+            'time' => "2021-04-29 00:00:00",
+            "storage_type" => "saving",
+            "category_id" => 2,
+            "user_id" => 3,
+        ]);
+        DB::table('operations')->insert([
             'description' => 'Купил попить',
             'amount' => "50",
-            'time' => "2021-04-29 00:00:00",
+            'time' => "2021-04-29 03:00:00",
             "storage_type" => "account",
             "category_id" => 2,
             "user_id" => 3,

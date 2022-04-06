@@ -48,11 +48,65 @@ class OperationController extends Controller
      */
     public function show($id)
     {
-        return Operation::where("user_id", $id)
+
+        $unsortedOperations = Operation::where("user_id", $id)
             ->select("id", "description", "amount", "time")
             ->addSelect(["type" => Category::select("type")->whereColumn("id", "category_id")->take(1)])
-            ->get();
+            ->get()->toArray();
+
+        $packagedOperations = [];
+        if (count($unsortedOperations) !== 0) {
+
+            usort($unsortedOperations, function ($arr1, $arr2) {
+                return $arr1['time'] > $arr2['time'];
+            });
+
+            $currentSubarray = 0;
+            $currentDate = [
+                date_parse($unsortedOperations[0]["time"])["year"],
+                date_parse($unsortedOperations[0]["time"])["month"],
+                date_parse($unsortedOperations[0]["time"])["day"],
+            ];
+
+            for ($i = 0; $i < count($unsortedOperations); $i++) {
+                $dateInQuestions = [
+                    date_parse($unsortedOperations[$i]["time"])["year"],
+                    date_parse($unsortedOperations[$i]["time"])["month"],
+                    date_parse($unsortedOperations[$i]["time"])["day"],
+                ];
+
+                $equal = true;
+                for ($k = 0; $k < 3; $k++) {
+                    if ($dateInQuestions[$k] !== $currentDate[$k]) {
+                        $equal = false;
+                    }
+                }
+
+
+                if ($equal) {
+                    if (count($packagedOperations) === 0) {
+                        array_push($packagedOperations, []);
+                    };
+                    array_push($packagedOperations[$currentSubarray], $unsortedOperations[$i]);
+                } else {
+                    if (count($packagedOperations) !== 0) {
+                        $currentSubarray++;
+                    }
+                    array_push($packagedOperations, []);
+                    array_push($packagedOperations[$currentSubarray], $unsortedOperations[$i]);
+                    $currentDate = $dateInQuestions;
+                };
+
+                // for ($k = 0; $k < count($packagedOperations); $k++) {
+                //     usort($packagedOperations[$k], function ($arr1, $arr2) {
+                //         return $arr1['time'] > $arr2['time'];
+                //     });
+                // }
+            }
+        }
+        return $packagedOperations;
     }
+
 
     /**
      * Show the form for editing the specified resource.

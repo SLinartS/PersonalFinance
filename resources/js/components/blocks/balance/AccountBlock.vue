@@ -1,7 +1,11 @@
 <template>
     <div class="data-stroke">
-        <p class="data-item">{{title}}</p>
-        <p class="data-item">{{amount}} ₽</p>
+        <div class="data-stroke__button-block">
+            <button class="data-title__button"></button>
+            <button class="data-title__button" @click="togglePopupBalanceChange"></button>
+            <p class="data-item">{{ title }}</p>
+        </div>
+        <p class="data-item">{{ amount }} ₽</p>
     </div>
 </template>
 
@@ -12,10 +16,14 @@ export default {
         id: Number,
         title: String,
         amount: String
-    }
+    },
+        methods: {
+        togglePopupBalanceChange() {
+            this.$store.commit("togglePopupBalanceChange", true)
+        }
+    },
 }
 </script>
 
 <style scoped>
-
 </style>

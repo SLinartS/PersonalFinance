@@ -47,7 +47,6 @@ export default {
     },
     computed: {
         currentCategories() {
-            console.log(this.$store.getters.getCategories)
             return this.$store.getters.getCategories
         },
         plusSolidSvg() {

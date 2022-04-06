@@ -14,7 +14,7 @@
     top: 200%;
     display: block;
     background: var(--main-white);
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .auth-reg--reg {

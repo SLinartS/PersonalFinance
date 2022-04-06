@@ -30,9 +30,6 @@ export default {
             return "../" + this.imgUrl
         },
         currentSumOperation() {
-            console.log("!!!!!!!!", this.$store.getters.getSumOperation)
-            console.log("????????",this.title)
-            console.log("........",this.$store.getters.getSumOperation[this.title])
             let operByCat = this.$store.getters.getSumOperation[this.title]
             return operByCat
         }

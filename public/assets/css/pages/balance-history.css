@@ -19,9 +19,29 @@
 
 .data-title,
 .data-list {
-    padding-left: 20%;
+    padding-left: 17%;
 }
 
+
+.data-stroke__button-block {
+    display: flex;
+    align-items: center;
+}
+
+.data-title__button {
+    width: 3rem;
+    height: 3rem;
+    margin-right: 1rem;
+    opacity: 0.2;
+    transition: all 0.3s ease;
+}
+
+.data-title__button:hover {
+    width: 3rem;
+    height: 3rem;
+    margin-right: 1rem;
+    opacity: 1;
+}
 
 .data-title {
     font-size: 2.6rem;
@@ -35,7 +55,6 @@
 .data-item,
 .data-item--empty{
     font-size: 2.4rem;
-    margin-top: 2rem;
     display: inline-block;
 }
 
@@ -50,6 +69,7 @@
 .data-stroke {
     display: grid;
     gap: 3rem;
+    margin-top: 2rem;
     grid-template-columns: 1fr 1fr;
 }
 
