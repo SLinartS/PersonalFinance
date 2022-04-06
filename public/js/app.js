@@ -23000,12 +23000,37 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "PopupBalanceChange",
   data: function data() {
-    return {};
+    return {
+      title: "",
+      amount: "",
+      type: ""
+    };
   },
-  watch: {},
-  computed: {},
+  computed: {
+    currentData: function currentData() {
+      var getData = this.$store.getters.getChangedData;
+      this.title = getData["title"];
+      this.amount = getData["amount"];
+      this.type = getData["type"];
+      return getData;
+    }
+  },
   methods: {
     togglePopupBalanceChange: function togglePopupBalanceChange() {
+      this.$store.commit("togglePopupBalanceChange", false);
+    },
+    updateAccount: function updateAccount() {
+      this.$store.dispatch("updateBalanceDataFromDBById", {
+        changedData: {
+          id: this.currentData["id"],
+          title: this.title,
+          amount: this.amount
+        },
+        type: this.type
+      });
+      this.$store.dispatch("loadBalanceDataFromDB", "account");
+      this.$store.dispatch("loadBalanceDataFromDB", "debt");
+      this.$store.dispatch("loadBalanceDataFromDB", "saving");
       this.$store.commit("togglePopupBalanceChange", false);
     }
   }
@@ -23117,7 +23142,18 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     togglePopupBalanceChange: function togglePopupBalanceChange() {
+      this.$store.dispatch("loadBalanceDataFromDBById", {
+        id: this.id,
+        type: "account"
+      });
       this.$store.commit("togglePopupBalanceChange", true);
+    },
+    deleteStroke: function deleteStroke() {
+      this.$store.dispatch("deleteBalanceDataFromDBById", {
+        id: this.id,
+        type: "account"
+      });
+      this.$store.dispatch("loadBalanceDataFromDB", "account");
     }
   }
 });
@@ -23141,6 +23177,22 @@ __webpack_require__.r(__webpack_exports__);
     id: Number,
     title: String,
     amount: String
+  },
+  methods: {
+    togglePopupBalanceChange: function togglePopupBalanceChange() {
+      this.$store.dispatch("loadBalanceDataFromDBById", {
+        id: this.id,
+        type: "debt"
+      });
+      this.$store.commit("togglePopupBalanceChange", true);
+    },
+    deleteStroke: function deleteStroke() {
+      this.$store.dispatch("deleteBalanceDataFromDBById", {
+        id: this.id,
+        type: "debt"
+      });
+      this.$store.dispatch("loadBalanceDataFromDB", "debt");
+    }
   }
 });
 
@@ -23163,6 +23215,22 @@ __webpack_require__.r(__webpack_exports__);
     id: Number,
     title: String,
     amount: String
+  },
+  methods: {
+    togglePopupBalanceChange: function togglePopupBalanceChange() {
+      this.$store.dispatch("loadBalanceDataFromDBById", {
+        id: this.id,
+        type: "saving"
+      });
+      this.$store.commit("togglePopupBalanceChange", true);
+    },
+    deleteStroke: function deleteStroke() {
+      this.$store.dispatch("deleteBalanceDataFromDBById", {
+        id: this.id,
+        type: "saving"
+      });
+      this.$store.dispatch("loadBalanceDataFromDB", "saving");
+    }
   }
 });
 
@@ -23339,9 +23407,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     loadDateFromDB: function loadDateFromDB() {
-      this.$store.dispatch("loadAccountsFromDB");
-      this.$store.dispatch("loadDebtsFromDB");
-      this.$store.dispatch("loadSavingFromDB");
+      this.$store.dispatch("loadBalanceDataFromDB", "account");
+      this.$store.dispatch("loadBalanceDataFromDB", "debt");
+      this.$store.dispatch("loadBalanceDataFromDB", "saving");
     }
   },
   computed: {
@@ -23901,8 +23969,35 @@ var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_5 = [_hoisted_4];
+var _hoisted_6 = {
+  "class": "change__block"
+};
 
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"change__block\"><h2 class=\"change__block-title\">Название</h2><input type=\"text\" class=\"change__block-input\"><h2 class=\"change__block-title\">Сумма</h2><input type=\"text\" class=\"change__block-input\"></div><div class=\"balance-change__button-section\"><button class=\"button button--cancel balance-change__button\" href>Отмена</button><button class=\"button button--save balance-change__button\" href>Сохранить</button></div>", 2);
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", {
+  "class": "change__block-title"
+}, "Название", -1
+/* HOISTED */
+);
+
+var _hoisted_8 = ["value"];
+
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", {
+  "class": "change__block-title"
+}, "Сумма", -1
+/* HOISTED */
+);
+
+var _hoisted_10 = ["value"];
+var _hoisted_11 = {
+  "class": "balance-change__button-section"
+};
+
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  "class": "button button--cancel balance-change__button",
+  href: ""
+}, "Отмена", -1
+/* HOISTED */
+);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("svg", {
@@ -23912,7 +24007,32 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "icon-close icon-close--balance-change",
     xmlns: "http://www.w3.org/2000/svg",
     viewBox: "0 0 320 512"
-  }, _hoisted_5))]), _hoisted_6]);
+  }, _hoisted_5))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "text",
+    "class": "change__block-input",
+    onInput: _cache[1] || (_cache[1] = function (e) {
+      return $data.title = e.target.value;
+    }),
+    value: $options.currentData['title']
+  }, null, 40
+  /* PROPS, HYDRATE_EVENTS */
+  , _hoisted_8), _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "text",
+    "class": "change__block-input",
+    onInput: _cache[2] || (_cache[2] = function (e) {
+      return $data.amount = e.target.value;
+    }),
+    value: $options.currentData['amount']
+  }, null, 40
+  /* PROPS, HYDRATE_EVENTS */
+  , _hoisted_10)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    type: "button",
+    onClick: _cache[3] || (_cache[3] = function () {
+      return $options.updateAccount && $options.updateAccount.apply($options, arguments);
+    }),
+    "class": "button button--save balance-change__button",
+    href: ""
+  }, "Сохранить")])])]);
 }
 
 /***/ }),
@@ -24279,28 +24399,26 @@ var _hoisted_1 = {
 var _hoisted_2 = {
   "class": "data-stroke__button-block"
 };
-
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-  "class": "data-title__button"
-}, null, -1
-/* HOISTED */
-);
-
+var _hoisted_3 = {
+  "class": "data-item"
+};
 var _hoisted_4 = {
   "class": "data-item"
 };
-var _hoisted_5 = {
-  "class": "data-item"
-};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "data-title__button",
     onClick: _cache[0] || (_cache[0] = function () {
+      return $options.deleteStroke && $options.deleteStroke.apply($options, arguments);
+    })
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": "data-title__button",
+    onClick: _cache[1] || (_cache[1] = function () {
       return $options.togglePopupBalanceChange && $options.togglePopupBalanceChange.apply($options, arguments);
     })
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.title), 1
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.title), 1
   /* TEXT */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.amount) + " ₽", 1
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.amount) + " ₽", 1
   /* TEXT */
   )]);
 }
@@ -24326,29 +24444,26 @@ var _hoisted_1 = {
 var _hoisted_2 = {
   "class": "data-stroke__button-block"
 };
-
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-  "class": "data-title__button"
-}, null, -1
-/* HOISTED */
-);
-
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-  "class": "data-title__button"
-}, null, -1
-/* HOISTED */
-);
-
-var _hoisted_5 = {
+var _hoisted_3 = {
   "class": "data-item"
 };
-var _hoisted_6 = {
+var _hoisted_4 = {
   "class": "data-item"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.title), 1
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": "data-title__button",
+    onClick: _cache[0] || (_cache[0] = function () {
+      return $options.deleteStroke && $options.deleteStroke.apply($options, arguments);
+    })
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": "data-title__button",
+    onClick: _cache[1] || (_cache[1] = function () {
+      return $options.togglePopupBalanceChange && $options.togglePopupBalanceChange.apply($options, arguments);
+    })
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.title), 1
   /* TEXT */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.amount) + " ₽", 1
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.amount) + " ₽", 1
   /* TEXT */
   )]);
 }
@@ -24375,30 +24490,28 @@ var _hoisted_2 = {
   "class": "data-stroke__button-block"
 };
 
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-  "class": "data-title__button"
-}, null, -1
-/* HOISTED */
-);
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("> ");
 
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-  "class": "data-title__button"
-}, null, -1
-/* HOISTED */
-);
-
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("> ");
-
-var _hoisted_6 = {
+var _hoisted_4 = {
   "class": "data-item"
 };
-var _hoisted_7 = {
+var _hoisted_5 = {
   "class": "data-item"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, _hoisted_4, _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.title), 1
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": "data-title__button",
+    onClick: _cache[0] || (_cache[0] = function () {
+      return $options.deleteStroke && $options.deleteStroke.apply($options, arguments);
+    })
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": "data-title__button",
+    onClick: _cache[1] || (_cache[1] = function () {
+      return $options.togglePopupBalanceChange && $options.togglePopupBalanceChange.apply($options, arguments);
+    })
+  }), _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.title), 1
   /* TEXT */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.amount) + " ₽", 1
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.amount) + " ₽", 1
   /* TEXT */
   )]);
 }
@@ -25325,9 +25438,9 @@ var store = (0,vuex__WEBPACK_IMPORTED_MODULE_5__.createStore)({
   actions: {
     startDataLoad: function startDataLoad(_ref) {
       var dispatch = _ref.dispatch;
-      dispatch("loadAccountsFromDB");
-      dispatch("loadDebtsFromDB");
-      dispatch("loadSavingFromDB");
+      dispatch("loadBalanceDataFromDB", "account");
+      dispatch("loadBalanceDataFromDB", "debt");
+      dispatch("loadBalanceDataFromDB", "saving");
     }
   }
 });
@@ -25348,11 +25461,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../router */ "./resources/js/router.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 var moduleAuthReg = {
   state: function state() {
@@ -25614,7 +25729,7 @@ var moduleAuthReg = {
               case 0:
                 commit = _ref5.commit, dispatch = _ref5.dispatch;
                 _context3.next = 3;
-                return fetch("/api/users", {
+                return fetch("/api/insertUser", {
                   method: 'POST',
                   body: JSON.stringify(inputData),
                   headers: {
@@ -25650,7 +25765,7 @@ var moduleAuthReg = {
                   value: true
                 });
                 _context5.next = 6;
-                return fetch("/api/users").then( /*#__PURE__*/function () {
+                return fetch("/api/getAllUsers").then( /*#__PURE__*/function () {
                   var _ref7 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4(response) {
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
                       while (1) {
@@ -25696,7 +25811,7 @@ var moduleAuthReg = {
                 }
 
                 commit("clearFields");
-                router.push({
+                _router__WEBPACK_IMPORTED_MODULE_1__["default"].push({
                   name: 'main',
                   params: {}
                 });
@@ -25740,7 +25855,8 @@ var moduleBalance = {
     return {
       accounts: [],
       debts: [],
-      savings: []
+      savings: [],
+      changedData: []
     };
   },
   mutations: {
@@ -25752,6 +25868,9 @@ var moduleBalance = {
     },
     setSavings: function setSavings(state, value) {
       state.savings = value;
+    },
+    setChangedData: function setChangedData(state, value) {
+      state.changedData = value;
     }
   },
   getters: {
@@ -25763,19 +25882,28 @@ var moduleBalance = {
     },
     currentSavings: function currentSavings(state) {
       return state.savings;
+    },
+    getChangedData: function getChangedData(state) {
+      return state.changedData;
     }
   },
   actions: {
-    loadAccountsFromDB: function loadAccountsFromDB(_ref) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+    loadBalanceDataFromDB: function loadBalanceDataFromDB(_ref, type) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
         var commit, getters, variable;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 commit = _ref.commit, getters = _ref.getters;
-                _context2.next = 3;
-                return fetch("/api/account/" + getters.getAuthStatus.userId).then( /*#__PURE__*/function () {
+                variable = 0;
+                _context4.t0 = type;
+                _context4.next = _context4.t0 === "account" ? 5 : _context4.t0 === "debt" ? 9 : _context4.t0 === "saving" ? 13 : 17;
+                break;
+
+              case 5:
+                _context4.next = 7;
+                return fetch("/api/getAccountsByUserId/" + getters.getAuthStatus.userId).then( /*#__PURE__*/function () {
                   var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(response) {
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
                       while (1) {
@@ -25802,31 +25930,56 @@ var moduleBalance = {
                   return alert(error);
                 });
 
-              case 3:
+              case 7:
                 if (variable !== 0) {
                   commit("setAccounts", variable);
                 } else {
                   commit("setAccounts", 0);
                 }
 
-              case 4:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
-    },
-    loadDebtsFromDB: function loadDebtsFromDB(_ref3) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
-        var commit, getters, variable;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                commit = _ref3.commit, getters = _ref3.getters;
-                _context4.next = 3;
-                return fetch("/api/debt/" + getters.getAuthStatus.userId).then( /*#__PURE__*/function () {
+                return _context4.abrupt("break", 18);
+
+              case 9:
+                _context4.next = 11;
+                return fetch("/api/getDebtsByUserId/" + getters.getAuthStatus.userId).then( /*#__PURE__*/function () {
+                  var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2(response) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+                      while (1) {
+                        switch (_context2.prev = _context2.next) {
+                          case 0:
+                            _context2.next = 2;
+                            return response.json();
+
+                          case 2:
+                            return _context2.abrupt("return", variable = _context2.sent);
+
+                          case 3:
+                          case "end":
+                            return _context2.stop();
+                        }
+                      }
+                    }, _callee2);
+                  }));
+
+                  return function (_x2) {
+                    return _ref3.apply(this, arguments);
+                  };
+                }())["catch"](function (error) {
+                  return alert(error);
+                });
+
+              case 11:
+                if (variable !== 0) {
+                  commit("setDebts", variable);
+                } else {
+                  commit("setDebts", 0);
+                }
+
+                return _context4.abrupt("break", 18);
+
+              case 13:
+                _context4.next = 15;
+                return fetch("/api/getSavingsByUserId/" + getters.getAuthStatus.userId).then( /*#__PURE__*/function () {
                   var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(response) {
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
                       while (1) {
@@ -25846,21 +25999,26 @@ var moduleBalance = {
                     }, _callee3);
                   }));
 
-                  return function (_x2) {
+                  return function (_x3) {
                     return _ref4.apply(this, arguments);
                   };
                 }())["catch"](function (error) {
                   return alert(error);
                 });
 
-              case 3:
+              case 15:
                 if (variable !== 0) {
-                  commit("setDebts", variable);
+                  commit("setSavings", variable);
                 } else {
-                  commit("setDebts", 0);
+                  commit("setSavings", 0);
                 }
 
-              case 4:
+                return _context4.abrupt("break", 18);
+
+              case 17:
+                return _context4.abrupt("break", 18);
+
+              case 18:
               case "end":
                 return _context4.stop();
             }
@@ -25868,17 +26026,23 @@ var moduleBalance = {
         }, _callee4);
       }))();
     },
-    loadSavingFromDB: function loadSavingFromDB(_ref5) {
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6() {
-        var commit, getters, variable;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
+    loadBalanceDataFromDBById: function loadBalanceDataFromDBById(_ref5, _ref6) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee8() {
+        var commit, id, type, variable;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee8$(_context8) {
           while (1) {
-            switch (_context6.prev = _context6.next) {
+            switch (_context8.prev = _context8.next) {
               case 0:
-                commit = _ref5.commit, getters = _ref5.getters;
-                _context6.next = 3;
-                return fetch("/api/saving/" + getters.getAuthStatus.userId).then( /*#__PURE__*/function () {
-                  var _ref6 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5(response) {
+                commit = _ref5.commit;
+                id = _ref6.id, type = _ref6.type;
+                _context8.t0 = type;
+                _context8.next = _context8.t0 === "account" ? 5 : _context8.t0 === "debt" ? 8 : _context8.t0 === "saving" ? 11 : 14;
+                break;
+
+              case 5:
+                _context8.next = 7;
+                return fetch("/api/getAccountById/" + id).then( /*#__PURE__*/function () {
+                  var _ref7 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5(response) {
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
                       while (1) {
                         switch (_context5.prev = _context5.next) {
@@ -25897,26 +26061,207 @@ var moduleBalance = {
                     }, _callee5);
                   }));
 
-                  return function (_x3) {
-                    return _ref6.apply(this, arguments);
+                  return function (_x4) {
+                    return _ref7.apply(this, arguments);
                   };
                 }())["catch"](function (error) {
                   return alert(error);
                 });
 
-              case 3:
+              case 7:
+                return _context8.abrupt("break", 15);
+
+              case 8:
+                _context8.next = 10;
+                return fetch("/api/getDebtById/" + id).then( /*#__PURE__*/function () {
+                  var _ref8 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee6(response) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee6$(_context6) {
+                      while (1) {
+                        switch (_context6.prev = _context6.next) {
+                          case 0:
+                            _context6.next = 2;
+                            return response.json();
+
+                          case 2:
+                            return _context6.abrupt("return", variable = _context6.sent);
+
+                          case 3:
+                          case "end":
+                            return _context6.stop();
+                        }
+                      }
+                    }, _callee6);
+                  }));
+
+                  return function (_x5) {
+                    return _ref8.apply(this, arguments);
+                  };
+                }())["catch"](function (error) {
+                  return alert(error);
+                });
+
+              case 10:
+                return _context8.abrupt("break", 15);
+
+              case 11:
+                _context8.next = 13;
+                return fetch("/api/getSavingById/" + id).then( /*#__PURE__*/function () {
+                  var _ref9 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee7(response) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee7$(_context7) {
+                      while (1) {
+                        switch (_context7.prev = _context7.next) {
+                          case 0:
+                            _context7.next = 2;
+                            return response.json();
+
+                          case 2:
+                            return _context7.abrupt("return", variable = _context7.sent);
+
+                          case 3:
+                          case "end":
+                            return _context7.stop();
+                        }
+                      }
+                    }, _callee7);
+                  }));
+
+                  return function (_x6) {
+                    return _ref9.apply(this, arguments);
+                  };
+                }())["catch"](function (error) {
+                  return alert(error);
+                });
+
+              case 13:
+                return _context8.abrupt("break", 15);
+
+              case 14:
+                return _context8.abrupt("break", 15);
+
+              case 15:
                 if (variable !== 0) {
-                  commit("setSavings", variable);
+                  commit("setChangedData", variable);
                 } else {
-                  commit("setSavings", 0);
+                  commit("setChangedData", 0);
                 }
 
-              case 4:
+              case 16:
               case "end":
-                return _context6.stop();
+                return _context8.stop();
             }
           }
-        }, _callee6);
+        }, _callee8);
+      }))();
+    },
+    updateBalanceDataFromDBById: function updateBalanceDataFromDBById(_ref10, _ref11) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee9() {
+        var commit, getters, changedData, type;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee9$(_context9) {
+          while (1) {
+            switch (_context9.prev = _context9.next) {
+              case 0:
+                commit = _ref10.commit, getters = _ref10.getters;
+                changedData = _ref11.changedData, type = _ref11.type;
+                _context9.t0 = type;
+                _context9.next = _context9.t0 === "account" ? 5 : _context9.t0 === "debt" ? 7 : _context9.t0 === "saving" ? 9 : 11;
+                break;
+
+              case 5:
+                _context9.next = 7;
+                return fetch("/api/updateAccountById", {
+                  method: 'POST',
+                  body: JSON.stringify(changedData),
+                  headers: {
+                    'Content-Type': 'application/json;charset=UTF-8'
+                  }
+                }).then()["catch"](function (error) {
+                  return alert(error);
+                });
+
+              case 7:
+                _context9.next = 9;
+                return fetch("/api/updateDebtById", {
+                  method: 'POST',
+                  body: JSON.stringify(changedData),
+                  headers: {
+                    'Content-Type': 'application/json;charset=UTF-8'
+                  }
+                }).then()["catch"](function (error) {
+                  return alert(error);
+                });
+
+              case 9:
+                _context9.next = 11;
+                return fetch("/api/updateSavingById", {
+                  method: 'POST',
+                  body: JSON.stringify(changedData),
+                  headers: {
+                    'Content-Type': 'application/json;charset=UTF-8'
+                  }
+                }).then()["catch"](function (error) {
+                  return alert(error);
+                });
+
+              case 11:
+                return _context9.abrupt("break", 12);
+
+              case 12:
+              case "end":
+                return _context9.stop();
+            }
+          }
+        }, _callee9);
+      }))();
+    },
+    deleteBalanceDataFromDBById: function deleteBalanceDataFromDBById(_ref12, _ref13) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee10() {
+        var commit, getters, id, type;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee10$(_context10) {
+          while (1) {
+            switch (_context10.prev = _context10.next) {
+              case 0:
+                commit = _ref12.commit, getters = _ref12.getters;
+                id = _ref13.id, type = _ref13.type;
+                _context10.t0 = type;
+                _context10.next = _context10.t0 === "account" ? 5 : _context10.t0 === "debt" ? 8 : _context10.t0 === "saving" ? 11 : 14;
+                break;
+
+              case 5:
+                _context10.next = 7;
+                return fetch("/api/deleteAccountById/" + id).then()["catch"](function (error) {
+                  return alert(error);
+                });
+
+              case 7:
+                return _context10.abrupt("break", 15);
+
+              case 8:
+                _context10.next = 10;
+                return fetch("/api/deleteDebtById/" + id).then()["catch"](function (error) {
+                  return alert(error);
+                });
+
+              case 10:
+                return _context10.abrupt("break", 15);
+
+              case 11:
+                _context10.next = 13;
+                return fetch("/api/deleteSavingById/" + id).then()["catch"](function (error) {
+                  return alert(error);
+                });
+
+              case 13:
+                return _context10.abrupt("break", 15);
+
+              case 14:
+                return _context10.abrupt("break", 15);
+
+              case 15:
+              case "end":
+                return _context10.stop();
+            }
+          }
+        }, _callee10);
       }))();
     }
   }
@@ -25977,7 +26322,7 @@ var moduleCategory = {
               case 0:
                 commit = _ref.commit, getters = _ref.getters, dispatch = _ref.dispatch;
                 _context2.next = 3;
-                return fetch("/api/reqCatTypes/" + getters.getAuthStatus.userId + "/income").then( /*#__PURE__*/function () {
+                return fetch("/api/reqCatsByType/" + getters.getAuthStatus.userId + "/income").then( /*#__PURE__*/function () {
                   var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(response) {
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
                       while (1) {
@@ -26005,11 +26350,10 @@ var moduleCategory = {
                 });
 
               case 3:
-                console.log(variable);
                 dispatch("loadIncomeOperatonsByCat", variable);
                 commit("setCategories", variable);
 
-              case 6:
+              case 5:
               case "end":
                 return _context2.stop();
             }
@@ -26026,7 +26370,7 @@ var moduleCategory = {
               case 0:
                 commit = _ref3.commit, getters = _ref3.getters, dispatch = _ref3.dispatch;
                 _context4.next = 3;
-                return fetch("/api/reqCatTypes/" + getters.getAuthStatus.userId + "/expenses").then( /*#__PURE__*/function () {
+                return fetch("/api/reqCatsByType/" + getters.getAuthStatus.userId + "/expenses").then( /*#__PURE__*/function () {
                   var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(response) {
                     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
                       while (1) {
@@ -26054,11 +26398,10 @@ var moduleCategory = {
                 });
 
               case 3:
-                console.log(variable);
                 dispatch("loadExpensesOperatonsByCat");
                 commit("setCategories", variable);
 
-              case 6:
+              case 5:
               case "end":
                 return _context4.stop();
             }
@@ -26103,10 +26446,9 @@ var moduleCategory = {
                 });
 
               case 3:
-                console.log(operationByCat);
                 commit("setSumOperation", operationByCat);
 
-              case 5:
+              case 4:
               case "end":
                 return _context6.stop();
             }
@@ -26151,10 +26493,9 @@ var moduleCategory = {
                 });
 
               case 3:
-                console.log(operationByCat);
                 commit("setSumOperation", operationByCat);
 
-              case 5:
+              case 4:
               case "end":
                 return _context8.stop();
             }
@@ -26286,7 +26627,7 @@ var modulePopupControl = {
       popupNav: false,
       popupAuth: false,
       popupReg: false,
-      popupBalanceChange: true
+      popupBalanceChange: false
     };
   },
   mutations: {

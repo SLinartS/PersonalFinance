@@ -13,5 +13,6 @@
     <App></App>
 </div>
 <script src="/js/app.js"></script>
+<script src="/js/settingByJS.js"></script>
 </body>
 </html>

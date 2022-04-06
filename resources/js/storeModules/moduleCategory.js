@@ -25,19 +25,17 @@ const moduleCategory = {
     actions: {
         async loadIncomeCategoriesFromDB({ commit, getters, dispatch }) {
             let variable;
-            await fetch("/api/reqCatTypes/" + getters.getAuthStatus.userId + "/income")
+            await fetch("/api/reqCatsByType/" + getters.getAuthStatus.userId + "/income")
                 .then(async (response) => (variable = await response.json()))
                 .catch((error) => alert(error));
-            console.log(variable);
             dispatch("loadIncomeOperatonsByCat", variable);
             commit("setCategories", variable);
         },
         async loadExpensesCategoriesFromDB({ commit, getters, dispatch }) {
             let variable;
-            await fetch("/api/reqCatTypes/" + getters.getAuthStatus.userId + "/expenses")
+            await fetch("/api/reqCatsByType/" + getters.getAuthStatus.userId + "/expenses")
                 .then(async (response) => (variable = await response.json()))
                 .catch((error) => alert(error));
-            console.log(variable);
             dispatch("loadExpensesOperatonsByCat");
             commit("setCategories", variable);
         },
@@ -47,7 +45,6 @@ const moduleCategory = {
                 "/api/reqOperationsByCat/" + getters.getAuthStatus.userId + "/income")
                 .then(async (response) => (operationByCat = await response.json()))
                 .catch((error) => alert(error));
-            console.log(operationByCat);
             commit("setSumOperation", operationByCat)
         },
         async loadExpensesOperatonsByCat({ commit, getters }) {
@@ -55,7 +52,6 @@ const moduleCategory = {
             await fetch("/api/reqOperationsByCat/" + getters.getAuthStatus.userId + "/expenses")
                 .then(async (response) => (operationByCat = await response.json()))
                 .catch((error) => alert(error));
-            console.log(operationByCat);
             commit("setSumOperation", operationByCat)
         },
     },

@@ -5,7 +5,7 @@ const modulePopupControl = {
             popupNav: false,
             popupAuth: false,
             popupReg: false,
-            popupBalanceChange: true,
+            popupBalanceChange: false,
         };
     },
     mutations: {

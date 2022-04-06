@@ -103,9 +103,9 @@ export default {
     },
     methods: {
         loadDateFromDB() {
-            this.$store.dispatch("loadAccountsFromDB");
-            this.$store.dispatch("loadDebtsFromDB");
-            this.$store.dispatch("loadSavingFromDB");
+            this.$store.dispatch("loadBalanceDataFromDB", "account");
+            this.$store.dispatch("loadBalanceDataFromDB", "debt");
+            this.$store.dispatch("loadBalanceDataFromDB", "saving");
         },
     },
     computed: {

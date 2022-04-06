@@ -8,39 +8,7 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-
-    public function reqCatTypes($id, $type)
+    public function reqCatsByType($id, $type)
     {
         return Category::query()
             ->join("colors", "categories.color_id", "colors.id")
@@ -89,12 +57,12 @@ class CategoryController extends Controller
                     $equal = true;
                 }
             }
-            if(!$equal) {
+            if (!$equal) {
                 $locSumOper[$operationByCat[$i]["title"]] = 0;
             }
             $equal = false;
         }
-        foreach(array_keys($locSumOper) as $key) {
+        foreach (array_keys($locSumOper) as $key) {
             for ($i = 0; $i < count($operationByCat); $i++) {
                 if ($key === $operationByCat[$i]["title"]) {
                     $locSumOper[$key] += (int) $operationByCat[$i]["operation_amount"];
@@ -103,50 +71,5 @@ class CategoryController extends Controller
         }
 
         return $locSumOper;
-    }
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

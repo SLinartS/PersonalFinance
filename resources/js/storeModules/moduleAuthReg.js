@@ -1,3 +1,4 @@
+import router from "../router"
 
 const moduleAuthReg = {
     state() {
@@ -199,7 +200,7 @@ const moduleAuthReg = {
 
         async regUser({commit, dispatch }, inputData) {
 
-            await fetch("/api/users", {
+            await fetch("/api/insertUser", {
                 method: 'POST',
                 body: JSON.stringify(inputData),
                 headers: {
@@ -218,7 +219,7 @@ const moduleAuthReg = {
             commit("setAuthStatus", { field: "status", value: true })
 
             let user
-            await fetch("/api/users")
+            await fetch("/api/getAllUsers")
                 .then(async response => user = await response.json())
                 .catch(error => alert(error))
 
