@@ -6,50 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Operation;
 use Illuminate\Http\Request;
+use PHPUnit\Framework\Constraint\Operator;
 
 class OperationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function getOperationByUserId($userId)
     {
 
-        $unsortedOperations = Operation::where("user_id", $id)
+        $unsortedOperations = Operation::where("user_id", $userId)
             ->select("id", "description", "amount", "time")
             ->addSelect(["type" => Category::select("type")->whereColumn("id", "category_id")->take(1)])
             ->get()->toArray();
@@ -58,7 +23,7 @@ class OperationController extends Controller
         if (count($unsortedOperations) !== 0) {
 
             usort($unsortedOperations, function ($arr1, $arr2) {
-                return $arr1['time'] > $arr2['time'];
+                return $arr1['time'] < $arr2['time'];
             });
 
             $currentSubarray = 0;
@@ -80,8 +45,7 @@ class OperationController extends Controller
                     if ($dateInQuestions[$k] !== $currentDate[$k]) {
                         $equal = false;
                     }
-                }
-
+                };
 
                 if ($equal) {
                     if (count($packagedOperations) === 0) {
@@ -97,48 +61,40 @@ class OperationController extends Controller
                     $currentDate = $dateInQuestions;
                 };
 
-                // for ($k = 0; $k < count($packagedOperations); $k++) {
-                //     usort($packagedOperations[$k], function ($arr1, $arr2) {
-                //         return $arr1['time'] > $arr2['time'];
-                //     });
-                // }
+                for ($k = 0; $k < count($packagedOperations); $k++) {
+                    usort($packagedOperations[$k], function ($arr1, $arr2) {
+                        return $arr1['time'] < $arr2['time'];
+                    });
+                }
+
             }
         }
         return $packagedOperations;
     }
 
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function getOperationById($id)
     {
-        //
+        $operation = Operation::where("id", $id)
+            ->select("id", "description", "amount", "time")
+            ->first();
+
+        return $operation;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function updateOperationById(Request $request)
     {
-        //
+        $data = $request->post();
+
+        Operation::where("id", $data["id"])
+            ->update([
+                "description" => $data["description"],
+                "amount" => $data["amount"],
+                "time" => $data["time"]
+            ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function deleteOperationById($id)
     {
-        //
+        Operation::where("id", $id)->delete();
     }
 }

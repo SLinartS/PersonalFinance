@@ -16,96 +16,114 @@ class UserController extends Controller
         return User::all();
     }
 
+    public function findUserData($email)
+    {
+        return User::select("id", "email", "name")->where("email", $email)->first();
+    }
+
     public function userCheck(Request $request)
     {
         $inputData = $request->post();
-        $actionType = $inputData["actionType"];
+        $isReg = $inputData["isReg"];
         $errors = [
-            "name" => [],
-            "email" => [],
-            "password" => [],
-            "repPassword" => [],
-            "valideDB" => [],
+            "name" => null,
+            "email" => null,
+            "password" => null,
+            "repPassword" => null,
+            "valideDB" => null,
         ];
 
-        if ($actionType === "auth") {
+        if ($isReg) {
+
+            $errors["name"] = null;
+            $errors["repPassword"] = null;
+
+            $validator = Validator::make($request->post(), [
+                "name" => 'required|min:6',
+                "email" => 'required|email',
+                "password" => 'required|min:8',
+                'repPassword' => 'required|same:password',
+            ]);
+            $errors = $this->validateEmailPass($validator, $errors);
+            if ($validator->errors()->first("name")) {
+                $errors["name"] =  $validator->errors()->first("name");
+            }
+            if ($validator->errors()->first("repPassword")) {
+                $errors["repPassword"] = $validator->errors()->first("repPassword");
+            }
+        } else {
             $validator = Validator::make($request->post(), [
                 "email" => 'required|email',
                 "password" => 'required',
             ]);
             $errors = $this->validateEmailPass($validator, $errors);
-        } else if ($actionType === "reg") {
-            $validator = Validator::make($request->post(), [
-                "name" => 'required|min:6',
-                "email" => 'required|email',
-                "password" => 'required|same:repPassword||min:8',
-                'repPassword' => 'required',
-            ]);
-            $errors = $this->validateEmailPass($validator, $errors);
-            if ($validator->errors()->first("name")) {
-                foreach ($validator->errors()->get("name") as $error) {
-                    array_push($errors["name"], $error);
-                }
-            }
-            if ($validator->errors()->first("repPassword")) {
-                foreach ($validator->errors()->get("repPassword") as $error) {
-                    array_push($errors["repPassword"], $error);
-                }
-            }
         }
 
         if (empty($errors["email"]) && empty($errors["password"])) {
             $usersData = User::all();
-            switch ($actionType) {
-                case "auth":
-                    for ($i = 0; $i < count($usersData); $i++) {
-                        if ($inputData["email"] !== $usersData[$i]["email"]) {
-                            $errors["valideDB"] = ['Invalid email or password'];
-                        } else {
-                            $errors["valideDB"] = [];
-                            if (!Hash::check($inputData["password"], $usersData[$i]["password"])) {
-                                $errors["valideDB"] = ['Invalid email or password'];
-                            } else {
-                                $errors["valideDB"] = [];
-                                break;
-                            }
-                        }
+            if ($isReg) {
+                for ($i = 0; $i < count($usersData); $i++) {
+                    if ($inputData["email"] === $usersData[$i]["email"]) {
+                        $errors["valideDB"] = 'Такая почта уже существует';
+                        break;
+                    } else {
+                        $errors["valideDB"] = null;
                     }
-                    break;
-                case "reg":
-                    for ($i = 0; $i < count($usersData); $i++) {
-                        if ($inputData["email"] === $usersData[$i]["email"]) {
-                            $errors["valideDB"] = ['This mail already exists'];
+                }
+            } else {
+                for ($i = 0; $i < count($usersData); $i++) {
+                    if ($inputData["email"] !== $usersData[$i]["email"]) {
+                        $errors["valideDB"] = 'Неверная почта или пароль';
+                    } else {
+                        $errors["valideDB"] = [];
+                        if (!Hash::check($inputData["password"], $usersData[$i]["password"])) {
+                            $errors["valideDB"] = 'Неверная почта или пароль';
+                        } else {
+                            $errors["valideDB"] = null;
                             break;
-                        } else {
-                            $errors["valideDB"] = [];
                         }
                     }
-                    break;
+                }
             }
         }
 
-        return $errors;
+        if (
+            isset($errors["name"]) ||
+            isset($errors["email"]) ||
+            isset($errors["password"]) ||
+            isset($errors["repPassword"])
+        ) {
+            return [
+                "errors" => $errors,
+                "status" => 0,
+            ];
+        } elseif (isset($errors["valideDB"])) {
+            return [
+                "errors" => $errors,
+                "status" => 1,
+            ];
+        } else {
+            return [
+                "errors" => $errors,
+                "status" => 2,
+            ];
+        }
     }
 
     private function validateEmailPass($validator, $errors)
     {
         if ($validator->errors()->first("email")) {
-            foreach ($validator->errors()->get("email") as $error) {
-                array_push($errors["email"], $error);
-            }
+            $errors["email"] = $validator->errors()->first("email");
         }
         if ($validator->errors()->first("password")) {
-            foreach ($validator->errors()->get("password") as $error) {
-                array_push($errors["password"], $error);
-            }
+            $errors["password"] = $validator->errors()->first("password");
         }
         return $errors;
     }
 
     public function insertUser(Request $request)
     {
-        User::query()->insert([
+        User::insert([
             "name" => $request["name"],
             "email" => $request["email"],
             "password" => Hash::make($request["password"]),

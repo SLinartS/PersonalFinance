@@ -14,7 +14,7 @@
                     участие.</p>
                 <p>Попробуй воспользоваться, удивись, обрадуйся, прими.
                     Регистрируйся прямо сейчас по кнопке ниже.</p>
-                <a class="button general__button button--start-reg" href="">Зарегистрироваться</a>
+                <button type="button" @click="togglePopupReg" class="button general__button button--start-reg" href="">Зарегистрироваться</button>
             </div>
         </div>
     </main>
@@ -28,8 +28,13 @@ export default {
         return {
             img_analytics: img_analytics
         }
-    }
-// :src="require('../../../../public/assets/files/images/analytics.png').default"
+    },
+    methods: {
+        togglePopupReg() {
+            this.$store.commit("changeErrors", {})
+            this.$store.commit("togglePopupReg", true)
+        },
+    },
 }
 </script>
 

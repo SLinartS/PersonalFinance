@@ -25,11 +25,6 @@ const store = createStore({
 
     },
     actions: {
-        startDataLoad({dispatch}) {
-            dispatch("loadBalanceDataFromDB", "account");
-            dispatch("loadBalanceDataFromDB", "debt");
-            dispatch("loadBalanceDataFromDB", "saving");
-        },
     }
 })
 

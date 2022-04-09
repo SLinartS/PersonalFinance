@@ -1,13 +1,13 @@
 <template>
     <div class="data-block">
-        <h3 class="data-title">{{ formattedDate }}</h3>
-        <div class="data-list">
+        <h3 class="data-title data-title--history">{{ formattedDate }}</h3>
+        <div class="data-list data-list--history">
             <OperationBlock v-for="operation in operations"
                             :key="operation.id"
                             :id="operation.id"
                             :description="operation.description"
                             :amount="operation.amount"
-                            :datetime="operation.title"
+                            :datetime="operation.time"
                             :type="operation.type"
             ></OperationBlock>
         </div>
@@ -30,7 +30,8 @@ export default {
             let currentDate = new Date()
             let options = {
                 day: "numeric",
-                month: "long"
+                month: "long",
+                year: "numeric",
             }
             currentDate = currentDate.toLocaleString("ru", options)
             date = date.toLocaleString("ru", options)

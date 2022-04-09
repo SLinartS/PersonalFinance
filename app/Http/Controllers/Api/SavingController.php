@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 
 class SavingController extends Controller
 {
-    public function getSavingsByUserId($id)
+    public function getSavingsByUserId($userId)
     {
-        return Saving::where("user_id", $id)
+        return Saving::where("user_id", $userId)
             ->select("id", "title", "amount")
             ->get();
     }
@@ -40,5 +40,20 @@ class SavingController extends Controller
     public function deleteSavingById($id)
     {
         Saving::where("id", $id)->delete();
+    }
+
+    public function clearSavingsByUserId($userId)
+    {
+        Saving::where("user_id", $userId)->delete();
+    }
+
+    public function insertSavingByUserId(Request $request)
+    {
+        $data = $request->post();
+        Saving::insert([
+            "title" => $data["title"],
+            "amount" => $data["amount"],
+            "user_id" => $data["userId"],
+        ]);
     }
 }

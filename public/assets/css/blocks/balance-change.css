@@ -18,7 +18,16 @@
     color: var(--main-black);
 }
 
+.balance-change--delete {
+    height: 22rem;
+}
+
+.balance-change--operation {
+    height: 45rem;
+}
+
 .change__block {
+    margin-top: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -72,3 +81,5 @@
 .button--save {
     background-color: var(--main-yellow);
 }
+
+

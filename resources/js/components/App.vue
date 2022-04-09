@@ -15,7 +15,7 @@ export default {
     name: "App",
     components: {Footer, MainPage, Header},
     mounted() {
-        this.$store.dispatch("startDataLoad")
+
     }
 }
 </script>

@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 
 class DebtController extends Controller
 {
-    public function getDebtsByUserId($id)
+    public function getDebtsByUserId($userId)
     {
-        return Debt::where("user_id", $id)
+        return Debt::where("user_id", $userId)
             ->select("id", "title", "amount")
             ->get();
     }
@@ -39,5 +39,20 @@ class DebtController extends Controller
     public function deleteDebtById($id)
     {
         Debt::where("id", $id)->delete();
+    }
+
+    public function clearDebtsByUserId($userId)
+    {
+        Debt::where("user_id", $userId)->delete();
+    }
+
+    public function insertDebtByUserId(Request $request)
+    {
+        $data = $request->post();
+        Debt::insert([
+            "title" => $data["title"],
+            "amount" => $data["amount"],
+            "user_id" => $data["userId"],
+        ]);
     }
 }

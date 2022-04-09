@@ -11,7 +11,7 @@
         <form action="" @submit.prevent="submitForm">
             <div class="auth-reg__input-section">
                 <div class="auth-reg__input-block">
-                    <img class="auth-reg__image" src="../../../../public/assets/files/images/user-solid.svg" alt="">
+                    <img class="auth-reg__image" src="../../../../../public/assets/files/images/user-solid.svg" alt="">
                     <div class="auth-reg__input-container">
                         <input v-model="fieldName" class="input" type="text" id="name" name="name"
                                placeholder="Имя пользователя">
@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="auth-reg__input-block">
-                    <img class="auth-reg__image" src="../../../../public/assets/files/images/user-solid.svg" alt="">
+                    <img class="auth-reg__image" src="../../../../../public/assets/files/images/user-solid.svg" alt="">
                     <div class="auth-reg__input-container">
                         <input v-model="fieldEmail" class="input" type="text" id="email" name="email"
                                placeholder="Электронная почта">
@@ -27,7 +27,7 @@
                     </div>
                 </div>
                 <div class="auth-reg__input-block">
-                    <img class="auth-reg__image" src="../../../../public/assets/files/images/key-solid.svg" alt="">
+                    <img class="auth-reg__image" src="../../../../../public/assets/files/images/key-solid.svg" alt="">
                     <div class="auth-reg__input-container">
                         <input v-model="fieldPassword" class="input" type="text" id="password" name="password"
                                placeholder="Пароль">
@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div class="auth-reg__input-block">
-                    <img class="auth-reg__image" src="../../../../public/assets/files/images/key-solid.svg" alt="">
+                    <img class="auth-reg__image" src="../../../../../public/assets/files/images/key-solid.svg" alt="">
                     <div class="auth-reg__input-container">
                         <input v-model="fieldPasswordRepeat" class="input" type="text" id="repeat-password"
                                name="repeat-password"
@@ -97,7 +97,7 @@ export default {
 
         },
         submitForm() {
-            this.$store.dispatch("validateFieldsAuthReg", "reg")
+            this.$store.dispatch("validateFieldsAuthReg", 1)
         },
     },
 }

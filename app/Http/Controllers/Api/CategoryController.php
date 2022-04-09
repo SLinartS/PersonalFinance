@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function reqCatsByType($id, $type)
+    public function getCategoriesByType($id, $type)
     {
         return Category::query()
             ->join("colors", "categories.color_id", "colors.id")
@@ -26,7 +26,7 @@ class CategoryController extends Controller
             ->get();
     }
 
-    public function reqOperationsByCat($id, $type)
+    public function getSumCategoryOperations($id, $type)
     {
         $operationByCat = Category::query()
             ->join("colors", "categories.color_id", "colors.id")
@@ -40,6 +40,7 @@ class CategoryController extends Controller
                 "categories.title",
                 "categories.img_url",
                 "colors.value as color",
+                "operations.description",
                 "operations.amount as operation_amount",
                 "operations.time as operation_time",
                 "users.id as user_id"

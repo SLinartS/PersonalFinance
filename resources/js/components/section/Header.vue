@@ -63,18 +63,35 @@
         <PopupNav v-if="popupNav"></PopupNav>
         <PopupAuth v-if="popupAuth"></PopupAuth>
         <PopupReg v-if="popupReg"></PopupReg>
-        <PopupBalanceChange v-if="popupBalanceChange"></PopupBalanceChange>
+        <PopupBalanceChange v-if="popupBalanceChange['status']"></PopupBalanceChange>
+        <PopupBalanceDelete v-if="popupBalanceDelete['status']"></PopupBalanceDelete>
+        <PopupOperationChange v-if="popupOperationChange['status']"></PopupOperationChange>
+        <PopupOperationDelete v-if="popupOperationDelete['status']"></PopupOperationDelete>
     </header>
 </template>
 
 <script>
-import PopupNav from "../blocks/PopupNav";
-import PopupAuth from "../blocks/PopupAuth";
-import PopupReg from "../blocks/PopupReg";
-import PopupBalanceChange from "../blocks/PopupBalanceChange.vue";
+import PopupNav from "../blocks/globalPopup/PopupNav";
+import PopupAuth from "../blocks/globalPopup/PopupAuth";
+import PopupReg from "../blocks/globalPopup/PopupReg";
+
+import PopupBalanceChange from "../blocks/balance/PopupBalanceChange.vue";
+import PopupBalanceDelete from "../blocks/balance/PopupBalanceDelete.vue";
+
+import PopupOperationChange from "../blocks/operation/PopupOperationChange.vue";
+import PopupOperationDelete from "../blocks/operation/PopupOperationDelete.vue";
+
 export default {
     name: "Header",
-    components: { PopupReg, PopupAuth, PopupNav, PopupBalanceChange },
+    components: {
+        PopupReg,
+        PopupAuth,
+        PopupNav,
+        PopupBalanceChange,
+        PopupBalanceDelete,
+        PopupOperationChange,
+        PopupOperationDelete
+    },
     computed: {
         userName() {
             return this.$store.getters.getAuthStatus.userName;
@@ -93,6 +110,15 @@ export default {
         },
         popupBalanceChange() {
             return this.$store.getters.popupBalanceChange;
+        },
+        popupBalanceDelete() {
+            return this.$store.getters.popupBalanceDelete;
+        },
+        popupOperationChange() {
+            return this.$store.getters.popupOperationChange;
+        },
+        popupOperationDelete() {
+            return this.$store.getters.popupOperationDelete;
         }
 
     },
@@ -112,9 +138,6 @@ export default {
             this.$store.commit("changeErrors", {})
             this.$store.commit("togglePopupReg", true)
         },
-        togglePopupBalanceChange() {
-            this.$store.commit("togglePopupBalanceChange", true)
-        }
     },
 }
 </script>

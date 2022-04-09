@@ -1,11 +1,10 @@
 <template>
     <main class="balance-history">
         <div class="data-block">
-            <div class="data-title">
-                <button class="data-title__button"></button>
-                <button class="data-title__button"></button>
-                <h3 class="data-title__text">Счета</h3>
-            </div>
+            <TitleBalanceBlock
+                title = "Счета"
+                type = "account"
+            ></TitleBalanceBlock>
             <div class="data-list">
                 <div v-if="currentAccounts.length" class="container-for-vue">
                     <AccountBlock
@@ -18,8 +17,6 @@
                 </div>
                 <div class="data-stroke data-stroke--empty" v-else>
                     <div class="data-stroke__button-block">
-                        <button class="data-title__button"></button>
-                        <button class="data-title__button"></button>
                         <p class="data-item data-item--empty">
                             Счетов нет.
                             <a>Добавить</a>
@@ -29,11 +26,10 @@
             </div>
         </div>
         <div class="data-block">
-            <div class="data-title">
-                <button class="data-title__button"></button>
-                <button class="data-title__button"></button>
-                <h3 class="data-title__text">Долги</h3>
-            </div>
+            <TitleBalanceBlock
+                title = "Долги"
+                type = "debt"
+            ></TitleBalanceBlock>
             <div class="data-list">
                 <div v-if="currentDebts.length" class="container-for-vue">
                     <DebtBlock
@@ -46,8 +42,6 @@
                 </div>
                 <div class="data-stroke data-stroke--empty" v-else>
                     <div class="data-stroke__button-block">
-                        <button class="data-title__button"></button>
-                        <button class="data-title__button"></button>
                         <p class="data-item data-item--empty">
                             Долгов нет.
                             <a>Добавить</a>
@@ -57,11 +51,10 @@
             </div>
         </div>
         <div class="data-block">
-            <div class="data-title">
-                <button class="data-title__button"></button>
-                <button class="data-title__button"></button>
-                <h3 class="data-title__text">Накопления</h3>
-            </div>
+            <TitleBalanceBlock
+                title = "Накопления"
+                type = "saving"
+            ></TitleBalanceBlock>
             <div class="data-list">
                 <div v-if="currentSavings.length" class="container-for-vue">
                     <SavingBlock
@@ -74,8 +67,6 @@
                 </div>
                 <div class="data-stroke data-stroke--empty" v-else>
                     <div class="data-stroke__button-block">
-                        <button class="data-title__button"></button>
-                        <button class="data-title__button"></button>
                         <p class="data-item data-item--empty">
                             Накоплений нет.
                             <a>Добавить</a>
@@ -91,10 +82,11 @@
 import AccountBlock from "../blocks/balance/AccountBlock";
 import DebtBlock from "../blocks/balance/DebtBlock";
 import SavingBlock from "../blocks/balance/SavingBlock";
+import TitleBalanceBlock from "../blocks/balance/TitleBalanceBlock.vue";
 
 export default {
     name: "BalancePage",
-    components: { AccountBlock, DebtBlock, SavingBlock },
+    components: { AccountBlock, DebtBlock, SavingBlock, TitleBalanceBlock },
     data() {
         return {};
     },
@@ -103,9 +95,9 @@ export default {
     },
     methods: {
         loadDateFromDB() {
-            this.$store.dispatch("loadBalanceDataFromDB", "account");
-            this.$store.dispatch("loadBalanceDataFromDB", "debt");
-            this.$store.dispatch("loadBalanceDataFromDB", "saving");
+            this.$store.dispatch("loadBalanceData", "account");
+            this.$store.dispatch("loadBalanceData", "debt");
+            this.$store.dispatch("loadBalanceData", "saving");
         },
     },
     computed: {

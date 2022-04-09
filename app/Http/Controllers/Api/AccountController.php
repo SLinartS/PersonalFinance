@@ -9,9 +9,9 @@ use Illuminate\Http\Request;
 class AccountController extends Controller
 {
 
-    public function getAccountsByUserId($id)
+    public function getAccountsByUserId($userId)
     {
-        return Account::where("user_id", $id)
+        return Account::where("user_id", $userId)
             ->select("id", "title", "amount")
             ->get();
     }
@@ -41,5 +41,20 @@ class AccountController extends Controller
     public function deleteAccountById($id)
     {
         Account::where("id", $id)->delete();
+    }
+
+    public function clearAccountsByUserId($userId)
+    {
+        Account::where("user_id", $userId)->delete();
+    }
+
+    public function insertAccountByUserId(Request $request)
+    {
+        $data = $request->post();
+        Account::insert([
+            "title" => $data["title"],
+            "amount" => $data["amount"],
+            "user_id" => $data["userId"],
+        ]);
     }
 }

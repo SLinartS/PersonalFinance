@@ -61,6 +61,11 @@
 }
 .change-section__button--one {
     background-color: var(--main-red);
+    transition: all 0.3s ease-in-out;
+}
+
+.change-section__button--one:hover {
+    background-color: var(--main-red);
     box-shadow:
             5px 0 2px -1px rgba(219, 68, 55, 0.9),
             15px 0 3px -3px rgba(200, 64, 50, 0.7),
@@ -79,7 +84,13 @@
             -65px 0 5px -18px rgba(110, 44, 25, 0.2),
             -75px 0 6px -21px rgba(100, 40, 20, 0.1);
 }
+
 .change-section__button--two {
+    background-color: var(--main-green);
+    transition: all 0.3s ease-in-out;
+}
+
+.change-section__button--two:hover {
     background-color: var(--main-green);
     box-shadow:
             5px 0 2px -1px rgba(0, 190, 77, 0.9),

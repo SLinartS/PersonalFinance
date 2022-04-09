@@ -1,10 +1,11 @@
 <template>
     <div class="categories__change-section change-section">
         <router-link
-            class="button change-section__button change-section__button--two"
+            class="button change-section__button change-section__button--one"
             to="/categories/income"
-        >Поступления</router-link>
+        >Расходы</router-link>
     </div>
+
     <div class="categories__list categories__list--expenses">
         <div class="container-for-vue">
             <CategoryItem

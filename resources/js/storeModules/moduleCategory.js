@@ -25,34 +25,36 @@ const moduleCategory = {
     actions: {
         async loadIncomeCategoriesFromDB({ commit, getters, dispatch }) {
             let variable;
-            await fetch("/api/reqCatsByType/" + getters.getAuthStatus.userId + "/income")
-                .then(async (response) => (variable = await response.json()))
-                .catch((error) => alert(error));
+            await fetch("/api/getCategoriesByType/" + getters.getAuthStatus.userId + "/income")
+                .then(async response => variable = await response.json())
+                .catch((error) => console.log(error));
             dispatch("loadIncomeOperatonsByCat", variable);
             commit("setCategories", variable);
         },
         async loadExpensesCategoriesFromDB({ commit, getters, dispatch }) {
             let variable;
-            await fetch("/api/reqCatsByType/" + getters.getAuthStatus.userId + "/expenses")
-                .then(async (response) => (variable = await response.json()))
-                .catch((error) => alert(error));
+            await fetch("/api/getCategoriesByType/" + getters.getAuthStatus.userId + "/expenses")
+                .then(async response => variable = await response.json())
+                .catch((error) => console.log(error));
             dispatch("loadExpensesOperatonsByCat");
             commit("setCategories", variable);
         },
         async loadIncomeOperatonsByCat({ commit, getters }) {
-            let operationByCat;
+            let variable;
             await fetch(
-                "/api/reqOperationsByCat/" + getters.getAuthStatus.userId + "/income")
-                .then(async (response) => (operationByCat = await response.json()))
-                .catch((error) => alert(error));
-            commit("setSumOperation", operationByCat)
+                "/api/getSumCategoryOperations/" + getters.getAuthStatus.userId + "/income")
+                .then(async response => variable = await response.json())
+                .catch((error) => console.log(error));
+                console.log(variable)
+            commit("setSumOperation", variable)
         },
         async loadExpensesOperatonsByCat({ commit, getters }) {
-            let operationByCat;
-            await fetch("/api/reqOperationsByCat/" + getters.getAuthStatus.userId + "/expenses")
-                .then(async (response) => (operationByCat = await response.json()))
-                .catch((error) => alert(error));
-            commit("setSumOperation", operationByCat)
+            let variable;
+            await fetch("/api/getSumCategoryOperations/" + getters.getAuthStatus.userId + "/expenses")
+                .then(async response => variable = await response.json())
+                .catch((error) => console.log(error));
+                console.log(variable)
+            commit("setSumOperation", variable)
         },
     },
 };

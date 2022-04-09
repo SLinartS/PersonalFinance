@@ -11,14 +11,14 @@
         <form @submit.prevent="submitForm">
         <div class="auth-reg__input-section">
             <div class="auth-reg__input-block">
-                <img class="auth-reg__image" src="../../../../public/assets/files/images/user-solid.svg" alt="">
+                <img class="auth-reg__image" src="../../../../../public/assets/files/images/user-solid.svg" alt="">
                 <div class="auth-reg__input-container">
                     <input v-model="fieldEmail" class="input" type="text" name="email" placeholder="Электронная почта">
                     <p class="auth-reg__error"> {{ emailExist }} </p>
                 </div>
             </div>
             <div class="auth-reg__input-block">
-                <img class="auth-reg__image" src="../../../../public/assets/files/images/key-solid.svg" alt="">
+                <img class="auth-reg__image" src="../../../../../public/assets/files/images/key-solid.svg" alt="">
                 <div class="auth-reg__input-container">
                     <input v-model="fieldPassword" class="input" type="text" name="password" placeholder="Пароль">
                     <p class="auth-reg__error"> {{ passwordExist }} </p>
@@ -66,7 +66,7 @@ export default {
             this.$store.commit("changeErrors", {})
         },
         submitForm() {
-            this.$store.dispatch("validateFieldsAuthReg", "auth")
+            this.$store.dispatch("validateFieldsAuthReg", 0)
         },
     },
 }
