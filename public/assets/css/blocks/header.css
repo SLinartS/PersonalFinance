@@ -21,6 +21,12 @@
 
 .main-title {
     margin-left: 2rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.main-title:hover {
+    margin-left: 2rem;
+    transform: scale(1.05);
 }
 
 .main-title,
@@ -53,7 +59,20 @@
 }
 
 .navigation-item {
-    padding: 1.5rem;
+    padding: 1.5rem 3rem 1.5rem 3rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.navigation-item:hover {
+    padding: 1.5rem 3rem 1.5rem 3rem;
+    transition: scale(2);
+    position: relative;
+    background-color: var(--main-blue--hover);
+}
+
+.navigation-item:active{
+    padding: 1.5rem 3rem 1.5rem 3rem;
+    background-color: var(--main-blue--active);
 }
 
 .header__button {
@@ -65,16 +84,47 @@
 
 .button--auth {
     background-color: var(--main-green);
+    transition: all 0.2s ease-in-out;
 }
+
+.button--auth:hover {
+    background-color: var(--main-green--hover);
+    transform: scale(1.02);
+}
+
+.button--auth:active {
+    background-color: var(--main-green--active);
+}
+
 
 .button--reg {
     background-color: var(--main-yellow);
+    transition: all 0.2s ease-in-out;
+}
+
+.button--reg:hover {
+    background-color: var(--main-yellow--hover);
+    transform: scale(1.02);
+}
+
+.button--reg:active  {
+    background-color: var(--main-yellow--active);
 }
 
 .button--exit {
     background-color: var(--main-red);
     padding: 0.8rem 0 0.8rem 0;
     width: 25rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.button--exit:hover {
+    background-color: var(--main-red--hover);
+    transform: scale(1.02);
+}
+
+.button--exit:active {
+    background-color: var(--main-red--active);
 }
 
 .icon-main {

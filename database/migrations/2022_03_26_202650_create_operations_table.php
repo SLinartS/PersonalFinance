@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('description', 40);
             $table->string('amount', 20);
             $table->dateTime('time');
-            $table->string('storage_type');
+            $table->foreignId('account_id')->constrained("accounts");
             $table->foreignId('category_id')->constrained("categories");
             $table->foreignId('user_id')->constrained("users");
         });

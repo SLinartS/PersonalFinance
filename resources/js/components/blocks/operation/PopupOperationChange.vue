@@ -22,7 +22,7 @@
                 <h2 class="change__block-title">Время</h2>
                 <input
                     type="datetime"
-                    class="change__block-input"
+                    class="change__block-input change__block-input--datetime"
                     @input="e => time = e.target.value"
                     :value="currentData['time']"
                 />
@@ -66,9 +66,6 @@ export default {
             this.time = getData["time"]
             return getData;
         },
-        currentPopupOperationChange() {
-            return this.$store.getters.popupOperationChange
-        }
     },
     methods: {
         togglePopupOperationChange() {
@@ -76,7 +73,7 @@ export default {
             this.$store.commit("setChangedDataOperation", [])
         },
         updateOperationItem() {
-            this.$store.dispatch("updateOperationDataById", {
+            this.$store.dispatch("updateOperationById", {
                 id: this.currentData["id"],
                 description: this.description,
                 amount: this.amount,

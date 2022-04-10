@@ -19,10 +19,18 @@
 }
 
 .balance-change--delete {
-    height: 22rem;
+    height: 25rem;
 }
 
 .balance-change--operation {
+    height: 45rem;
+}
+
+.balance-change--operation-add {
+    height: 54rem;
+}
+
+.balance-change--category-change {
     height: 45rem;
 }
 
@@ -82,4 +90,15 @@
     background-color: var(--main-yellow);
 }
 
+
+.balance-change__header {
+    display: flex;
+    justify-content: center;
+    color: var(--main-white)
+}
+
+.change__block-input--datetime {
+    width: 19rem;
+    text-align: center;
+}
 

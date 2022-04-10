@@ -1,9 +1,8 @@
 <template>
     <div class="data-title">
-        <img :src="clearImg" @click="clearBlockItems" class="data-title__button">
-        <img :src="plusImg" @click="addBlockItems" class="data-title__button">
-        <h3 class="data-title__text">{{ title }}</h3>
-    </div>
+        <img :src="clearImg" @click="togglePopupBalanceDelete" class="data-title__button">
+        <img :src="plusImg" @click="togglePopupBalanceChange" class="data-title__button">
+        <h3 class="data-title__text">{{ title }}</h3>   </div>
 </template>
 
 <script>
@@ -22,16 +21,14 @@ export default {
         type: String,
     },
     methods: {
-        clearBlockItems() {
-            this.$store.dispatch("clearBalanceDataByUserId", this.type)
-            this.$store.dispatch("loadBalanceData", this.type)
+        togglePopupBalanceDelete() {
+            this.$store.commit("togglePopupBalanceDelete", { status: true, typeAction: "clear", typeBlock: this.type })
         },
-        addBlockItems() {
-            this.$store.commit("togglePopupBalanceChange", {status: true, typeAction: "add", typeBlock: this.type})
+        togglePopupBalanceChange() {
+            this.$store.commit("togglePopupBalanceChange", { status: true, typeAction: "add", typeBlock: this.type })
         }
     }
 }
 </script>
 
-<style>
-</style>
+<style></style>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Operation;
+use App\Models\UserCategory;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -72,5 +74,82 @@ class CategoryController extends Controller
         }
 
         return $locSumOper;
+    }
+
+    public function getCategoryById($id)
+    {
+
+        $category = Category::query()
+            ->join("colors", "categories.color_id", "colors.id")
+            ->select(
+                "categories.id",
+                "categories.type",
+                "categories.title",
+                "categories.img_url",
+                "colors.value as color"
+            )
+            ->where("categories.id", $id)
+            ->first();
+
+        $accounts = Category::query()
+            ->join("users_categories", "categories.id", "users_categories.category_id")
+            ->join("users", "users_categories.user_id", "users.id")
+            ->join("accounts", "users.id", "accounts.user_id")
+            ->select(
+                "accounts.id",
+                "accounts.title",
+                "accounts.amount",
+                "accounts.type",
+            )
+            ->where("categories.id", $id)
+            ->get()->toArray();
+
+
+        $operations = Operation::join("categories", "operations.category_id", "categories.id")
+            ->select(
+                "operations.id",
+                "operations.amount",
+                "operations.account_id",
+                "categories.type"
+            )
+            ->get()->toArray();
+
+        for ($i = 0; $i < count($accounts); $i++) {
+            for ($k = 0; $k < count($operations); $k++) {
+                if ($accounts[$i]["id"] === $operations[$k]["account_id"]) {
+                    switch ($operations[$k]["type"]) {
+                        case "income":
+                            $accounts[$i]["amount"] = (float)$accounts[$i]["amount"] + (float)$operations[$k]["amount"];
+                            break;
+                        case "expenses":
+                            $accounts[$i]["amount"] = (float)$accounts[$i]["amount"] - (float)$operations[$k]["amount"];
+                            break;
+                    }
+                }
+            }
+            $accounts[$i]["amount"] = (string)$accounts[$i]["amount"];
+        }
+
+        $category["accounts"] = $accounts;
+
+        return $category;
+    }
+
+    public function insertCategoryByUserId(Request $request) {
+        $data = $request->post();
+
+        Category::insert([
+            "type" => $data["type"],
+            "title" => $data["title"],
+            "img_url" => $data["img_url"],
+            "color_id" => $data["color_id"],
+        ]);
+
+        $currentCategory = Category::select("id", "type", "title")->where("title", $data["title"])->first();
+
+        UserCategory::insert([
+            "user_id" => $data["userId"],
+            "category_id" => $currentCategory["id"]
+        ]);
     }
 }

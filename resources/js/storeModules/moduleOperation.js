@@ -1,4 +1,6 @@
+import axios from "axios"
 const moduleOperation = {
+
     state() {
         return {
             operations: [],
@@ -36,7 +38,7 @@ const moduleOperation = {
             }
         },
 
-        async loadOperationDataById({ commit }, id) {
+        async loadOperationById({ commit }, id) {
             let variable;
             await fetch("/api/getOperationById/" + id)
                 .then(async (response) => (variable = await response.json()))
@@ -48,11 +50,23 @@ const moduleOperation = {
             }
         },
 
-        async updateOperationDataById({ commit }, ChangedDataOperation) {
-            console.log(ChangedDataOperation)
+        async updateOperationById({ commit }, changedDataOperation) {
             await fetch("/api/updateOperationById", {
                 method: "POST",
-                body: JSON.stringify(ChangedDataOperation),
+                body: JSON.stringify(changedDataOperation),
+                headers: {
+                    "Content-Type": "application/json;charset=UTF-8",
+                },
+            })
+                .then()
+                .catch((error) => console.log(error));
+        },
+
+        async insertOperationById({ getters }, changedDataOperation ) {
+            changedDataOperation["userId"] = getters.getAuthStatus["userId"];
+            await fetch("/api/insertOperationByUserId/", {
+                method: "POST",
+                body: JSON.stringify(changedDataOperation),
                 headers: {
                     "Content-Type": "application/json;charset=UTF-8",
                 },
@@ -66,6 +80,8 @@ const moduleOperation = {
                 .then()
                 .catch((error) => console.log(error));
         },
+
+
     },
 };
 

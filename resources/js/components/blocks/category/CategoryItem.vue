@@ -1,12 +1,19 @@
 <template>
     <div class="categories__item">
-            <h4 class="categories__item__title">{{title}}</h4>
-            <div class="categories__item__background bgcolor-1" :style="{backgroundColor: color}">
-                <img class="categories__item__image" :src="currentImgUrl" alt="icon-item">
-            </div>
-            <p v-if="currentSumOperation" class="categories__item__price color-1">{{currentSumOperation}} ₽</p>
-            <p v-else class="categories__item__price color-1">0 ₽</p>
+        <h4 class="categories__item__title">{{ title }}</h4>
+        <div
+            @click="togglePopupOperationAdd"
+            class="categories__item__background bgcolor-1"
+            :style="{ backgroundColor: color }"
+        >
+            <img class="categories__item__image" :src="currentImgUrl" alt="icon-item" />
         </div>
+        <p
+            v-if="currentSumOperation"
+            class="categories__item__price color-1"
+        >{{ currentSumOperation }} ₽</p>
+        <p v-else class="categories__item__price color-1">0 ₽</p>
+    </div>
 </template>
 
 <script>
@@ -30,13 +37,17 @@ export default {
             return "../" + this.imgUrl
         },
         currentSumOperation() {
-            let operByCat = this.$store.getters.getSumOperation[this.title]
-            return operByCat
+            return this.$store.getters.getSumOperation[this.title]
         }
+    },
+    methods: {
+        togglePopupOperationAdd() {
+            this.$store.dispatch("loadCategoryById", this.id)
+            this.$store.commit("togglePopupOperationAdd", { status: true })
+        },
     }
 }
 </script>
 
 <style scoped>
-
 </style>

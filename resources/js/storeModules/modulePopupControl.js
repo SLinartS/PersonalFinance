@@ -11,6 +11,7 @@ const modulePopupControl = {
             },
             popupBalanceDelete: {
                 status: false,
+                typeAction: "",
                 typeBlock: "",
             },
             popupOperationChange: {
@@ -18,6 +19,14 @@ const modulePopupControl = {
             },
             popupOperationDelete: {
                 status: false,
+            },
+            popupOperationAdd: {
+                status: false,
+            },
+            popupCategoryChange: {
+                status: false,
+                typeAction: "",
+                typeBlock: "",
             },
         };
     },
@@ -46,9 +55,10 @@ const modulePopupControl = {
                 typeBlock: typeBlock,
             };
         },
-        togglePopupBalanceDelete(state, { status, typeBlock }) {
+        togglePopupBalanceDelete(state, { status, typeAction, typeBlock }) {
             state.popupBalanceDelete = {
                 status: status,
+                typeAction: typeAction,
                 typeBlock: typeBlock,
             };
         },
@@ -60,6 +70,18 @@ const modulePopupControl = {
         togglePopupOperationDelete(state, { status }) {
             state.popupOperationDelete = {
                 status: status,
+            };
+        },
+        togglePopupOperationAdd(state, { status }) {
+            state.popupOperationAdd = {
+                status: status,
+            };
+        },
+        togglePopupCategoryChange(state, { status, typeAction, typeBlock }) {
+            state.popupCategoryChange = {
+                status: status,
+                typeAction: typeAction,
+                typeBlock: typeBlock,
             };
         },
     },
@@ -84,6 +106,12 @@ const modulePopupControl = {
         },
         popupOperationDelete(state) {
             return state.popupOperationDelete;
+        },
+        popupOperationAdd(state) {
+            return state.popupOperationAdd;
+        },
+        popupCategoryChange(state) {
+            return state.popupCategoryChange;
         },
     },
 };

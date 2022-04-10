@@ -6,51 +6,25 @@
         <form>
             <div class="change__block">
                 <h2 class="change__block-title">Название</h2>
-                <input
-                    type="text"
-                    class="change__block-input"
-                    @input="e => title = e.target.value"
-                    :value="currentData['title']"
-                />
+                <input type="text" class="change__block-input" @input="e => title = e.target.value"
+                    :value="currentData['title']" />
                 <h2 class="change__block-title">Сумма</h2>
-                <input
-                    type="text"
-                    class="change__block-input"
-                    @input="e => amount = e.target.value"
-                    :value="currentData['amount']"
-                />
+                <input type="text" class="change__block-input" @input="e => amount = e.target.value"
+                    :value="currentData['amount']" />
             </div>
-            <div
-                v-if="currentPopupBalanceChange['typeAction'] === 'change'"
-                class="balance-change__button-section"
-            >
-                <button
-                    type="button"
-                    class="button button--cancel balance-change__button"
-                    @click="togglePopupBalanceChange"
-                >Отмена</button>
-                <button
-                    type="button"
-                    @click="updateBalanceItem"
-                    class="button button--save balance-change__button"
-                    href
-                >Сохранить</button>
+            <div v-if="currentPopupBalanceChange['typeAction'] === 'change'" class="balance-change__button-section">
+                <button type="button" class="button button--cancel balance-change__button"
+                    @click="togglePopupBalanceChange">Отмена</button>
+                <button type="button" @click="updateAccountItem" class="button button--save balance-change__button"
+                    href>Сохранить</button>
             </div>
             <div v-else class="balance-change__button-section">
-                <button
-                    type="button"
-                    class="button button--cancel balance-change__button"
-                    @click="togglePopupBalanceChange"
-                >Отмена</button>
-                <button
-                    type="button"
-                    @click="addBalanceItem"
-                    class="button button--save balance-change__button"
-                    href
-                >Добавить</button>
+                <button type="button" class="button button--cancel balance-change__button"
+                    @click="togglePopupBalanceChange">Отмена</button>
+                <button type="button" @click="addAccountItem" class="button button--save balance-change__button"
+                    href>Добавить</button>
             </div>
-        </form>
-    </div>
+        </form>   </div>
 </template>
 
 <script>
@@ -65,7 +39,7 @@ export default {
     },
     computed: {
         currentData() {
-            const getData = this.$store.getters.getChangedDataBalance
+            const getData = this.$store.getters.getChangedAccountData
             this.title = getData["title"]
             this.amount = getData["amount"]
             this.type = getData["type"]
@@ -78,36 +52,32 @@ export default {
     methods: {
         togglePopupBalanceChange() {
             this.$store.commit("togglePopupBalanceChange", { status: false, typeAction: "", typeBlock: "" })
-            this.$store.commit("setChangedDataBalance", [])
+            this.$store.commit("setChangedAccountData", [])
         },
-        updateBalanceItem() {
-            this.$store.dispatch("updateBalanceDataById", {
-                changedDataBalance: {
-                    id: this.currentData["id"],
-                    title: this.title,
-                    amount: this.amount,
-                },
+        updateAccountItem() {
+            this.$store.dispatch("updateAccountById", {
+                id: this.currentData["id"],
+                title: this.title,
+                amount: this.amount,
                 type: this.type
             });
-            this.$store.dispatch("loadBalanceData", this.type)
+            this.$store.dispatch("loadAccountsData")
             this.$store.commit("togglePopupBalanceChange", { status: false, typeAction: "", typeBlock: "" })
-            this.$store.commit("setChangedDataBalance", [])
+            this.$store.commit("setChangedAccountData", [])
         },
-        addBalanceItem() {
-            this.$store.dispatch("insertBalanceDataByType", {
-                changedDataBalance: {
-                    title: this.title,
-                    amount: this.amount,
-                },
+        addAccountItem() {
+            this.$store.dispatch("insertAccountByType", {
+                title: this.title,
+                amount: this.amount,
                 type: this.currentPopupBalanceChange['typeBlock']
+
             })
-            this.$store.dispatch("loadBalanceData", this.currentPopupBalanceChange['typeBlock'])
+            this.$store.dispatch("loadAccountsData")
             this.$store.commit("togglePopupBalanceChange", { status: false, typeAction: "", typeBlock: "" })
-            this.$store.commit("setChangedDataBalance", [])
+            this.$store.commit("setChangedAccountData", [])
         }
     },
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

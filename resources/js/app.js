@@ -15,6 +15,10 @@ import App from "./components/App"
 import store from "./store"
 import router from "./router"
 
+import moment from "moment"
+moment.locale('ru');
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

@@ -5,15 +5,15 @@
             <img :src="changeImg" class="data-title__button" @click="togglePopupOperationChange" />
             <p class="data-item">{{ description }}</p>
         </div>
-        <p :class="[operationClass, 'data-item']">{{ operationMark }} {{ amount }} ₽</p>
-        <p class="data-item date-item--time">{{ formattedTime }}</p>
+            <p :class="[operationClass, 'data-item']">{{ operationMark }} {{ amount }} ₽</p>
+            <p class="data-item date-item--time">{{ currentType }} {{ accountTitle }} {{ formattedTime }}</p>
     </div>
 </template>
 
 <script>
 import changeImg from "../../../../../public/assets/files/images/arrows-rotate-solid.svg"
 import deleteImg from "../../../../../public/assets/files/images/trash-can-solid.svg"
-
+import moment from "moment";
 export default {
     data() {
         return {
@@ -30,6 +30,8 @@ export default {
         amount: String,
         type: String,
         datetime: String,
+        accountType: String,
+        accountTitle: String,
     },
     mounted() {
         if (this.type === "income") {
@@ -42,27 +44,32 @@ export default {
     },
     methods: {
         togglePopupOperationChange() {
-            this.$store.dispatch("loadOperationDataById", this.id)
+            this.$store.dispatch("loadOperationById", this.id)
             this.$store.commit("togglePopupOperationChange", { status: true })
         },
         togglePopupOperationDelete() {
-            this.$store.dispatch("loadOperationDataById", this.id)
+            this.$store.dispatch("loadOperationById", this.id)
             this.$store.commit("togglePopupOperationDelete", { status: true })
 
         }
     },
     computed: {
         formattedTime() {
-            let date = new Date(this.datetime)
-            let options = {
-                hour: "2-digit",
-                minute: "2-digit",
+            return moment(this.datetime).format("HH:mm")
+        },
+        currentType() {
+            switch (this.accountType) {
+                case "account":
+                    return "| Счёт |"
+                case "debt":
+                    return "| Долг |"
+                case "saving":
+                    return "| Накопление |"
             }
-            return date.toLocaleString("ru", options)
         }
-    }
+    },
+
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

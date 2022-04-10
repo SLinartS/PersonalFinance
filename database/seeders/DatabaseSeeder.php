@@ -41,29 +41,32 @@ class DatabaseSeeder extends Seeder
         DB::table('accounts')->insert([
             'title' => 'Наличные',
             'amount' => '194.5',
+            'type' => 'account',
             'user_id' => 2,
         ]);
         DB::table('accounts')->insert([
             'title' => 'Карта ВТБ',
             'amount' => '0',
+            'type' => 'account',
             'user_id' => 2,
         ]);
         DB::table('accounts')->insert([
             'title' => 'Карта Альфа Банк',
             'amount' => '76.05',
+            'type' => 'account',
             'user_id' => 2,
         ]);
 
-        //----------------------------------------------------------------------------------------------------------------------
-
-        DB::table('debts')->insert([
+        DB::table('accounts')->insert([
             'title' => 'Кредит',
             'amount' => '197494.72',
+            'type' => 'debt',
             'user_id' => 2,
         ]);
-        DB::table('debts')->insert([
+        DB::table('accounts')->insert([
             'title' => 'Долг Андрею',
             'amount' => '1000',
+            'type' => 'debt',
             'user_id' => 2,
         ]);
 
@@ -226,7 +229,7 @@ class DatabaseSeeder extends Seeder
             'description' => 'Зарплата',
             'amount' => "10000",
             'time' => "2022-03-29 00:00:00",
-            "storage_type" => "account",
+            "account_id" => 1,
             "category_id" => 10,
             "user_id" => 2,
 
@@ -235,7 +238,7 @@ class DatabaseSeeder extends Seeder
             'description' => 'Подарок от друга',
             'amount' => "500",
             'time' => "2022-03-28 00:00:00",
-            "storage_type" => "saving",
+            "account_id" => 2,
             "category_id" => 11,
             "user_id" => 2,
         ]);
@@ -243,7 +246,7 @@ class DatabaseSeeder extends Seeder
             'description' => 'Корм коту',
             'amount' => "300",
             'time' => "2022-04-03 00:00:00",
-            "storage_type" => "account",
+            "account_id" => 3,
             "category_id" => 1,
             "user_id" => 2,
         ]);
@@ -251,7 +254,7 @@ class DatabaseSeeder extends Seeder
             'description' => 'Еда для дома',
             'amount' => "8000",
             'time' => "2022-04-03 01:00:00",
-            "storage_type" => "account",
+            "account_id" => 4,
             "category_id" => 2,
             "user_id" => 2,
         ]);
@@ -259,7 +262,7 @@ class DatabaseSeeder extends Seeder
             'description' => 'Потерял деньги',
             'amount' => "2000",
             'time' => "2021-04-29 06:00:00",
-            "storage_type" => "saving",
+            "account_id" => 5,
             "category_id" => 2,
             "user_id" => 2,
         ]);
@@ -267,7 +270,7 @@ class DatabaseSeeder extends Seeder
             'description' => 'Поел в столовой',
             'amount' => "1000",
             'time' => "2021-04-29 00:00:00",
-            "storage_type" => "saving",
+            "account_id" => 1,
             "category_id" => 2,
             "user_id" => 2,
         ]);
@@ -275,7 +278,7 @@ class DatabaseSeeder extends Seeder
             'description' => 'Купил попить',
             'amount' => "50",
             'time' => "2021-04-29 03:00:00",
-            "storage_type" => "account",
+            "account_id" => 2,
             "category_id" => 2,
             "user_id" => 2,
         ]);

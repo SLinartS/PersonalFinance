@@ -10,8 +10,34 @@
     margin: 0 auto 0 auto;
     background-color: var(--main-white);
     color: var(--main-black);
-    /*flex: 1 0 auto;*/
+    height: 75vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
+
+/* Стилизация скроллбара */
+
+.general::-webkit-scrollbar,
+.balance-history::-webkit-scrollbar,
+.categories::-webkit-scrollbar,
+.analytics::-webkit-scrollbar{
+    width: 1rem;
+}
+
+.general::-webkit-scrollbar-track,
+.balance-history::-webkit-scrollbar-track,
+.categories::-webkit-scrollbar-track,
+.analytics::-webkit-scrollbar-track {
+    background: var(--main-gray);
+}
+
+.general::-webkit-scrollbar-thumb,
+.balance-history::-webkit-scrollbar-thumb,
+.categories::-webkit-scrollbar-thumb,
+.analytics::-webkit-scrollbar-thumb {
+    background-color: var(--main-yellow);
+}
+
 
 html,
 body {
@@ -22,6 +48,7 @@ body {
     -khtml-user-select: none;
     -webkit-user-select: none;
     user-select: none;
+    overflow: hidden;
 }
 
 #app {

@@ -1,19 +1,11 @@
 <template>
     <main class="balance-history">
         <div class="data-block">
-            <TitleBalanceBlock
-                title = "Счета"
-                type = "account"
-            ></TitleBalanceBlock>
+            <TitleBalanceBlock title="Счета" type="account"></TitleBalanceBlock>
             <div class="data-list">
-                <div v-if="currentAccounts.length" class="container-for-vue">
-                    <AccountBlock
-                        v-for="account in currentAccounts"
-                        :key="account.id"
-                        :id="account.id"
-                        :title="account.title"
-                        :amount="account.amount"
-                    ></AccountBlock>
+                <div v-if="currentAccounts['account'].length" class="container-for-vue">
+                    <AccountBlock v-for="account in currentAccounts['account']" :key="account.id" :id="account.id"
+                        :title="account.title" :amount="account.amount"></AccountBlock>
                 </div>
                 <div class="data-stroke data-stroke--empty" v-else>
                     <div class="data-stroke__button-block">
@@ -26,19 +18,11 @@
             </div>
         </div>
         <div class="data-block">
-            <TitleBalanceBlock
-                title = "Долги"
-                type = "debt"
-            ></TitleBalanceBlock>
+            <TitleBalanceBlock title="Долги" type="debt"></TitleBalanceBlock>
             <div class="data-list">
-                <div v-if="currentDebts.length" class="container-for-vue">
-                    <DebtBlock
-                        v-for="debt in currentDebts"
-                        :key="debt.id"
-                        :id="debt.id"
-                        :title="debt.title"
-                        :amount="debt.amount"
-                    ></DebtBlock>
+                <div v-if="currentAccounts['debt'].length" class="container-for-vue">
+                    <DebtBlock v-for="debt in currentAccounts['debt']" :key="debt.id" :id="debt.id" :title="debt.title"
+                        :amount="debt.amount"></DebtBlock>
                 </div>
                 <div class="data-stroke data-stroke--empty" v-else>
                     <div class="data-stroke__button-block">
@@ -51,19 +35,11 @@
             </div>
         </div>
         <div class="data-block">
-            <TitleBalanceBlock
-                title = "Накопления"
-                type = "saving"
-            ></TitleBalanceBlock>
+            <TitleBalanceBlock title="Накопления" type="saving"></TitleBalanceBlock>
             <div class="data-list">
-                <div v-if="currentSavings.length" class="container-for-vue">
-                    <SavingBlock
-                        v-for="saving in currentSavings"
-                        :key="saving.id"
-                        :id="saving.id"
-                        :title="saving.title"
-                        :amount="saving.amount"
-                    ></SavingBlock>
+                <div v-if="currentAccounts['saving'].length" class="container-for-vue">
+                    <SavingBlock v-for="saving in currentAccounts['saving']" :key="saving.id" :id="saving.id"
+                        :title="saving.title" :amount="saving.amount"></SavingBlock>
                 </div>
                 <div class="data-stroke data-stroke--empty" v-else>
                     <div class="data-stroke__button-block">
@@ -74,8 +50,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
+        </div>  </main>
 </template>
 
 <script>
@@ -95,20 +70,18 @@ export default {
     },
     methods: {
         loadDateFromDB() {
-            this.$store.dispatch("loadBalanceData", "account");
-            this.$store.dispatch("loadBalanceData", "debt");
-            this.$store.dispatch("loadBalanceData", "saving");
+            this.$store.dispatch("loadAccountsData");
         },
     },
     computed: {
         currentAccounts() {
-            return this.$store.getters.currentAccounts;
-        },
-        currentDebts() {
-            return this.$store.getters.currentDebts;
-        },
-        currentSavings() {
-            return this.$store.getters.currentSavings;
+            let accounts = this.$store.getters.currentAccounts;
+            if (accounts["account"] && accounts["debt"] && accounts["saving"]) {
+                return this.$store.getters.currentAccounts;
+            } else {
+                return {account: [], debt: [], saving: []}
+            }
+
         },
     },
 };

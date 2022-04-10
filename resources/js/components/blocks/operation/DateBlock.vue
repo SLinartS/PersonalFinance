@@ -9,6 +9,8 @@
                             :amount="operation.amount"
                             :datetime="operation.time"
                             :type="operation.type"
+                            :accountType="operation.accountType"
+                            :accountTitle="operation.accountTitle"
             ></OperationBlock>
         </div>
     </div>
@@ -16,7 +18,7 @@
 
 <script>
 import OperationBlock from "./OperationBlock";
-
+import moment from "moment";
 export default {
     name: "DateBlock",
     components: {OperationBlock},
@@ -26,20 +28,7 @@ export default {
     },
     computed: {
         formattedDate() {
-            let date = new Date(this.datetime)
-            let currentDate = new Date()
-            let options = {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-            }
-            currentDate = currentDate.toLocaleString("ru", options)
-            date = date.toLocaleString("ru", options)
-            if (currentDate === date) {
-                return date + " (сегодня)"
-            } else {
-                return date
-            }
+            return moment(this.datetime).format("D MMMM YYYY") + " г."
         }
     }
 }

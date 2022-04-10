@@ -28,12 +28,12 @@ export default {
     },
     methods: {
         togglePopupBalanceChange() {
-            this.$store.dispatch("loadBalanceDataById", { id: this.id, type: "debt" })
+            this.$store.dispatch("loadAccountById", this.id)
             this.$store.commit("togglePopupBalanceChange", { status: true, typeAction: "change", typeBlock: "debt" })
         },
         togglePopupBalanceDelete() {
-            this.$store.dispatch("loadBalanceDataById", { id: this.id, type: "debt" })
-            this.$store.commit("togglePopupBalanceDelete", { status: true, typeBlock: "debt" })
+            this.$store.dispatch("loadAccountById", this.id)
+            this.$store.commit("togglePopupBalanceDelete", { status: true, typeAction: "delete", typeBlock: "debt" })
         }
     },
 }

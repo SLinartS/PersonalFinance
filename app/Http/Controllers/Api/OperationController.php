@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
 use App\Models\Operation;
 use Illuminate\Http\Request;
 use PHPUnit\Framework\Constraint\Operator;
@@ -14,9 +13,18 @@ class OperationController extends Controller
     public function getOperationByUserId($userId)
     {
 
-        $unsortedOperations = Operation::where("user_id", $userId)
-            ->select("id", "description", "amount", "time")
-            ->addSelect(["type" => Category::select("type")->whereColumn("id", "category_id")->take(1)])
+        $unsortedOperations = Operation::join("accounts", "operations.account_id", "accounts.id")
+            ->join("categories", "operations.category_id", "categories.id")
+            ->select(
+                "operations.id",
+                "operations.description",
+                "categories.type",
+                "operations.amount",
+                "operations.time",
+                "accounts.type as accountType",
+                "accounts.title as accountTitle"
+            )
+            ->where("operations.user_id", $userId)
             ->get()->toArray();
 
         $packagedOperations = [];
@@ -66,7 +74,6 @@ class OperationController extends Controller
                         return $arr1['time'] < $arr2['time'];
                     });
                 }
-
             }
         }
         return $packagedOperations;
@@ -96,5 +103,18 @@ class OperationController extends Controller
     public function deleteOperationById($id)
     {
         Operation::where("id", $id)->delete();
+    }
+
+    public function insertOperationByUserId(Request $request)
+    {
+        $data = $request->post();
+        Operation::insert([
+            "category_id" => $data["id"],
+            "description" => $data["description"],
+            "amount" => $data["amount"],
+            "time" => $data["time"],
+            "account_id" => $data["account_id"],
+            "user_id" => $data["userId"],
+        ]);
     }
 }

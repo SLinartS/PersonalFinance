@@ -1,8 +1,21 @@
 :root {
     --main-blue: #007C8D;
+    --main-blue--hover: #006977;
+    --main-blue--active: #005661;;
+
     --main-yellow: #DFAD00;
+    --main-yellow--hover: #e7b500;
+    --main-yellow--active: #d3a500;
+
     --main-green: #00C064;
+    --main-green--hover: #00ce6a;
+    --main-green--active: #00ad5a;
+
     --main-red: #DB4437;
+    --main-red--hover: #ee4d3f;
+    --main-red--active: #cf4134;
+
+
     --main-white: #F8F8F8;
     --second-white: #EFEFEF;
     --main-black: #222222;
