@@ -19,6 +19,9 @@ const modulePopupControl = {
             },
             popupOperationDelete: {
                 status: false,
+                categoryId: "",
+                typeAction: "",
+                typeBlock: "",
             },
             popupOperationAdd: {
                 status: false,
@@ -67,9 +70,12 @@ const modulePopupControl = {
                 status: status,
             };
         },
-        togglePopupOperationDelete(state, { status }) {
+        togglePopupOperationDelete(state, { status, categoryId, typeAction, typeBlock }) {
             state.popupOperationDelete = {
                 status: status,
+                categoryId: categoryId,
+                typeAction: typeAction,
+                typeBlock: typeBlock,
             };
         },
         togglePopupOperationAdd(state, { status }) {

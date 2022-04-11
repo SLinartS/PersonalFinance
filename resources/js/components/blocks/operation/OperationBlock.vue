@@ -3,10 +3,12 @@
         <div class="data-stroke__button-block data-stroke__button-block--history">
             <img :src="deleteImg" class="data-title__button" @click="togglePopupOperationDelete" />
             <img :src="changeImg" class="data-title__button" @click="togglePopupOperationChange" />
-            <p class="data-item">{{ description }}</p>
+            <p class="data-item data-item--decription">{{ formattedDescription }}</p>
         </div>
-            <p :class="[operationClass, 'data-item']">{{ operationMark }} {{ amount }} ₽</p>
-            <p class="data-item date-item--time">{{ currentType }} {{ accountTitle }} {{ formattedTime }}</p>
+        <p :class="[operationClass, 'data-item data-item--amount']">{{ operationMark }} {{ amount }} ₽</p>
+        <p class="data-item date-item--title">{{ formattedAccountTitle }}</p>
+        <p class="data-item date-item--type">{{ currentType }}</p>
+        <p class="data-item date-item--time">{{ formattedTime }}</p>
     </div>
 </template>
 
@@ -49,7 +51,7 @@ export default {
         },
         togglePopupOperationDelete() {
             this.$store.dispatch("loadOperationById", this.id)
-            this.$store.commit("togglePopupOperationDelete", { status: true })
+            this.$store.commit("togglePopupOperationDelete", { status: true, categoryId: "", typeAction: "", typeBlock: "operation" })
 
         }
     },
@@ -60,16 +62,35 @@ export default {
         currentType() {
             switch (this.accountType) {
                 case "account":
-                    return "| Счёт |"
+                    return "Счёт"
                 case "debt":
-                    return "| Долг |"
+                    return "Долг"
                 case "saving":
-                    return "| Накопление |"
+                    return "Накоп.."
             }
+        },
+        formattedAccountTitle() {
+            let title = this.accountTitle
+            if (title.length > 10) {
+                return title.substring(0, 10) + ".."
+            } else {
+                return title;
+            }
+
+        },
+        formattedDescription() {
+            let description = this.description
+            if (description.length > 15) {
+                return description.substring(0, 15) + ".."
+            } else {
+                return description;
+            }
+
         }
     },
 
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>

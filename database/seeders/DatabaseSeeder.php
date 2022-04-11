@@ -157,6 +157,20 @@ class DatabaseSeeder extends Seeder
         //----------------------------------------------------------------------------------------------------------------------
 
         DB::table('categories')->insert([
+            'type' => 'income',
+            'title' => 'Неизв. пополнения',
+            'img_url' => 'assets/files/images/question-solid.svg',
+            'color_id' => 1,
+        ]);
+
+        DB::table('categories')->insert([
+            'type' => 'expenses',
+            'title' => 'Неизв. расходы',
+            'img_url' => 'assets/files/images/question-solid.svg',
+            'color_id' => 1,
+        ]);
+
+        DB::table('categories')->insert([
             'type' => 'expenses',
             'title' => 'Транспорт',
             'img_url' => 'assets/files/images/categories/bus.svg',
@@ -230,7 +244,7 @@ class DatabaseSeeder extends Seeder
             'amount' => "10000",
             'time' => "2022-03-29 00:00:00",
             "account_id" => 1,
-            "category_id" => 10,
+            "category_id" => 12,
             "user_id" => 2,
 
         ]);
@@ -239,7 +253,7 @@ class DatabaseSeeder extends Seeder
             'amount' => "500",
             'time' => "2022-03-28 00:00:00",
             "account_id" => 2,
-            "category_id" => 11,
+            "category_id" => 13,
             "user_id" => 2,
         ]);
         DB::table('operations')->insert([
@@ -247,7 +261,7 @@ class DatabaseSeeder extends Seeder
             'amount' => "300",
             'time' => "2022-04-03 00:00:00",
             "account_id" => 3,
-            "category_id" => 1,
+            "category_id" => 3,
             "user_id" => 2,
         ]);
         DB::table('operations')->insert([
@@ -255,7 +269,7 @@ class DatabaseSeeder extends Seeder
             'amount' => "8000",
             'time' => "2022-04-03 01:00:00",
             "account_id" => 4,
-            "category_id" => 2,
+            "category_id" => 4,
             "user_id" => 2,
         ]);
         DB::table('operations')->insert([
@@ -263,7 +277,7 @@ class DatabaseSeeder extends Seeder
             'amount' => "2000",
             'time' => "2021-04-29 06:00:00",
             "account_id" => 5,
-            "category_id" => 2,
+            "category_id" => 4,
             "user_id" => 2,
         ]);
         DB::table('operations')->insert([
@@ -271,7 +285,7 @@ class DatabaseSeeder extends Seeder
             'amount' => "1000",
             'time' => "2021-04-29 00:00:00",
             "account_id" => 1,
-            "category_id" => 2,
+            "category_id" => 4,
             "user_id" => 2,
         ]);
         DB::table('operations')->insert([
@@ -279,7 +293,7 @@ class DatabaseSeeder extends Seeder
             'amount' => "50",
             'time' => "2021-04-29 03:00:00",
             "account_id" => 2,
-            "category_id" => 2,
+            "category_id" => 4,
             "user_id" => 2,
         ]);
 
@@ -289,24 +303,24 @@ class DatabaseSeeder extends Seeder
             "user_id" => 2,
         ]);
         DB::table('users_categories')->insert([
-            "category_id" => 1,
-            "user_id" => 3,
-        ]);
-        DB::table('users_categories')->insert([
             "category_id" => 2,
             "user_id" => 2,
-        ]);
-        DB::table('users_categories')->insert([
-            "category_id" => 2,
-            "user_id" => 3,
         ]);
         DB::table('users_categories')->insert([
             "category_id" => 3,
             "user_id" => 2,
         ]);
         DB::table('users_categories')->insert([
+            "category_id" => 3,
+            "user_id" => 3,
+        ]);
+        DB::table('users_categories')->insert([
             "category_id" => 4,
             "user_id" => 2,
+        ]);
+        DB::table('users_categories')->insert([
+            "category_id" => 4,
+            "user_id" => 3,
         ]);
         DB::table('users_categories')->insert([
             "category_id" => 5,
@@ -334,6 +348,14 @@ class DatabaseSeeder extends Seeder
         ]);
         DB::table('users_categories')->insert([
             "category_id" => 11,
+            "user_id" => 2,
+        ]);
+        DB::table('users_categories')->insert([
+            "category_id" => 12,
+            "user_id" => 2,
+        ]);
+        DB::table('users_categories')->insert([
+            "category_id" => 13,
             "user_id" => 2,
         ]);
     }

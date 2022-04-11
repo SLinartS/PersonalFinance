@@ -1,0 +1,28 @@
+.operation-search {
+    display: flex;
+    justify-items: center;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 0 auto;
+    font-weight: 700;
+    width: 100%;
+    color: var(--main-black)
+}
+
+.operation-search__label {
+    font-size: 3rem;
+    margin-right: 1rem;
+}
+
+.operation-search__input {
+    height: 4rem;
+    font-size: 2.4rem;
+    width: 50vw;
+    border: none;
+    background-color: var(--main-white);
+}
+
+.operation-search__input:focus {
+    border: none;
+    outline:none;
+}

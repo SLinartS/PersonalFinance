@@ -64,14 +64,14 @@
 }
 
 .navigation-item:hover {
-    padding: 1.5rem 3rem 1.5rem 3rem;
+    padding: 1.5rem 5rem 1.5rem 5rem;
     transition: scale(2);
     position: relative;
     background-color: var(--main-blue--hover);
 }
 
 .navigation-item:active{
-    padding: 1.5rem 3rem 1.5rem 3rem;
+    padding: 1.5rem 5rem 1.5rem 5rem;
     background-color: var(--main-blue--active);
 }
 

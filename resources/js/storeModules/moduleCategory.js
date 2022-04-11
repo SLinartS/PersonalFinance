@@ -107,6 +107,13 @@ const moduleCategory = {
                 .catch((error) => console.log(error));
         },
 
+        async deleteCategoryById({ commit }, id) {
+            let variable;
+            await fetch("/api/deleteCategoryById/" + id)
+                .then(async (response) => (variable = await response.text()))
+                .catch((error) => console.log(error));
+        },
+
     },
 };
 

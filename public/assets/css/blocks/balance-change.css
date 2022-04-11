@@ -91,10 +91,20 @@
 }
 
 
-.balance-change__header {
+/* .balance-change__header-- {
     display: flex;
     justify-content: center;
     color: var(--main-white)
+} */
+
+.balance-change__header--3fr {
+    display: grid;
+    justify-items: center;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.balance-change__header__title {
+    grid-column: 2/3;
 }
 
 .change__block-input--datetime {

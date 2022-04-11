@@ -10,23 +10,42 @@ use PHPUnit\Framework\Constraint\Operator;
 class OperationController extends Controller
 {
 
-    public function getOperationByUserId($userId)
+    public function getOperationByUserId(Request $request)
     {
+        $data = $request->post();
 
-        $unsortedOperations = Operation::join("accounts", "operations.account_id", "accounts.id")
-            ->join("categories", "operations.category_id", "categories.id")
-            ->select(
-                "operations.id",
-                "operations.description",
-                "categories.type",
-                "operations.amount",
-                "operations.time",
-                "accounts.type as accountType",
-                "accounts.title as accountTitle"
-            )
-            ->where("operations.user_id", $userId)
-            ->get()->toArray();
 
+        if (isset($data["searchCrit"])) {
+            $unsortedOperations = Operation::join("accounts", "operations.account_id", "accounts.id")
+                ->join("categories", "operations.category_id", "categories.id")
+                ->select(
+                    "operations.id",
+                    "operations.description",
+                    "categories.type",
+                    "operations.amount",
+                    "operations.time",
+                    "accounts.type as accountType",
+                    "accounts.title as accountTitle"
+                )
+                ->where("operations.user_id", $data["userId"])
+                ->where("operations.description", $data["searchCrit"])
+                ->orWhere("operations.time", $data["searchCrit"])
+                ->get()->toArray();
+        } else {
+            $unsortedOperations = Operation::join("accounts", "operations.account_id", "accounts.id")
+                ->join("categories", "operations.category_id", "categories.id")
+                ->select(
+                    "operations.id",
+                    "operations.description",
+                    "categories.type",
+                    "operations.amount",
+                    "operations.time",
+                    "accounts.type as accountType",
+                    "accounts.title as accountTitle"
+                )
+                ->where("operations.user_id", $data["userId"])
+                ->get()->toArray();
+        }
         $packagedOperations = [];
         if (count($unsortedOperations) !== 0) {
 

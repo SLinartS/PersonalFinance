@@ -135,7 +135,8 @@ class CategoryController extends Controller
         return $category;
     }
 
-    public function insertCategoryByUserId(Request $request) {
+    public function insertCategoryByUserId(Request $request)
+    {
         $data = $request->post();
 
         Category::insert([
@@ -151,5 +152,29 @@ class CategoryController extends Controller
             "user_id" => $data["userId"],
             "category_id" => $currentCategory["id"]
         ]);
+    }
+
+    public function deleteCategoryById($id)
+    {
+
+        $category = Category::where("id", $id)->first()->toArray();
+
+        if ($category["type"] === "income") {
+            Operation::query()
+                ->join("categories", "operations.category_id", "categories.id")
+                ->where("categories.id", $id)->update([
+                    "category_id" => 1
+                ]);
+        } elseif ($category["type"] === "expenses") {
+            Operation::query()
+                ->join("categories", "operations.category_id", "categories.id")
+                ->where("categories.id", $id)->update([
+                    "category_id" => 2
+                ]);
+        }
+
+        UserCategory::where("category_id", $id)->delete();
+        Category::where("id", $id)->delete();
+
     }
 }

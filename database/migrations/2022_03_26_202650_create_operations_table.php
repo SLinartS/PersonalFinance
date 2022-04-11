@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('operations', function (Blueprint $table) {
             $table->id();
+            // $table->string('description', 40)->fulltext();
             $table->string('description', 40);
             $table->string('amount', 20);
             $table->dateTime('time');

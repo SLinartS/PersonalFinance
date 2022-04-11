@@ -3,7 +3,7 @@
         <div class="data-stroke__button-block">
             <img :src="deleteImg" class="data-title__button" @click="togglePopupBalanceDelete" />
             <img :src="changeImg" class="data-title__button" @click="togglePopupBalanceChange" />
-            <p class="data-item">{{ title }}</p>
+            <p class="data-item data-item--decription">{{ title }}</p>
         </div>
         <p class="data-item">{{ amount }} ₽</p>
     </div>

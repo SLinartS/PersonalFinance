@@ -35,7 +35,8 @@
 .balance-history::-webkit-scrollbar-thumb,
 .categories::-webkit-scrollbar-thumb,
 .analytics::-webkit-scrollbar-thumb {
-    background-color: var(--main-yellow);
+    background-color: var(--second-gray);
+    border: 2px solid var(--main-gray);
 }
 
 
