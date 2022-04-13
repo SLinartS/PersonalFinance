@@ -48,6 +48,7 @@
 <script>
 import moment from "moment";
 import ColorSelectOption from "./ColorSelectOption.vue";
+
 export default {
     name: "PopupCategoryChange",
     components: { ColorSelectOption },

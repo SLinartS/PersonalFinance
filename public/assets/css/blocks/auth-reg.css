@@ -87,7 +87,7 @@
     flex-direction: column;
 }
 
-.auth-reg__error {
+.error-p {
     font-weight: 500;
     height: 2.2rem;
     margin: 0.2rem 0 0.2rem 2rem;

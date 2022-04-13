@@ -14,14 +14,14 @@
                 <img class="auth-reg__image" src="../../../../../public/assets/files/images/user-solid.svg" alt="">
                 <div class="auth-reg__input-container">
                     <input v-model="fieldEmail" class="input" type="text" name="email" placeholder="Электронная почта">
-                    <p class="auth-reg__error"> {{ emailExist }} </p>
+                    <p class="error-p"> {{ emailExist }} </p>
                 </div>
             </div>
             <div class="auth-reg__input-block">
                 <img class="auth-reg__image" src="../../../../../public/assets/files/images/key-solid.svg" alt="">
                 <div class="auth-reg__input-container">
                     <input v-model="fieldPassword" class="input" type="text" name="password" placeholder="Пароль">
-                    <p class="auth-reg__error"> {{ passwordExist }} </p>
+                    <p class="error-p"> {{ passwordExist }} </p>
                 </div>
             </div>
             <div class="auth-reg__input-block">

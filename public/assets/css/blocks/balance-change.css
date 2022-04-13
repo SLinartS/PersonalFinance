@@ -3,7 +3,7 @@
 */
 
 .balance-change {
-    height: 35rem;
+    height: 38rem;
     width: 60rem;
     z-index: 2;
     box-shadow: 0 0 20px rgb(34, 34, 34);
@@ -23,7 +23,7 @@
 }
 
 .balance-change--operation {
-    height: 45rem;
+    height: 46rem;
 }
 
 .balance-change--operation-add {
@@ -37,13 +37,14 @@
 .change__block {
     margin-top: 1rem;
     display: flex;
+    justify-items: left;
     flex-direction: column;
     align-items: center;
     text-align: center;
 }
 
 .change__block-title {
-    margin-top: 1rem;
+    /* margin-top: 1rem; */
 }
 
 .change__block-input {
@@ -73,7 +74,7 @@
 .balance-change__button-section {
     display: flex;
     justify-content: center;
-    margin: 4rem 0 0 0;
+    margin: 3rem 0 0 0;
 }
 
 .balance-change__button {
@@ -100,7 +101,7 @@
 .balance-change__header--3fr {
     display: grid;
     justify-items: center;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 3fr 1fr;
 }
 
 .balance-change__header__title {
@@ -112,3 +113,7 @@
     text-align: center;
 }
 
+.change__block-input--operation-search {
+    width: 35rem;
+    margin-right: 2rem;
+}

@@ -49,16 +49,35 @@ const moduleBalance = {
             }
         },
 
-        async updateAccountById({ commit }, changedAccountData) {
-            await fetch("/api/updateAccountById", {
-                method: "POST",
-                body: JSON.stringify(changedAccountData),
-                headers: {
-                    "Content-Type": "application/json;charset=UTF-8",
-                },
-            })
-                .then()
-                .catch((error) => console.log(error));
+        async updateAccountById(
+            { commit, dispatch, getters },
+            changedAccountData
+        ) {
+            await dispatch("globalValidate", {
+                title: changedAccountData["title"],
+                description: "notValidate",
+                amount: changedAccountData["amount"],
+                time: "notValidateCode",
+            });
+            if (getters.getErrorStatus === 0) {
+                await fetch("/api/updateAccountById", {
+                    method: "POST",
+                    body: JSON.stringify(changedAccountData),
+                    headers: {
+                        "Content-Type": "application/json;charset=UTF-8",
+                    },
+                })
+                    .then()
+                    .catch((error) => console.log(error));
+
+                dispatch("loadAccountsData");
+                commit("togglePopupBalanceChange", {
+                    status: false,
+                    typeAction: "",
+                    typeBlock: "",
+                });
+                commit("setChangedAccountData", []);
+            }
         },
         async deleteAccountById({ commit }, id) {
             await fetch("/api/deleteAccountById/" + id)
@@ -82,18 +101,34 @@ const moduleBalance = {
                 .catch((error) => console.log(error));
         },
 
-        async insertAccountByType({ getters }, newAccountData) {
+        async insertAccountByType({ commit, getters, dispatch}, newAccountData) {
             newAccountData["userId"] = getters.getAuthStatus["userId"];
 
-            await fetch("/api/insertAccountByUserId/", {
-                method: "POST",
-                body: JSON.stringify(newAccountData),
-                headers: {
-                    "Content-Type": "application/json;charset=UTF-8",
-                },
-            })
-                .then()
-                .catch((error) => console.log(error));
+            await dispatch("globalValidate", {
+                title: newAccountData["title"],
+                description: "notValidate",
+                amount: newAccountData["amount"],
+                time: "notValidateCode",
+            });
+            if (getters.getErrorStatus === 0) {
+                await fetch("/api/insertAccountByUserId/", {
+                    method: "POST",
+                    body: JSON.stringify(newAccountData),
+                    headers: {
+                        "Content-Type": "application/json;charset=UTF-8",
+                    },
+                })
+                    .then()
+                    .catch((error) => console.log(error));
+
+                dispatch("loadAccountsData");
+                commit("togglePopupBalanceChange", {
+                    status: false,
+                    typeAction: "",
+                    typeBlock: "",
+                });
+                commit("setChangedAccountData", []);
+            }
         },
     },
 };

@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\OperationController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\BudgetController;
 use App\Http\Controllers\Api\ColorController;
+use App\Http\Controllers\Api\ValidateController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +26,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get("getColorsList", [ColorController::class, "getColorsList"]);
+Route::post("validateField", [ValidateController::class, "validateField"]);
 
 Route::get("getCategoriesByType/{id}/{type}", [CategoryController::class, "getCategoriesByType"]);
 Route::get("getSumCategoryOperations/{id}/{type}", [CategoryController::class, "getSumCategoryOperations"]);

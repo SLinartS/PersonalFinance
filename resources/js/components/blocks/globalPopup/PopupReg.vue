@@ -15,7 +15,7 @@
                     <div class="auth-reg__input-container">
                         <input v-model="fieldName" class="input" type="text" id="name" name="name"
                                placeholder="Имя пользователя">
-                        <p class="auth-reg__error">{{ nameExist }} </p>
+                        <p class="error-p">{{ nameExist }} </p>
                     </div>
                 </div>
                 <div class="auth-reg__input-block">
@@ -23,7 +23,7 @@
                     <div class="auth-reg__input-container">
                         <input v-model="fieldEmail" class="input" type="text" id="email" name="email"
                                placeholder="Электронная почта">
-                        <p class="auth-reg__error">{{ emailExist }} </p>
+                        <p class="error-p">{{ emailExist }} </p>
                     </div>
                 </div>
                 <div class="auth-reg__input-block">
@@ -31,7 +31,7 @@
                     <div class="auth-reg__input-container">
                         <input v-model="fieldPassword" class="input" type="text" id="password" name="password"
                                placeholder="Пароль">
-                        <p class="auth-reg__error">{{ passwordExist }}</p>
+                        <p class="error-p">{{ passwordExist }}</p>
                     </div>
                 </div>
                 <div class="auth-reg__input-block">
@@ -40,7 +40,7 @@
                         <input v-model="fieldPasswordRepeat" class="input" type="text" id="repeat-password"
                                name="repeat-password"
                                placeholder="Повторите пароль">
-                        <p class="auth-reg__error"> {{ passwordRepeatExist }}</p>
+                        <p class="error-p"> {{ passwordRepeatExist }}</p>
                     </div>
                 </div>
             </div>

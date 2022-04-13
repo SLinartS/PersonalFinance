@@ -4,6 +4,7 @@ import moduleOperation from "./storeModules/moduleOperation";
 import moduleAuthReg from "./storeModules/moduleAuthReg";
 import modulePopupControl from "./storeModules/modulePopupControl";
 import moduleCategory from './storeModules/moduleCategory';
+import moduleGlobalValidate from "./storeModules/moduleGlobalValidate"
 
 const store = createStore({
     modules: {
@@ -12,6 +13,7 @@ const store = createStore({
         moduleAuthReg,
         modulePopupControl,
         moduleCategory,
+        moduleGlobalValidate,
     },
     state() {
         return {
