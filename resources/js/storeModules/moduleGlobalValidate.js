@@ -5,17 +5,36 @@ const moduleGlobalValidate = {
             descriptionError: "",
             amountError: "",
             timeError: "",
+            selectedError: "",
+            imgError: "",
         };
     },
     mutations: {
         setAllErrors(
             state,
-            { titleError, descriptionError, amountError, timeError }
+            {
+                titleError,
+                descriptionError,
+                amountError,
+                timeError,
+                selectedError,
+                imgError,
+            }
         ) {
             state.titleError = titleError;
             state.descriptionError = descriptionError;
             state.amountError = amountError;
             state.timeError = timeError;
+            state.selectedError = selectedError;
+            state.imgError = imgError;
+        },
+        clearAllErrors(state) {
+            state.titleError = "";
+            state.descriptionError = "";
+            state.amountError = "";
+            state.timeError = "";
+            state.selectedError = "";
+            state.imgError = "";
         },
         setTitleError(state, value) {
             state.titleError = value;
@@ -29,6 +48,12 @@ const moduleGlobalValidate = {
         setTimeError(state, value) {
             state.timeError = value;
         },
+        setSelectedError(state, value) {
+            state.selectedError = value;
+        },
+        setimgError(state, value) {
+            state.imgError = value;
+        },
     },
     getters: {
         getAllErrors(state) {
@@ -37,14 +62,18 @@ const moduleGlobalValidate = {
                 descriptionError: state.descriptionError,
                 amountError: state.amountError,
                 timeError: state.timeError,
+                selectedError: state.selectedError,
+                imgError: state.imgError,
             };
         },
         getErrorStatus(state) {
             if (
-                (state.titleError === "" &&
+                state.titleError === "" &&
                 state.descriptionError === "" &&
                 state.amountError === "" &&
-                state.timeError === "")
+                state.timeError === "" &&
+                state.selectedError === "" &&
+                state.imgError === ""
             ) {
                 return 0;
             } else {
@@ -53,6 +82,8 @@ const moduleGlobalValidate = {
                     descriptionError: state.descriptionError,
                     amountError: state.amountError,
                     timeError: state.timeError,
+                    selectedError: state.selectedError,
+                    imgError: state.imgError,
                 };
             }
         },
@@ -67,6 +98,12 @@ const moduleGlobalValidate = {
         },
         getTimeError(state) {
             return state.timeError;
+        },
+        getSelectedError(state) {
+            return state.selectedError;
+        },
+        getImgError(state) {
+            return state.imgError;
         },
     },
     actions: {
@@ -89,6 +126,8 @@ const moduleGlobalValidate = {
                     descriptionError: variable["description"],
                     amountError: variable["amount"],
                     timeError: variable["time"],
+                    selectedError: variable["selected"],
+                    imgError: variable["img"],
                 });
             } else {
                 commit("setAllErrors", {
@@ -96,6 +135,8 @@ const moduleGlobalValidate = {
                     descriptionError: "",
                     amountError: "",
                     timeError: "",
+                    selectedError: "",
+                    imgError: "",
                 });
             }
         },

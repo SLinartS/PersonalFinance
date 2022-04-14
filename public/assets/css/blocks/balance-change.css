@@ -23,11 +23,11 @@
 }
 
 .balance-change--operation {
-    height: 46rem;
+    height: 50rem;
 }
 
 .balance-change--operation-add {
-    height: 54rem;
+    height: 60rem;
 }
 
 .balance-change--category-change {
@@ -111,6 +111,22 @@
 .change__block-input--datetime {
     width: 19rem;
     text-align: center;
+}
+
+.change__block__time-block {
+    display: flex;
+    align-items: center;
+}
+
+.input-calendar {
+    background: url("../../files/images/calendar.svg") no-repeat center;
+    width: 4rem;
+    height: 4rem;
+    border: none;
+    color: transparent;
+    z-index: 2;
+    display: inline-block;
+    margin-left: 1rem;
 }
 
 .change__block-input--operation-search {

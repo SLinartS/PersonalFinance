@@ -46,7 +46,6 @@ const moduleOperation = {
             })
                 .then(async (response) => (variable = await response.json()))
                 .catch((error) => console.log(error));
-            console.log(variable);
             if (variable !== 0) {
                 commit("setOperations", variable);
             } else {
@@ -62,33 +61,78 @@ const moduleOperation = {
             if (variable !== 0) {
                 commit("setChangedDataOperation", variable);
             } else {
-                commit("setChangedDataOperation", 0);
+                commit("setChangedDataOperation", []);
             }
         },
 
-        async updateOperationById({ commit }, changedDataOperation) {
-            await fetch("/api/updateOperationById", {
-                method: "POST",
-                body: JSON.stringify(changedDataOperation),
-                headers: {
-                    "Content-Type": "application/json;charset=UTF-8",
-                },
-            })
-                .then()
-                .catch((error) => console.log(error));
+        async updateOperationById(
+            { commit, dispatch, getters },
+            changedDataOperation
+        ) {
+            await dispatch("globalValidate", {
+                title: "notValidateCode",
+                description: changedDataOperation["description"],
+                amount: changedDataOperation["amount"],
+                time: changedDataOperation["time"],
+                selected: "notValidateCode",
+                img: "notValidateCode"
+            });
+            if (getters.getErrorStatus === 0) {
+                await fetch("/api/updateOperationById", {
+                    method: "POST",
+                    body: JSON.stringify(changedDataOperation),
+                    headers: {
+                        "Content-Type": "application/json;charset=UTF-8",
+                    },
+                })
+                    .then()
+                    .catch((error) => console.log(error));
+
+                dispatch("loadOperationByUserId");
+                commit("togglePopupOperationChange", {
+                    status: false,
+                });
+                commit("setChangedDataOperation", []);
+            }
         },
 
-        async insertOperationById({ getters }, changedDataOperation) {
-            changedDataOperation["userId"] = getters.getAuthStatus["userId"];
-            await fetch("/api/insertOperationByUserId/", {
-                method: "POST",
-                body: JSON.stringify(changedDataOperation),
-                headers: {
-                    "Content-Type": "application/json;charset=UTF-8",
-                },
-            })
-                .then()
-                .catch((error) => console.log(error));
+        async insertOperationById(
+            { getters, commit, dispatch },
+            newDataOperation
+        ) {
+            await dispatch("globalValidate", {
+                title: "notValidateCode",
+                description: newDataOperation["description"],
+                amount: newDataOperation["amount"],
+                time: newDataOperation["time"],
+                selected: "notValidateCode",
+                img: "notValidateCode"
+            });
+            if (getters.getErrorStatus === 0) {
+                newDataOperation["userId"] = getters.getAuthStatus["userId"];
+                await fetch("/api/insertOperationByUserId/", {
+                    method: "POST",
+                    body: JSON.stringify(newDataOperation),
+                    headers: {
+                        "Content-Type": "application/json;charset=UTF-8",
+                    },
+                })
+                    .then()
+                    .catch((error) => console.log(error));
+
+                switch (newDataOperation["typeCategory"]) {
+                    case "income":
+                        dispatch("loadIncomeCategoriesFromDB");
+                        break;
+                    case "expenses":
+                        dispatch("loadExpensesCategoriesFromDB");
+                        break;
+                }
+                commit("togglePopupOperationAdd", {
+                    status: false,
+                });
+                commit("setChangedDataCategory", []);
+            }
         },
 
         async deleteOperationById({ commit }, id) {

@@ -43,6 +43,7 @@ export default {
     methods: {
         togglePopupOperationAdd() {
             this.$store.dispatch("loadCategoryById", this.id)
+            this.$store.dispatch("loadOperationByUserId")
             this.$store.commit("togglePopupOperationAdd", { status: true })
         },
     }

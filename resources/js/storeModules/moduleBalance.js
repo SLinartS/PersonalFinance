@@ -58,6 +58,8 @@ const moduleBalance = {
                 description: "notValidate",
                 amount: changedAccountData["amount"],
                 time: "notValidateCode",
+                selected: "notValidateCode",
+                img: "notValidateCode"
             });
             if (getters.getErrorStatus === 0) {
                 await fetch("/api/updateAccountById", {
@@ -109,6 +111,8 @@ const moduleBalance = {
                 description: "notValidate",
                 amount: newAccountData["amount"],
                 time: "notValidateCode",
+                selected: "notValidateCode",
+                img: "notValidateCode"
             });
             if (getters.getErrorStatus === 0) {
                 await fetch("/api/insertAccountByUserId/", {

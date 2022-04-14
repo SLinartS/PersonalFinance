@@ -32,6 +32,7 @@ Route::get("getCategoriesByType/{id}/{type}", [CategoryController::class, "getCa
 Route::get("getSumCategoryOperations/{id}/{type}", [CategoryController::class, "getSumCategoryOperations"]);
 Route::get("getCategoryById/{id}", [CategoryController::class, "getCategoryById"]);
 Route::post("insertCategoryByUserId", [CategoryController::class, "insertCategoryByUserId"]);
+Route::post("updateCategoryById", [CategoryController::class, "updateCategoryById"]);
 Route::get("deleteCategoryById/{id}", [CategoryController::class, "deleteCategoryById"]);
 
 Route::post("getOperationByUserId", [OperationController::class, "getOperationByUserId"]);

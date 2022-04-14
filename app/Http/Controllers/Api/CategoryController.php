@@ -86,7 +86,8 @@ class CategoryController extends Controller
                 "categories.type",
                 "categories.title",
                 "categories.img_url",
-                "colors.value as color"
+                "colors.value as color",
+                "colors.id as color_id"
             )
             ->where("categories.id", $id)
             ->first();
@@ -154,6 +155,17 @@ class CategoryController extends Controller
         ]);
     }
 
+    public function updateCategoryById(Request $request)
+    {
+        $data = $request->post();
+
+        Category::where("id", $data["id"])->update([
+            "title" => $data["title"],
+            "img_url" => $data["img_url"],
+            "color_id" => $data["color_id"],
+        ]);
+    }
+
     public function deleteCategoryById($id)
     {
 
@@ -175,6 +187,5 @@ class CategoryController extends Controller
 
         UserCategory::where("category_id", $id)->delete();
         Category::where("id", $id)->delete();
-
     }
 }

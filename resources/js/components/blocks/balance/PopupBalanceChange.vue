@@ -109,6 +109,7 @@ export default {
                 typeBlock: "",
             });
             this.$store.commit("setChangedAccountData", []);
+            this.$store.commit("clearAllErrors")
         },
         updateAccountItem() {
             console.log(this.title);

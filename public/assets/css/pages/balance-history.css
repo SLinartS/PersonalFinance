@@ -33,6 +33,10 @@
     transition: all 0.2s ease-in-out;
 }
 
+.data-title__button--two {
+    justify-self: flex-end;
+}
+
 .data-title__button:hover {
     width: 3rem;
     height: 3rem;

@@ -7,40 +7,51 @@
                 @click="togglePopupCategoryDelete"
             />
             <h2 class="balance-change__header__title">
-                {{ currentData["title"] }}
+                {{ currentData }}{{ currentTime }}{{ title }}
             </h2>
+            <img
+                :src="changeImg"
+                class="data-title__button data-title__button--two"
+                @click="togglePopupCategoryChange"
+            />
         </div>
         <form>
             <div class="change__block">
                 <h2 class="change__block-title">Время</h2>
-                <input
-                    id="timeOperationAdd"
-                    ref="operAddTime"
-                    type="datetime"
-                    class="change__block-input change__block-input--datetime"
-                    :value="currentTime"
-                />
+                <div class="change__block__time-block">
+                    <input
+                        id="inputOperAdd"
+                        ref="operAddTime"
+                        type="datetime"
+                        class="change__block-input change__block-input--datetime"
+                        :value="time"
+                    />
+                    <input
+                        class="input-calendar"
+                        id="timeOperationAdd"
+                        type="button"
+                    />
+                </div>
+
+                <p class="error-p">{{ timeError }}</p>
                 <h2 class="change__block-title">Описание</h2>
                 <input
                     type="text"
                     class="change__block-input"
                     @input="(e) => (description = e.target.value)"
                 />
+                <p class="error-p">{{ descriptionError }}</p>
                 <h2 class="change__block-title">Сумма</h2>
                 <input
                     type="text"
                     class="change__block-input"
                     @input="(e) => (amount = e.target.value)"
                 />
+                <p class="error-p">{{ amountError }}</p>
                 <h2 class="change__block-title">Тип счёта</h2>
-                <select
-                    name
-                    id
-                    class="change__block-input"
-                    v-model="storageType"
-                >
+                <select class="change__block-input" v-model="storageType">
                     <CategorySelectOption
-                        v-for="select in currentData['accounts']"
+                        v-for="select in accounts"
                         :key="select['id']"
                         :id="select['id']"
                         :title="select['title']"
@@ -77,6 +88,7 @@ import AirDatepicker from "air-datepicker";
 import "air-datepicker/air-datepicker.css";
 
 import deleteImg from "../../../../../public/assets/files/images/trash-can-solid.svg";
+import changeImg from "../../../../../public/assets/files/images/arrows-rotate-solid.svg";
 import CategorySelectOption from "./CategorySelectOption.vue";
 export default {
     name: "PopupOperationAdd",
@@ -84,59 +96,106 @@ export default {
     data() {
         return {
             deleteImg: deleteImg,
+            changeImg: changeImg,
             description: "",
             amount: "",
-            storageType: "",
+            title: "",
+            id: "",
+            type: "",
+            time: "",
+            storageType: 1,
+            computedWork: true,
+            accounts: [],
         };
     },
     mounted() {
         new AirDatepicker("#timeOperationAdd", {
             timepicker: true,
             minutesStep: 5,
+            autoClose: true,
+            dateFormat: "yyyy-MM-dd",
+            onSelect({ date, formattedDate, datepicker }) {
+                document.querySelector("#inputOperAdd").value = formattedDate;
+            },
         });
     },
     computed: {
         currentData() {
-            return this.$store.getters.getChangedDataCategory;
+            if (this.computedWork) {
+                const getData = this.$store.getters.getChangedDataCategory;
+                this.id = getData["id"];
+                this.type = getData["type"];
+                this.title = getData["title"];
+                this.accounts = getData["accounts"];
+                if (this.title) {
+                    this.computedWork = false;
+                }
+                return "";
+            }
         },
         currentTime() {
-            return moment().format("YYYY-MM-DD HH:mm").substring(0,16);
+            if (this.computedWork) {
+                if (this.accounts) {
+                    this.computedWork = false;
+                }
+                this.time = moment()
+                    .format("YYYY-MM-DD HH:mm")
+                    .substring(0, 16);
+                return "";
+            }
+        },
+        timeError() {
+            return this.$store.getters.getAllErrors["timeError"];
+        },
+        descriptionError() {
+            return this.$store.getters.getAllErrors["descriptionError"];
+        },
+        amountError() {
+            return this.$store.getters.getAllErrors["amountError"];
         },
     },
     methods: {
         togglePopupOperationAdd() {
             this.$store.commit("togglePopupOperationAdd", { status: false });
             this.$store.commit("setChangedDataCategory", []);
+            this.$store.commit("clearAllErrors");
         },
         togglePopupCategoryDelete() {
             this.$store.commit("togglePopupOperationAdd", { status: false });
             this.$store.commit("togglePopupOperationDelete", {
                 status: true,
-                categoryId: this.currentData["id"],
-                typeAction: this.currentData["type"],
+                categoryId: this.id,
+                typeAction: this.type,
                 typeBlock: "category",
             });
         },
+        togglePopupCategoryChange() {
+            this.$store.commit("togglePopupOperationAdd", { status: false });
+            this.$store.dispatch("loadCategoryById", this.id);
+            this.$store.dispatch("loadColorsList");
+            this.$store.commit("togglePopupCategoryChange", {
+                status: true,
+                typeAction: "change",
+                typeBlock: this.type,
+            });
+        },
         addOperationItem() {
+            this.time = this.$refs.operAddTime.value;
             this.$store.dispatch("insertOperationById", {
-                id: this.currentData["id"],
+                id: this.id,
                 description: this.description,
                 amount: this.amount,
-                time: moment(this.$refs.operAddTime.value, "DD.MM.YYYY HH:mm").format("YYYY-MM-DD HH:mm:ss"),
+                time: this.$refs.operAddTime.value + ":00",
                 account_id: this.storageType,
+                typeCategory: this.type,
             });
-            switch (this.currentData["type"]) {
-                case "income":
-                    this.$store.dispatch("loadIncomeCategoriesFromDB");
-                    break;
-                case "expenses":
-                    this.$store.dispatch("loadExpensesCategoriesFromDB");
-                    break;
-            }
-            this.$store.commit("togglePopupOperationAdd", { status: false });
-            this.$store.commit("setChangedDataCategory", []);
         },
     },
+    watch: {
+        storageType() {
+            this.time = this.$refs.operAddTime.value;
+        }
+    }
 };
 </script>
 

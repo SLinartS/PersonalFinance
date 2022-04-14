@@ -29,7 +29,6 @@ class OperationController extends Controller
                 )
                 ->where("operations.user_id", $data["userId"])
                 ->where("operations.description", $data["searchCrit"])
-                ->orWhere("operations.time", $data["searchCrit"])
                 ->get()->toArray();
         } else {
             $unsortedOperations = Operation::join("accounts", "operations.account_id", "accounts.id")
