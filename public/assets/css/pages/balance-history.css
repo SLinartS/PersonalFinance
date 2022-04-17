@@ -54,21 +54,23 @@
     padding-left: 17.4%;
 }
 
+.data-item {
+    text-align: left;
+    border-right: 0.1rem solid var(--main-black)
+}
+
 .data-item,
 .data-item--empty {
     font-size: 2.4rem;
     display: inline-block;
-    text-align: center;
+    /* text-align: center; */
+    border: none;
 }
 
-.data-item {
-    text-align: left;
-    white-space: pre;
-    border-right: 0.1rem solid var(--main-black)
-}
+
 .date-item--time,
-.data-item--decription{
- border: none;
+.data-item--decription {
+    border: none;
 }
 
 /* .date-item--title{
@@ -80,7 +82,7 @@
 } */
 
 .data-item--empty a {
-    color: var(--main-blue)
+    color: var(--main-blue);
 }
 
 .data-list {
@@ -120,4 +122,3 @@
 .data-title--history {
     padding-left: 21.6%;
 }
-

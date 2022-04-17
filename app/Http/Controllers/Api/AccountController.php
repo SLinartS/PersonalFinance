@@ -14,7 +14,7 @@ class AccountController extends Controller
     public function getAccountsByUserId($userId)
     {
         $accounts = Account::where("user_id", $userId)
-            ->select("id", "title", "amount", "type")
+            ->select("id", "title", "type")
             ->get()->toArray();
 
         $outputData =
@@ -35,6 +35,7 @@ class AccountController extends Controller
             ->get()->toArray();
 
         for ($i = 0; $i < count($accounts); $i++) {
+            $accounts[$i]["amount"] = 0;
             for ($k = 0; $k < count($operations); $k++) {
                 if ($accounts[$i]["id"] === $operations[$k]["account_id"]) {
                     switch ($operations[$k]["type"]) {
@@ -69,7 +70,7 @@ class AccountController extends Controller
     public function getAccountById($id)
     {
         return Account::where("id", $id)
-            ->select("id", "title", "amount", "type")
+            ->select("id", "title", "type")
             ->first();
     }
 
@@ -79,7 +80,6 @@ class AccountController extends Controller
         Account::where("id", $inputData["id"])
             ->update([
                 "title" => $inputData["title"],
-                "amount" => $inputData["amount"],
                 "type" => $inputData["type"]
             ]);
     }
@@ -112,9 +112,74 @@ class AccountController extends Controller
         $data = $request->post();
         Account::insert([
             "title" => $data["title"],
-            "amount" => $data["amount"],
             "type" => $data["type"],
             "user_id" => $data["userId"],
         ]);
+    }
+
+    public function loadDebtAndBalanceByUserId($userId)
+    {
+
+        $accounts = Account::where("user_id", $userId)
+            ->select("id", "title", "type")
+            ->get()->toArray();
+
+        $outputData =
+            [
+                "account" => [],
+                "debt" => [],
+                "saving" => [],
+            ];
+
+        $operations = Operation::join("categories", "operations.category_id", "categories.id")
+            ->select(
+                "operations.id",
+                "operations.amount",
+                "operations.account_id",
+                "categories.type"
+            )
+            ->get()->toArray();
+
+        for ($i = 0; $i < count($accounts); $i++) {
+            $accounts[$i]["amount"] = 0;
+            for ($k = 0; $k < count($operations); $k++) {
+                if ($accounts[$i]["id"] === $operations[$k]["account_id"]) {
+                    switch ($operations[$k]["type"]) {
+                        case "income":
+                            $accounts[$i]["amount"] = (float)$accounts[$i]["amount"] + (float)$operations[$k]["amount"];
+                            break;
+                        case "expenses":
+                            $accounts[$i]["amount"] = (float)$accounts[$i]["amount"] - (float)$operations[$k]["amount"];
+                            break;
+                    }
+                }
+            }
+            $accounts[$i]["amount"] = (string)$accounts[$i]["amount"];
+        }
+        for ($i = 0; $i < count($accounts); $i++) {
+            switch ($accounts[$i]["type"]) {
+                case "account":
+                    $outputData["account"] = (float)$outputData["account"] + (float)$accounts[$i]["amount"];
+                    break;
+                case "debt":
+                    $outputData["debt"] = (float)$outputData["debt"] + (float)$accounts[$i]["amount"];
+                    break;
+                case "saving":
+                    $outputData["saving"] = (float)$outputData["saving"] + (float)$accounts[$i]["amount"];
+                    break;
+            }
+        }
+
+        if(empty($outputData["account"])) {
+            $outputData["account"] = 0;
+        }
+        if(empty($outputData["debt"])) {
+            $outputData["debt"] = 0;
+        }
+        if(empty($outputData["saving"])) {
+            $outputData["saving"] = 0;
+        }
+
+        return $outputData;
     }
 }

@@ -41,6 +41,9 @@ Route::post("updateOperationById", [OperationController::class, "updateOperation
 Route::get("deleteOperationById/{id}", [OperationController::class, "deleteOperationById"]);
 Route::post("insertOperationByUserId", [OperationController::class, "insertOperationByUserId"]);
 
+Route::post("loadCurrentBalanceByUserId", [OperationController::class, "loadCurrentBalanceByUserId"]);
+Route::get("loadDebtAndBalanceByUserId/{userId}", [AccountController::class, "loadDebtAndBalanceByUserId"]);
+
 Route::post("userCheck", [UserController::class, "userCheck"]);
 Route::get("getAllUsers", [UserController::class, "getAllUsers"]);
 Route::get("findUserData/{email}", [UserController::class, "findUserData"]);

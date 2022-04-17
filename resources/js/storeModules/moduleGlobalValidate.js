@@ -5,6 +5,7 @@ const moduleGlobalValidate = {
             descriptionError: "",
             amountError: "",
             timeError: "",
+            timeTwoError: "",
             selectedError: "",
             imgError: "",
         };
@@ -17,6 +18,7 @@ const moduleGlobalValidate = {
                 descriptionError,
                 amountError,
                 timeError,
+                timeTwoError,
                 selectedError,
                 imgError,
             }
@@ -25,6 +27,7 @@ const moduleGlobalValidate = {
             state.descriptionError = descriptionError;
             state.amountError = amountError;
             state.timeError = timeError;
+            state.timeTwoError = timeTwoError;
             state.selectedError = selectedError;
             state.imgError = imgError;
         },
@@ -33,6 +36,7 @@ const moduleGlobalValidate = {
             state.descriptionError = "";
             state.amountError = "";
             state.timeError = "";
+            state.timeTwoError = "";
             state.selectedError = "";
             state.imgError = "";
         },
@@ -48,6 +52,9 @@ const moduleGlobalValidate = {
         setTimeError(state, value) {
             state.timeError = value;
         },
+        setTimeTwoError(state, value) {
+            state.timeTwoError = value;
+        },
         setSelectedError(state, value) {
             state.selectedError = value;
         },
@@ -62,6 +69,7 @@ const moduleGlobalValidate = {
                 descriptionError: state.descriptionError,
                 amountError: state.amountError,
                 timeError: state.timeError,
+                timeTwoError: state.timeTwoError,
                 selectedError: state.selectedError,
                 imgError: state.imgError,
             };
@@ -72,6 +80,7 @@ const moduleGlobalValidate = {
                 state.descriptionError === "" &&
                 state.amountError === "" &&
                 state.timeError === "" &&
+                state.timeTwoError === "" &&
                 state.selectedError === "" &&
                 state.imgError === ""
             ) {
@@ -82,6 +91,7 @@ const moduleGlobalValidate = {
                     descriptionError: state.descriptionError,
                     amountError: state.amountError,
                     timeError: state.timeError,
+                    timeTwoError: state.timeTwoError,
                     selectedError: state.selectedError,
                     imgError: state.imgError,
                 };
@@ -98,6 +108,9 @@ const moduleGlobalValidate = {
         },
         getTimeError(state) {
             return state.timeError;
+        },
+        getTimeTwoError(state) {
+            return state.timeTwoError;
         },
         getSelectedError(state) {
             return state.selectedError;
@@ -126,6 +139,7 @@ const moduleGlobalValidate = {
                     descriptionError: variable["description"],
                     amountError: variable["amount"],
                     timeError: variable["time"],
+                    timeTwoError: variable["timeTwo"],
                     selectedError: variable["selected"],
                     imgError: variable["img"],
                 });
@@ -135,6 +149,7 @@ const moduleGlobalValidate = {
                     descriptionError: "",
                     amountError: "",
                     timeError: "",
+                    timeTwoError: "",
                     selectedError: "",
                     imgError: "",
                 });

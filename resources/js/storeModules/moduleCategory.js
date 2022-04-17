@@ -47,6 +47,7 @@ const moduleCategory = {
                 .catch((error) => console.log(error));
             dispatch("loadIncomeOperatonsByCat", variable);
             commit("setCategories", variable);
+            // dispatch("loadCurrentBalanceByUserId");
         },
         async loadExpensesCategoriesFromDB({ commit, getters, dispatch }) {
             let variable;
@@ -59,6 +60,7 @@ const moduleCategory = {
                 .catch((error) => console.log(error));
             dispatch("loadExpensesOperatonsByCat");
             commit("setCategories", variable);
+            // dispatch("loadCurrentBalanceByUserId");
         },
         async loadIncomeOperatonsByCat({ commit, getters }) {
             let variable;
@@ -118,6 +120,7 @@ const moduleCategory = {
                 description: "notValidateCode",
                 amount: "notValidateCode",
                 time: "notValidateCode",
+                timeTwo: "notValidateCode",
                 selected: "notValidateCode",
                 img: newDataCategory["img_url"],
             });
@@ -158,6 +161,7 @@ const moduleCategory = {
                 description: "notValidateCode",
                 amount: "notValidateCode",
                 time: "notValidateCode",
+                timeTwo: "notValidateCode",
                 selected: "notValidateCode",
                 img: changedDataCategory["img_url"],
             });

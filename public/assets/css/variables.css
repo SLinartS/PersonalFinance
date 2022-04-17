@@ -37,6 +37,10 @@
     --category-dark-green: #14721F;
 
 
+    --current-balance-green: rgba(0, 192, 99, 0.2);
+    --current-balance-reg: rgba(219, 69, 55, 0.2);
+
+
     --main-font: "Roboto", sans-serif;
 
     --animation: 0.155s ease-in-out;

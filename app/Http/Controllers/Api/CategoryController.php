@@ -99,12 +99,14 @@ class CategoryController extends Controller
             ->select(
                 "accounts.id",
                 "accounts.title",
-                "accounts.amount",
                 "accounts.type",
             )
             ->where("categories.id", $id)
             ->get()->toArray();
 
+        for ($i = 0; $i < count($accounts); $i++) {
+
+        }
 
         $operations = Operation::join("categories", "operations.category_id", "categories.id")
             ->select(
@@ -116,6 +118,7 @@ class CategoryController extends Controller
             ->get()->toArray();
 
         for ($i = 0; $i < count($accounts); $i++) {
+            $accounts[$i]["amount"] = 0;
             for ($k = 0; $k < count($operations); $k++) {
                 if ($accounts[$i]["id"] === $operations[$k]["account_id"]) {
                     switch ($operations[$k]["type"]) {

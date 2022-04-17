@@ -1,11 +1,12 @@
 .operation-search {
     display: flex;
     justify-items: center;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
     margin: 0 auto 0 auto;
     font-weight: 700;
     width: 100%;
+    min-height: 13rem;
     color: var(--main-black)
 }
 
@@ -21,6 +22,7 @@
     border: none;
     background-color: var(--main-white);
 }
+
 
 .operation-search__input:focus {
     border: none;

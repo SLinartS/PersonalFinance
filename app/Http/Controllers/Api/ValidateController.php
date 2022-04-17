@@ -18,6 +18,7 @@ class ValidateController extends Controller
             "description" => null,
             "amount" => null,
             "time" => null,
+            "timeTwo" => null,
             "selected" => null,
             "img" => null,
         ];
@@ -27,6 +28,7 @@ class ValidateController extends Controller
             "description" => 'required|min:4|max:20',
             "amount" => 'required|numeric|max:999999999999999',
             "time" => 'required|date_format:Y-m-d H:i:s',
+            "timeTwo" => 'required|date_format:Y-m-d H:i:s',
             "selected" => 'required',
             "img" => 'required',
         ]);
@@ -43,6 +45,9 @@ class ValidateController extends Controller
         if ($validator->errors()->first("time") && $data["time"] !== "notValidateCode") {
             $errors["time"] =  $validator->errors()->first("time");
         }
+        if ($validator->errors()->first("timeTwo") && $data["timeTwo"] !== "notValidateCode") {
+            $errors["timeTwo"] =  $validator->errors()->first("timeTwo");
+        }
         if ($validator->errors()->first("selected") && $data["selected"] !== "notValidateCode") {
             $errors["selected"] =  $validator->errors()->first("selected");
         }
@@ -56,6 +61,7 @@ class ValidateController extends Controller
             isset($errors["description"]) ||
             isset($errors["amount"]) ||
             isset($errors["time"]) ||
+            isset($errors["timeTwo"]) ||
             isset($errors["selected"]) ||
             isset($errors["img"])
         ) {

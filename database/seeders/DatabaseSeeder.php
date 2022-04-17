@@ -40,32 +40,27 @@ class DatabaseSeeder extends Seeder
 
         DB::table('accounts')->insert([
             'title' => 'Наличные',
-            'amount' => '194.5',
             'type' => 'account',
             'user_id' => 2,
         ]);
         DB::table('accounts')->insert([
             'title' => 'Карта ВТБ',
-            'amount' => '0',
             'type' => 'account',
             'user_id' => 2,
         ]);
         DB::table('accounts')->insert([
             'title' => 'Карта Альфа Банк',
-            'amount' => '76.05',
             'type' => 'account',
             'user_id' => 2,
         ]);
 
         DB::table('accounts')->insert([
             'title' => 'Кредит',
-            'amount' => '197494.72',
             'type' => 'debt',
             'user_id' => 2,
         ]);
         DB::table('accounts')->insert([
             'title' => 'Долг Андрею',
-            'amount' => '1000',
             'type' => 'debt',
             'user_id' => 2,
         ]);
@@ -242,16 +237,15 @@ class DatabaseSeeder extends Seeder
         DB::table('operations')->insert([
             'description' => 'Зарплата',
             'amount' => "10000",
-            'time' => "2022-03-29 00:00:00",
+            'time' => "2022-04-01 01:00:00",
             "account_id" => 1,
             "category_id" => 12,
             "user_id" => 2,
-
         ]);
         DB::table('operations')->insert([
             'description' => 'Подарок от друга',
             'amount' => "500",
-            'time' => "2022-03-28 00:00:00",
+            'time' => "2022-04-01 06:00:00",
             "account_id" => 2,
             "category_id" => 13,
             "user_id" => 2,
@@ -259,7 +253,7 @@ class DatabaseSeeder extends Seeder
         DB::table('operations')->insert([
             'description' => 'Корм коту',
             'amount' => "300",
-            'time' => "2022-04-03 00:00:00",
+            'time' => "2022-04-03 12:00:00",
             "account_id" => 3,
             "category_id" => 3,
             "user_id" => 2,
@@ -267,7 +261,7 @@ class DatabaseSeeder extends Seeder
         DB::table('operations')->insert([
             'description' => 'Еда для дома',
             'amount' => "8000",
-            'time' => "2022-04-03 01:00:00",
+            'time' => "2022-04-10 06:25:00",
             "account_id" => 4,
             "category_id" => 4,
             "user_id" => 2,
@@ -275,7 +269,7 @@ class DatabaseSeeder extends Seeder
         DB::table('operations')->insert([
             'description' => 'Потерял деньги',
             'amount' => "2000",
-            'time' => "2021-04-29 06:00:00",
+            'time' => "2022-04-24 23:59:00",
             "account_id" => 5,
             "category_id" => 4,
             "user_id" => 2,
@@ -283,7 +277,7 @@ class DatabaseSeeder extends Seeder
         DB::table('operations')->insert([
             'description' => 'Поел в столовой',
             'amount' => "1000",
-            'time' => "2021-04-29 00:00:00",
+            'time' => "2022-04-024 21:30:00",
             "account_id" => 1,
             "category_id" => 4,
             "user_id" => 2,
@@ -291,7 +285,7 @@ class DatabaseSeeder extends Seeder
         DB::table('operations')->insert([
             'description' => 'Купил попить',
             'amount' => "50",
-            'time' => "2021-04-29 03:00:00",
+            'time' => "2022-04-29 15:00:00",
             "account_id" => 2,
             "category_id" => 4,
             "user_id" => 2,

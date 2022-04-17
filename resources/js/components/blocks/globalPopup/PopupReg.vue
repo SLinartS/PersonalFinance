@@ -94,7 +94,6 @@ export default {
         togglePopupReg() {
             this.$store.commit("togglePopupReg", false)
             this.$store.commit("changeErrors", {})
-
         },
         submitForm() {
             this.$store.dispatch("validateFieldsAuthReg", 1)

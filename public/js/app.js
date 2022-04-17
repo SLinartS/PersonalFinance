@@ -23039,7 +23039,6 @@ __webpack_require__.r(__webpack_exports__);
     return {
       id: "",
       title: "",
-      amount: " ",
       type: "",
       computedWork: true
     };
@@ -23048,11 +23047,9 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     currentData: function currentData() {
       if (this.computedWork && this.currentPopupBalanceChange["typeAction"] === "change") {
-        console.log("!!!");
         var getData = this.$store.getters.getChangedAccountData;
         this.type = getData["type"];
         this.title = getData["title"];
-        this.amount = getData["amount"];
         this.id = getData["id"];
 
         if (this.title) {
@@ -23067,9 +23064,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     titleError: function titleError() {
       return this.$store.getters.getAllErrors["titleError"];
-    },
-    amountError: function amountError() {
-      return this.$store.getters.getAllErrors["amountError"];
     }
   },
   methods: {
@@ -23083,18 +23077,15 @@ __webpack_require__.r(__webpack_exports__);
       this.$store.commit("clearAllErrors");
     },
     updateAccountItem: function updateAccountItem() {
-      console.log(this.title);
       this.$store.dispatch("updateAccountById", {
         id: this.id,
         title: this.title,
-        amount: this.amount,
         type: this.type
       });
     },
     addAccountItem: function addAccountItem() {
       this.$store.dispatch("insertAccountByType", {
         title: this.title,
-        amount: this.amount,
         type: this.currentPopupBalanceChange["typeBlock"]
       });
     }
@@ -23392,7 +23383,78 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      inColor: false,
+      exColor: false
+    };
+  },
+  props: {
+    rangeStart: String,
+    rangeEnd: String,
+    updateSearchTrigger: Number
+  },
+  watch: {
+    updateSearchTrigger: function updateSearchTrigger() {
+      this.$store.dispatch("loadCurrentBalanceByUserId", {
+        rangeStart: this.rangeStart + ":00",
+        rangeEnd: this.rangeEnd + ":00"
+      });
+    }
+  },
+  // watch: {
+  //     $route(to, from) {
+  //         this.getCurrentBalanceByUserId();
+  //     },
+  // },
+  computed: {
+    getCurrentBalance: function getCurrentBalance() {
+      return this.$store.getters.getCurrentBalance;
+    },
+    currentIncome: function currentIncome() {
+      return this.getCurrentBalance["income"];
+    },
+    currentExpenses: function currentExpenses() {
+      return this.getCurrentBalance["expenses"];
+    },
+    currentResult: function currentResult() {
+      var result = this.currentIncome - this.currentExpenses;
+
+      if (result < 0) {
+        this.inColor = false;
+        this.exColor = true;
+      } else {
+        this.inColor = true;
+        this.exColor = false;
+      }
+
+      return result.toFixed(2);
+    },
+    incomePersent: function incomePersent() {
+      var sum = this.currentIncome + this.currentExpenses;
+      return Math.round(this.currentIncome / sum * 100);
+    },
+    expensesPersent: function expensesPersent() {
+      var sum = this.currentIncome + this.currentExpenses;
+      return Math.round(this.currentExpenses / sum * 100);
+    }
+  },
+  methods: {
+    getCurrentBalanceByUserId: function getCurrentBalanceByUserId() {
+      this.$store.dispatch("loadCurrentBalanceByUserId", {
+        rangeStart: "1970-01-01 00:00:00",
+        rangeEnd: moment__WEBPACK_IMPORTED_MODULE_0___default()().format("YYYY-MM-DD HH:mm:ss")
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.getCurrentBalanceByUserId();
+  }
+});
 
 /***/ }),
 
@@ -23772,6 +23834,34 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/blocks/globalPopup/PopupSetting.vue?vue&type=script&lang=js":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/blocks/globalPopup/PopupSetting.vue?vue&type=script&lang=js ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "PopupSetting",
+  data: function data() {
+    return {};
+  },
+  watch: {},
+  computed: {},
+  methods: {
+    togglePopupSetting: function togglePopupSetting() {
+      this.$store.commit("togglePopupSetting", false);
+      this.$store.commit("changeErrors", {});
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/blocks/operation/DateBlock.vue?vue&type=script&lang=js":
 /*!********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/blocks/operation/DateBlock.vue?vue&type=script&lang=js ***!
@@ -23919,20 +24009,74 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var air_datepicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! air-datepicker */ "./node_modules/air-datepicker/index.es.js");
-/* harmony import */ var air_datepicker_air_datepicker_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! air-datepicker/air-datepicker.css */ "./node_modules/air-datepicker/air-datepicker.css");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var air_datepicker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! air-datepicker */ "./node_modules/air-datepicker/index.es.js");
+/* harmony import */ var air_datepicker_air_datepicker_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! air-datepicker/air-datepicker.css */ "./node_modules/air-datepicker/air-datepicker.css");
+/* harmony import */ var _public_assets_files_images_magnifying_glass_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../public/assets/files/images/magnifying-glass.svg */ "./public/assets/files/images/magnifying-glass.svg");
+/* harmony import */ var _public_assets_files_images_circle_exclamation_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../../public/assets/files/images/circle-exclamation.svg */ "./public/assets/files/images/circle-exclamation.svg");
+
+
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     modelValue: String
   },
+  data: function data() {
+    return {
+      searchImg: _public_assets_files_images_magnifying_glass_svg__WEBPACK_IMPORTED_MODULE_3__["default"],
+      errorImg: _public_assets_files_images_circle_exclamation_svg__WEBPACK_IMPORTED_MODULE_4__["default"],
+      rangeStart: "",
+      rangeEnd: ""
+    };
+  },
+  computed: {
+    timeError: function timeError() {
+      return this.$store.getters.getAllErrors["timeError"];
+    },
+    timeTwoError: function timeTwoError() {
+      return this.$store.getters.getAllErrors["timeTwoError"];
+    }
+  },
+  methods: {
+    updateSearch: function updateSearch() {
+      this.rangeStart = this.$refs.operSearchTimeStart.value;
+      this.rangeEnd = this.$refs.operSearchTimeEnd.value;
+      this.$emit("updateSearchTime", {
+        rangeStart: this.rangeStart,
+        rangeEnd: this.rangeEnd
+      });
+    }
+  },
   mounted: function mounted() {
-    new air_datepicker__WEBPACK_IMPORTED_MODULE_0__["default"]("#timeOperationSearch", {
+    new air_datepicker__WEBPACK_IMPORTED_MODULE_1__["default"]("#timeAnalytics", {
       timepicker: true,
       minutesStep: 5,
-      range: true
+      autoClose: true,
+      range: true,
+      dateFormat: "yyyy-MM-dd",
+      onSelect: function onSelect(_ref) {
+        var date = _ref.date,
+            formattedDate = _ref.formattedDate,
+            datepicker = _ref.datepicker;
+
+        if (formattedDate[0]) {
+          document.querySelector("#timeOperationSearchStart").value = formattedDate[0];
+        } else {
+          document.querySelector("#timeOperationSearchStart").value = "";
+        }
+
+        if (formattedDate[1]) {
+          document.querySelector("#timeOperationSearchEnd").value = formattedDate[1];
+        } else {
+          document.querySelector("#timeOperationSearchEnd").value = "";
+        }
+      }
     });
+    this.$store.commit("setSearchRangeStart", "1970-01-01 00:00:00");
+    this.$store.commit("setSearchRangeEnd", moment__WEBPACK_IMPORTED_MODULE_0___default()().format("YYYY-MM-DD HH:mm:ss"));
   }
 });
 
@@ -24144,10 +24288,87 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var air_datepicker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! air-datepicker */ "./node_modules/air-datepicker/index.es.js");
+/* harmony import */ var air_datepicker_air_datepicker_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! air-datepicker/air-datepicker.css */ "./node_modules/air-datepicker/air-datepicker.css");
+/* harmony import */ var _public_assets_files_images_magnifying_glass_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../public/assets/files/images/magnifying-glass.svg */ "./public/assets/files/images/magnifying-glass.svg");
+/* harmony import */ var _public_assets_files_images_circle_exclamation_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../public/assets/files/images/circle-exclamation.svg */ "./public/assets/files/images/circle-exclamation.svg");
+/* harmony import */ var _blocks_category_CurrentBalance_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../blocks/category/CurrentBalance.vue */ "./resources/js/components/blocks/category/CurrentBalance.vue");
+
+
+
+
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "AnalyticsPage",
+  components: {
+    CurrentBalance: _blocks_category_CurrentBalance_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+  },
   data: function data() {
-    return {};
+    return {
+      searchImg: _public_assets_files_images_magnifying_glass_svg__WEBPACK_IMPORTED_MODULE_3__["default"],
+      errorImg: _public_assets_files_images_circle_exclamation_svg__WEBPACK_IMPORTED_MODULE_4__["default"],
+      time: "",
+      rangeStart: "",
+      rangeEnd: "",
+      updateSearchTrigger: 1
+    };
+  },
+  computed: {
+    getCurrentDebtAndBalance: function getCurrentDebtAndBalance() {
+      return this.$store.getters.getCurrentDebtAndBalance;
+    },
+    currentAccount: function currentAccount() {
+      return this.getCurrentDebtAndBalance["account"];
+    },
+    currentDebt: function currentDebt() {
+      return this.getCurrentDebtAndBalance["debt"];
+    },
+    currentSaving: function currentSaving() {
+      return this.getCurrentDebtAndBalance["saving"];
+    },
+    timeError: function timeError() {
+      return this.$store.getters.getAllErrors["timeError"];
+    },
+    timeTwoError: function timeTwoError() {
+      return this.$store.getters.getAllErrors["timeTwoError"];
+    }
+  },
+  methods: {
+    updateSearch: function updateSearch() {
+      this.rangeStart = this.$refs.operAddTimeStart.value;
+      this.rangeEnd = this.$refs.operAddTimeEnd.value;
+      this.updateSearchTrigger = !this.updateSearchTrigger;
+    }
+  },
+  mounted: function mounted() {
+    new air_datepicker__WEBPACK_IMPORTED_MODULE_1__["default"]("#timeAnalytics", {
+      timepicker: true,
+      minutesStep: 5,
+      autoClose: true,
+      range: true,
+      dateFormat: "yyyy-MM-dd",
+      onSelect: function onSelect(_ref) {
+        var date = _ref.date,
+            formattedDate = _ref.formattedDate,
+            datepicker = _ref.datepicker;
+
+        if (formattedDate[0]) {
+          document.querySelector("#inputOperAddStart").value = formattedDate[0];
+        } else {
+          document.querySelector("#inputOperAddStart").value = "";
+        }
+
+        if (formattedDate[1]) {
+          document.querySelector("#inputOperAddEnd").value = formattedDate[1];
+        } else {
+          document.querySelector("#inputOperAddEnd").value = "";
+        }
+      }
+    });
+    this.$store.dispatch("loadDebtAndBalanceByUserId");
   }
 });
 
@@ -24306,10 +24527,16 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.loadDateByUserId();
+    this.loadDateByUserIdText();
   },
   methods: {
-    loadDateByUserId: function loadDateByUserId() {
+    loadDateByUserIdText: function loadDateByUserIdText() {
+      this.$store.dispatch("loadOperationByUserId");
+    },
+    loadDateByUserIdTime: function loadDateByUserIdTime(range) {
+      console.log(range);
+      this.$store.commit("setSearchRangeStart", range["rangeStart"] + ":00");
+      this.$store.commit("setSearchRangeEnd", range["rangeEnd"] + ":00");
       this.$store.dispatch("loadOperationByUserId");
     }
   },
@@ -24365,6 +24592,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _blocks_operation_PopupOperationDelete_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../blocks/operation/PopupOperationDelete.vue */ "./resources/js/components/blocks/operation/PopupOperationDelete.vue");
 /* harmony import */ var _blocks_category_PopupOperationAdd_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../blocks/category/PopupOperationAdd.vue */ "./resources/js/components/blocks/category/PopupOperationAdd.vue");
 /* harmony import */ var _blocks_category_PopupCategoryChange_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../blocks/category/PopupCategoryChange.vue */ "./resources/js/components/blocks/category/PopupCategoryChange.vue");
+/* harmony import */ var _blocks_globalPopup_PopupSetting_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../blocks/globalPopup/PopupSetting.vue */ "./resources/js/components/blocks/globalPopup/PopupSetting.vue");
+
 
 
 
@@ -24380,6 +24609,7 @@ __webpack_require__.r(__webpack_exports__);
     PopupReg: _blocks_globalPopup_PopupReg__WEBPACK_IMPORTED_MODULE_2__["default"],
     PopupAuth: _blocks_globalPopup_PopupAuth__WEBPACK_IMPORTED_MODULE_1__["default"],
     PopupNav: _blocks_globalPopup_PopupNav__WEBPACK_IMPORTED_MODULE_0__["default"],
+    PopupSetting: _blocks_globalPopup_PopupSetting_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
     PopupBalanceChange: _blocks_balance_PopupBalanceChange_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
     PopupBalanceDelete: _blocks_balance_PopupBalanceDelete_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
     PopupOperationChange: _blocks_operation_PopupOperationChange_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
@@ -24403,6 +24633,9 @@ __webpack_require__.r(__webpack_exports__);
     popupReg: function popupReg() {
       return this.$store.getters.popupReg;
     },
+    popupSetting: function popupSetting() {
+      return this.$store.getters.popupSetting;
+    },
     popupBalanceChange: function popupBalanceChange() {
       return this.$store.getters.popupBalanceChange;
     },
@@ -24425,7 +24658,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     exitAccount: function exitAccount() {
       this.$router.push({
-        name: 'main',
+        name: "main",
         params: {}
       });
       this.$store.commit("setAuthStatus", {
@@ -24717,22 +24950,11 @@ var _hoisted_5 = ["value"];
 var _hoisted_6 = {
   "class": "error-p"
 };
-
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", {
-  "class": "change__block-title"
-}, "Сумма", -1
-/* HOISTED */
-);
-
-var _hoisted_8 = ["value"];
-var _hoisted_9 = {
-  "class": "error-p"
-};
-var _hoisted_10 = {
+var _hoisted_7 = {
   key: 0,
   "class": "balance-change__button-section"
 };
-var _hoisted_11 = {
+var _hoisted_8 = {
   key: 1,
   "class": "balance-change__button-section"
 };
@@ -24750,39 +24972,28 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS, HYDRATE_EVENTS */
   , _hoisted_5), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.titleError), 1
   /* TEXT */
-  ), _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    type: "text",
-    "class": "change__block-input",
-    onInput: _cache[1] || (_cache[1] = function (e) {
-      return $data.amount = e.target.value;
-    }),
-    value: $data.amount
-  }, null, 40
-  /* PROPS, HYDRATE_EVENTS */
-  , _hoisted_8), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.amountError), 1
-  /* TEXT */
-  )]), $options.currentPopupBalanceChange['typeAction'] === 'change' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  )]), $options.currentPopupBalanceChange['typeAction'] === 'change' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "button button--cancel balance-change__button",
-    onClick: _cache[2] || (_cache[2] = function () {
+    onClick: _cache[1] || (_cache[1] = function () {
       return $options.togglePopupBalanceChange && $options.togglePopupBalanceChange.apply($options, arguments);
     })
   }, " Отмена "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
-    onClick: _cache[3] || (_cache[3] = function () {
+    onClick: _cache[2] || (_cache[2] = function () {
       return $options.updateAccountItem && $options.updateAccountItem.apply($options, arguments);
     }),
     "class": "button button--save balance-change__button",
     href: ""
-  }, " Сохранить ")])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, " Сохранить ")])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "button button--cancel balance-change__button",
-    onClick: _cache[4] || (_cache[4] = function () {
+    onClick: _cache[3] || (_cache[3] = function () {
       return $options.togglePopupBalanceChange && $options.togglePopupBalanceChange.apply($options, arguments);
     })
   }, " Отмена "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
-    onClick: _cache[5] || (_cache[5] = function () {
+    onClick: _cache[4] || (_cache[4] = function () {
       return $options.addAccountItem && $options.addAccountItem.apply($options, arguments);
     }),
     "class": "button button--save balance-change__button",
@@ -25071,12 +25282,63 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "current-balance"
 };
+var _hoisted_2 = {
+  "class": "current-balance__elem current-balance__elem--income"
+};
 
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"current-balance__elem current-balance__elem--income\"><h3 class=\"current-balance__title\">Поступления</h3><p class=\"current-balance__amount income\">25 463,86 ₽</p></div><div class=\"current-balance__elem current-balance__elem--result\"><h3 class=\"current-balance__title\">Итог</h3><p class=\"current-balance__amount current-balance__amount--result\"> 16 417,72 ₽ </p></div><div class=\"current-balance__elem current-balance__elem--expenses\"><h3 class=\"current-balance__title\">Расходы</h3><p class=\"current-balance__amount expenses\">9 046,14 ₽</p></div>", 3);
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
+  "class": "current-balance__title"
+}, "Поступления", -1
+/* HOISTED */
+);
 
-var _hoisted_5 = [_hoisted_2];
+var _hoisted_4 = {
+  "class": "current-balance__amount income"
+};
+var _hoisted_5 = {
+  "class": "current-balance__elem current-balance__elem--result"
+};
+
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
+  "class": "current-balance__title"
+}, "Итог", -1
+/* HOISTED */
+);
+
+var _hoisted_7 = {
+  "class": "current-balance__elem current-balance__elem--expenses"
+};
+
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
+  "class": "current-balance__title"
+}, "Расходы", -1
+/* HOISTED */
+);
+
+var _hoisted_9 = {
+  "class": "current-balance__amount expenses"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, _hoisted_5);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+    "class": "current-balance__color-block",
+    style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
+      background: "linear-gradient(to right, var(--current-balance-green) ".concat($options.incomePersent, "%, var(--current-balance-reg) ").concat($options.incomePersent, "%)")
+    })
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.currentIncome) + " ₽ ", 1
+  /* TEXT */
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['current-balance__amount', {
+      'current-balance__amount--result--income': $data.inColor
+    }, {
+      'current-balance__amount--result--expenses': $data.exColor
+    }])
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.currentResult) + " ₽ ", 3
+  /* TEXT, CLASS */
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.currentExpenses) + " ₽ ", 1
+  /* TEXT */
+  )])])], 4
+  /* STYLE */
+  );
 }
 
 /***/ }),
@@ -25873,6 +26135,59 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/blocks/globalPopup/PopupSetting.vue?vue&type=template&id=73ad2718":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/blocks/globalPopup/PopupSetting.vue?vue&type=template&id=73ad2718 ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = {
+  "class": "auth-reg auth-reg--reg"
+};
+var _hoisted_2 = {
+  "class": "auth-reg__header"
+};
+
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", {
+  "class": "auth-reg__header__title"
+}, "Настройки", -1
+/* HOISTED */
+);
+
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
+  d: "M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_5 = [_hoisted_4];
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("svg", {
+    onClick: _cache[0] || (_cache[0] = function () {
+      return $options.togglePopupSetting && $options.togglePopupSetting.apply($options, arguments);
+    }),
+    "class": "icon-close icon-close--auth-reg",
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 320 512"
+  }, _hoisted_5))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+    action: "",
+    onSubmit: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+      return _ctx.submitForm && _ctx.submitForm.apply(_ctx, arguments);
+    }, ["prevent"]))
+  }, null, 32
+  /* HYDRATE_EVENTS */
+  )]);
+}
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/blocks/operation/DateBlock.vue?vue&type=template&id=7266a439":
 /*!************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/blocks/operation/DateBlock.vue?vue&type=template&id=7266a439 ***!
@@ -26003,39 +26318,93 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "operation-search"
 };
-var _hoisted_2 = ["value"];
+var _hoisted_2 = {
+  "class": "change__block__time-block"
+};
+var _hoisted_3 = {
+  "class": "analytics-input-block"
+};
 
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  "class": "input-calendar",
+  id: "timeAnalytics",
+  type: "button"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_5 = {
+  id: "timeOperationSearchStart",
+  ref: "operSearchTimeStart",
+  type: "datetime",
+  "class": "change__block-input change__block-input--datetime"
+};
+var _hoisted_6 = ["src"];
+var _hoisted_7 = {
+  "class": "analytics-input-block"
+};
+var _hoisted_8 = ["src"];
+var _hoisted_9 = {
+  id: "timeOperationSearchEnd",
+  ref: "operSearchTimeEnd",
+  type: "datetime",
+  "class": "change__block-input change__block-input--datetime"
+};
+var _hoisted_10 = ["src"];
+
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "operation-search__label",
   "for": ""
 }, "Поиск: ", -1
 /* HOISTED */
 );
 
-var _hoisted_4 = ["value"];
+var _hoisted_12 = ["value"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    id: "timeOperationSearch",
-    ref: "operAddTime",
-    type: "datetime",
-    "class": "change__block-input change__block-input--operation-search",
-    value: _ctx.currentTime
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", _hoisted_5, null, 512
+  /* NEED_PATCH */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['search-error-img', {
+      hiddenOpacity: !$options.timeError
+    }]),
+    src: $data.errorImg,
+    alt: ""
+  }, null, 10
+  /* CLASS, PROPS */
+  , _hoisted_6)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    "class": "icon-search",
+    src: $data.searchImg,
+    onClick: _cache[0] || (_cache[0] = function () {
+      return $options.updateSearch && $options.updateSearch.apply($options, arguments);
+    }),
+    alt: ""
   }, null, 8
   /* PROPS */
-  , _hoisted_2), _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  , _hoisted_8), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", _hoisted_9, null, 512
+  /* NEED_PATCH */
+  ), $options.timeTwoError ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", {
+    key: 0,
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['search-error-img', {
+      hiddenOpacity: !$options.timeTwoError
+    }]),
+    src: $data.errorImg,
+    alt: ""
+  }, null, 10
+  /* CLASS, PROPS */
+  , _hoisted_10)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "class": "operation-search__input",
     value: $props.modelValue,
-    onInput: _cache[0] || (_cache[0] = function ($event) {
+    onInput: _cache[1] || (_cache[1] = function ($event) {
       return _ctx.$emit('update:modelValue', $event.target.value);
     }),
-    onKeydown: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)(function ($event) {
-      return _ctx.$emit('goSearch');
+    onKeydown: _cache[2] || (_cache[2] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)(function ($event) {
+      return _ctx.$emit('updateSearchText');
     }, ["enter"])),
     placeholder: "Покормил кота..",
     type: "text"
   }, null, 40
   /* PROPS, HYDRATE_EVENTS */
-  , _hoisted_4)]);
+  , _hoisted_12)]);
 }
 
 /***/ }),
@@ -26237,12 +26606,128 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "analytics"
 };
+var _hoisted_2 = {
+  "class": "analytics__main-bar"
+};
+var _hoisted_3 = {
+  "class": "analytics__main-bar__calendar"
+};
+var _hoisted_4 = {
+  "class": "change__block__time-block"
+};
+var _hoisted_5 = {
+  "class": "analytics-input-block"
+};
 
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"analytics__main-bar\"><div class=\"analytics__main-bar__calendar\"><svg class=\"icon-calendar\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 448 512\"><path d=\"M160 32V64H288V32C288 14.33 302.3 0 320 0C337.7 0 352 14.33 352 32V64H400C426.5 64 448 85.49 448 112V160H0V112C0 85.49 21.49 64 48 64H96V32C96 14.33 110.3 0 128 0C145.7 0 160 14.33 160 32zM0 192H448V464C448 490.5 426.5 512 400 512H48C21.49 512 0 490.5 0 464V192zM64 304C64 312.8 71.16 320 80 320H112C120.8 320 128 312.8 128 304V272C128 263.2 120.8 256 112 256H80C71.16 256 64 263.2 64 272V304zM192 304C192 312.8 199.2 320 208 320H240C248.8 320 256 312.8 256 304V272C256 263.2 248.8 256 240 256H208C199.2 256 192 263.2 192 272V304zM336 256C327.2 256 320 263.2 320 272V304C320 312.8 327.2 320 336 320H368C376.8 320 384 312.8 384 304V272C384 263.2 376.8 256 368 256H336zM64 432C64 440.8 71.16 448 80 448H112C120.8 448 128 440.8 128 432V400C128 391.2 120.8 384 112 384H80C71.16 384 64 391.2 64 400V432zM208 384C199.2 384 192 391.2 192 400V432C192 440.8 199.2 448 208 448H240C248.8 448 256 440.8 256 432V400C256 391.2 248.8 384 240 384H208zM320 432C320 440.8 327.2 448 336 448H368C376.8 448 384 440.8 384 432V400C384 391.2 376.8 384 368 384H336C327.2 384 320 391.2 320 400V432z\"></path></svg><p class=\"analytics__main-bar__date\">14-20 марта 2022</p></div><div class=\"analytics__main-bar__elem-result\"><h3 class=\"analytics__main-bar__title\">Текущий баланс:</h3><p class=\"analytics__main-bar__amount-result result\">106 457,69 ₽</p></div><div class=\"analytics__main-bar__additional-information\"><div class=\"analytics__main-bar__elem-middle-day\"><h3 class=\"analytics__main-bar__title\">Ср. день</h3><p class=\"analytics__main-bar__amount analytics__setting-amount--middle-day expenses\">16 417,72 ₽</p></div><div class=\"analytics__main-bar__elem-middle-week\"><h3 class=\"analytics__main-bar__title\">Ср. неделя</h3><p class=\"analytics__main-bar__amount analytics__setting__amount--middle-week expenses\">9 046,14 ₽</p></div></div></div><div class=\"current-balance\"><div class=\"current-balance__elem current-balance__elem--income\"><h3 class=\"current-balance__title\">Поступления</h3><p class=\"current-balance__amount income\">25 463,86 ₽</p></div><div class=\"current-balance__elem current-balance__elem--result\"><h3 class=\"current-balance__title\">Итог</h3><p class=\"current-balance__amount current-balance__amount--result\">16 417,72 ₽</p></div><div class=\"current-balance__elem current-balance__elem--expenses\"><h3 class=\"current-balance__title\">Расходы</h3><p class=\"current-balance__amount expenses\">9 046,14 ₽</p></div></div><div class=\"analytics__all-blocks\"><div class=\"analytics__one-block\"><div class=\"analytics__circle-diagram-\"><img src=\"" + _public_assets_files_images_chart_svg__WEBPACK_IMPORTED_MODULE_1__["default"] + "\" alt=\"\"><!--                Здесь должена быть круговая диаграмма--></div></div><div class=\"analytics__two-block\"><div class=\"analytics__buttons-section\"><a class=\"button analytics__button bgincome\" href=\"\">Поступления</a><a class=\"button analytics__button bgexpenses\" href=\"\">Расходы</a></div><div class=\"analytics__graph-diagram\"><img src=\"" + _public_assets_files_images_graph_svg__WEBPACK_IMPORTED_MODULE_2__["default"] + "\" alt=\"\"><!--                Здесь должен быть график по дням--></div></div></div>", 3);
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  "class": "input-calendar",
+  id: "timeAnalytics",
+  type: "button"
+}, null, -1
+/* HOISTED */
+);
 
-var _hoisted_5 = [_hoisted_2];
+var _hoisted_7 = {
+  id: "inputOperAddStart",
+  ref: "operAddTimeStart",
+  type: "datetime",
+  "class": "change__block-input change__block-input--datetime"
+};
+var _hoisted_8 = ["src"];
+var _hoisted_9 = {
+  "class": "analytics-input-block"
+};
+var _hoisted_10 = ["src"];
+var _hoisted_11 = {
+  id: "inputOperAddEnd",
+  ref: "operAddTimeEnd",
+  type: "datetime",
+  "class": "change__block-input change__block-input--datetime"
+};
+var _hoisted_12 = ["src"];
+var _hoisted_13 = {
+  "class": "analytics__main-bar__elem-result"
+};
+
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
+  "class": "analytics__main-bar__title"
+}, "Тек. баланс:", -1
+/* HOISTED */
+);
+
+var _hoisted_15 = {
+  "class": "analytics__main-bar__amount-result result"
+};
+
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
+  "class": "analytics__main-bar__title"
+}, "Тек. долги:", -1
+/* HOISTED */
+);
+
+var _hoisted_17 = {
+  "class": "analytics__main-bar__amount-result result"
+};
+
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
+  "class": "analytics__main-bar__title"
+}, "Тек. накопления:", -1
+/* HOISTED */
+);
+
+var _hoisted_19 = {
+  "class": "analytics__main-bar__amount-result result"
+};
+
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"analytics__main-bar__additional-information\"><div class=\"analytics__main-bar__elem-middle-day\"><h3 class=\"analytics__main-bar__title\">Ср. день</h3><p class=\"analytics__main-bar__amount analytics__setting-amount--middle-day expenses\"> 16 417,72 ₽ </p></div><div class=\"analytics__main-bar__elem-middle-week\"><h3 class=\"analytics__main-bar__title\">Ср. неделя</h3><p class=\"analytics__main-bar__amount analytics__setting__amount--middle-week expenses\"> 9 046,14 ₽ </p></div></div>", 1);
+
+var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"analytics__all-blocks\"><div class=\"analytics__one-block\"><div class=\"analytics__circle-diagram-\"><img src=\"" + _public_assets_files_images_chart_svg__WEBPACK_IMPORTED_MODULE_1__["default"] + "\" alt=\"\"><!--                Здесь должена быть круговая диаграмма--></div></div><div class=\"analytics__two-block\"><div class=\"analytics__buttons-section\"><a class=\"button analytics__button bgincome\" href=\"\">Поступления</a><a class=\"button analytics__button bgexpenses\" href=\"\">Расходы</a></div><div class=\"analytics__graph-diagram\"><img src=\"" + _public_assets_files_images_graph_svg__WEBPACK_IMPORTED_MODULE_2__["default"] + "\" alt=\"\"><!--                Здесь должен быть график по дням--></div></div></div>", 1);
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("main", _hoisted_1, _hoisted_5);
+  var _component_CurrentBalance = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("CurrentBalance");
+
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("main", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", _hoisted_7, null, 512
+  /* NEED_PATCH */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([['search-error-img', {
+      'hiddenOpacity': !$options.timeError
+    }], "search-error-img"]),
+    src: $data.errorImg,
+    alt: ""
+  }, null, 10
+  /* CLASS, PROPS */
+  , _hoisted_8)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    "class": "icon-search",
+    src: $data.searchImg,
+    onClick: _cache[0] || (_cache[0] = function () {
+      return $options.updateSearch && $options.updateSearch.apply($options, arguments);
+    }),
+    alt: ""
+  }, null, 8
+  /* PROPS */
+  , _hoisted_10), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", _hoisted_11, null, 512
+  /* NEED_PATCH */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([['search-error-img', {
+      'hiddenOpacity': !$options.timeTwoError
+    }], "search-error-img"]),
+    src: $data.errorImg,
+    alt: ""
+  }, null, 10
+  /* CLASS, PROPS */
+  , _hoisted_12)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.currentAccount) + " ₽ ", 1
+  /* TEXT */
+  ), _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.currentDebt) + " ₽ ", 1
+  /* TEXT */
+  ), _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.currentSaving) + " ₽ ", 1
+  /* TEXT */
+  )]), _hoisted_20]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_CurrentBalance, {
+    rangeStart: $data.rangeStart,
+    rangeEnd: $data.rangeEnd,
+    updateSearchTrigger: $data.updateSearchTrigger
+  }, null, 8
+  /* PROPS */
+  , ["rangeStart", "rangeEnd", "updateSearchTrigger"]), _hoisted_21]);
 }
 
 /***/ }),
@@ -26539,7 +27024,7 @@ var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "data-stroke"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
-  "class": "data-item"
+  "class": "data-item--empty"
 }, "Операции осутствуют")])], -1
 /* HOISTED */
 );
@@ -26555,10 +27040,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $data.searchCrit = $event;
     }),
-    onGoSearch: $options.loadDateByUserId
+    onUpdateSearchText: $options.loadDateByUserIdText,
+    onUpdateSearchTime: $options.loadDateByUserIdTime
   }, null, 8
   /* PROPS */
-  , ["modelValue", "onGoSearch"]), $options.currentOperations.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_2, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.currentOperations, function (operations) {
+  , ["modelValue", "onUpdateSearchText", "onUpdateSearchTime"]), $options.currentOperations.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_2, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.currentOperations, function (operations) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_DateBlock, {
       key: operations.id,
       datetime: operations[0].time,
@@ -26709,6 +27195,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_PopupReg = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("PopupReg");
 
+  var _component_PopupSetting = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("PopupSetting");
+
   var _component_PopupBalanceChange = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("PopupBalanceChange");
 
   var _component_PopupBalanceDelete = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("PopupBalanceDelete");
@@ -26772,13 +27260,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[0] || (_cache[0] = function () {
       return $options.togglePopupAuth && $options.togglePopupAuth.apply($options, arguments);
     })
-  }, "Войти"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, " Войти "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "button header__button button--reg",
     onClick: _cache[1] || (_cache[1] = function () {
       return $options.togglePopupReg && $options.togglePopupReg.apply($options, arguments);
     })
-  }, "Регистрация")])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.userName), 1
+  }, " Регистрация ")])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.userName), 1
   /* TEXT */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
@@ -26786,7 +27274,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[2] || (_cache[2] = function () {
       return $options.exitAccount && $options.exitAccount.apply($options, arguments);
     })
-  }, "Выйти из аккаунта"), _hoisted_18])), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, " Выйти из аккаунта "), _hoisted_18])), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[3] || (_cache[3] = function () {
       return $options.togglePopupNav && $options.togglePopupNav.apply($options, arguments);
     }),
@@ -26798,18 +27286,20 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     key: 3
   })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.popupReg ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_PopupReg, {
     key: 4
-  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.popupBalanceChange['status'] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_PopupBalanceChange, {
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.popupSetting ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_PopupSetting, {
     key: 5
-  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.popupBalanceDelete['status'] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_PopupBalanceDelete, {
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.popupBalanceChange['status'] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_PopupBalanceChange, {
     key: 6
-  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.popupOperationChange['status'] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_PopupOperationChange, {
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.popupBalanceDelete['status'] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_PopupBalanceDelete, {
     key: 7
-  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.popupOperationDelete['status'] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_PopupOperationDelete, {
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.popupOperationChange['status'] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_PopupOperationChange, {
     key: 8
-  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.popupOperationAdd['status'] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_PopupOperationAdd, {
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.popupOperationDelete['status'] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_PopupOperationDelete, {
     key: 9
-  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.PopupCategoryChange['status'] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_PopupCategoryChange, {
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.popupOperationAdd['status'] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_PopupOperationAdd, {
     key: 10
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.PopupCategoryChange['status'] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_PopupCategoryChange, {
+    key: 11
   })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 }
 
@@ -26969,13 +27459,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
 /* harmony import */ var _storeModules_moduleBalance__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./storeModules/moduleBalance */ "./resources/js/storeModules/moduleBalance.js");
 /* harmony import */ var _storeModules_moduleOperation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./storeModules/moduleOperation */ "./resources/js/storeModules/moduleOperation.js");
 /* harmony import */ var _storeModules_moduleAuthReg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./storeModules/moduleAuthReg */ "./resources/js/storeModules/moduleAuthReg.js");
 /* harmony import */ var _storeModules_modulePopupControl__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./storeModules/modulePopupControl */ "./resources/js/storeModules/modulePopupControl.js");
 /* harmony import */ var _storeModules_moduleCategory__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./storeModules/moduleCategory */ "./resources/js/storeModules/moduleCategory.js");
 /* harmony import */ var _storeModules_moduleGlobalValidate__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./storeModules/moduleGlobalValidate */ "./resources/js/storeModules/moduleGlobalValidate.js");
+/* harmony import */ var _storeModules_moduleAnalytics__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./storeModules/moduleAnalytics */ "./resources/js/storeModules/moduleAnalytics.js");
 
 
 
@@ -26983,14 +27474,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var store = (0,vuex__WEBPACK_IMPORTED_MODULE_6__.createStore)({
+
+var store = (0,vuex__WEBPACK_IMPORTED_MODULE_7__.createStore)({
   modules: {
     moduleBalance: _storeModules_moduleBalance__WEBPACK_IMPORTED_MODULE_0__["default"],
     moduleOperation: _storeModules_moduleOperation__WEBPACK_IMPORTED_MODULE_1__["default"],
     moduleAuthReg: _storeModules_moduleAuthReg__WEBPACK_IMPORTED_MODULE_2__["default"],
     modulePopupControl: _storeModules_modulePopupControl__WEBPACK_IMPORTED_MODULE_3__["default"],
     moduleCategory: _storeModules_moduleCategory__WEBPACK_IMPORTED_MODULE_4__["default"],
-    moduleGlobalValidate: _storeModules_moduleGlobalValidate__WEBPACK_IMPORTED_MODULE_5__["default"]
+    moduleGlobalValidate: _storeModules_moduleGlobalValidate__WEBPACK_IMPORTED_MODULE_5__["default"],
+    moduleAnalytics: _storeModules_moduleAnalytics__WEBPACK_IMPORTED_MODULE_6__["default"]
   },
   state: function state() {
     return {};
@@ -27000,6 +27493,205 @@ var store = (0,vuex__WEBPACK_IMPORTED_MODULE_6__.createStore)({
   actions: {}
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (store);
+
+/***/ }),
+
+/***/ "./resources/js/storeModules/moduleAnalytics.js":
+/*!******************************************************!*\
+  !*** ./resources/js/storeModules/moduleAnalytics.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+var moduleAnalytics = {
+  state: function state() {
+    return {
+      currentBalance: {
+        income: 0,
+        expenses: 0
+      },
+      currentDebtAndBalance: {
+        account: 0,
+        debt: 0,
+        saving: 0
+      }
+    };
+  },
+  mutations: {
+    setCurrentBalance: function setCurrentBalance(state, _ref) {
+      var income = _ref.income,
+          expenses = _ref.expenses;
+      state.currentBalance["income"] = income;
+      state.currentBalance["expenses"] = expenses;
+    },
+    setCurrentDebtAndBalance: function setCurrentDebtAndBalance(state, _ref2) {
+      var account = _ref2.account,
+          debt = _ref2.debt,
+          saving = _ref2.saving;
+      state.currentBalance["account"] = account;
+      state.currentBalance["debt"] = debt;
+      state.currentBalance["saving"] = saving;
+    }
+  },
+  getters: {
+    getCurrentBalance: function getCurrentBalance(state) {
+      return state.currentBalance;
+    },
+    getCurrentDebtAndBalance: function getCurrentDebtAndBalance(state) {
+      return state.currentBalance;
+    }
+  },
+  actions: {
+    loadCurrentBalanceByUserId: function loadCurrentBalanceByUserId(_ref3, dateRange) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var commit, getters, dispatch, variable;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                commit = _ref3.commit, getters = _ref3.getters, dispatch = _ref3.dispatch;
+                dateRange["userId"] = getters.getAuthStatus.userId;
+                _context2.next = 4;
+                return dispatch("globalValidate", {
+                  title: "notValidateCode",
+                  description: "notValidateCode",
+                  amount: "notValidateCode",
+                  time: dateRange["rangeStart"],
+                  timeTwo: dateRange["rangeEnd"],
+                  selected: "notValidateCode",
+                  img: "notValidateCode"
+                });
+
+              case 4:
+                if (!(getters.getErrorStatus === 0)) {
+                  _context2.next = 8;
+                  break;
+                }
+
+                _context2.next = 7;
+                return fetch("/api/loadCurrentBalanceByUserId/", {
+                  method: "POST",
+                  body: JSON.stringify(dateRange),
+                  headers: {
+                    "Content-Type": "application/json;charset=UTF-8"
+                  }
+                }).then( /*#__PURE__*/function () {
+                  var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(response) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+                      while (1) {
+                        switch (_context.prev = _context.next) {
+                          case 0:
+                            _context.next = 2;
+                            return response.json();
+
+                          case 2:
+                            return _context.abrupt("return", variable = _context.sent);
+
+                          case 3:
+                          case "end":
+                            return _context.stop();
+                        }
+                      }
+                    }, _callee);
+                  }));
+
+                  return function (_x) {
+                    return _ref4.apply(this, arguments);
+                  };
+                }())["catch"](function (error) {
+                  return console.log(error);
+                });
+
+              case 7:
+                if (variable !== 0) {
+                  commit("setCurrentBalance", {
+                    income: variable["income"],
+                    expenses: variable["expenses"]
+                  });
+                } else {
+                  commit("setCurrentBalance", {
+                    income: 0,
+                    expenses: 0
+                  });
+                }
+
+              case 8:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    loadDebtAndBalanceByUserId: function loadDebtAndBalanceByUserId(_ref5) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+        var commit, getters, variable;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                commit = _ref5.commit, getters = _ref5.getters;
+                _context4.next = 3;
+                return fetch("/api/loadDebtAndBalanceByUserId/" + getters.getAuthStatus.userId).then( /*#__PURE__*/function () {
+                  var _ref6 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3(response) {
+                    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+                      while (1) {
+                        switch (_context3.prev = _context3.next) {
+                          case 0:
+                            _context3.next = 2;
+                            return response.json();
+
+                          case 2:
+                            return _context3.abrupt("return", variable = _context3.sent);
+
+                          case 3:
+                          case "end":
+                            return _context3.stop();
+                        }
+                      }
+                    }, _callee3);
+                  }));
+
+                  return function (_x2) {
+                    return _ref6.apply(this, arguments);
+                  };
+                }())["catch"](function (error) {
+                  return console.log(error);
+                });
+
+              case 3:
+                commit("setCurrentDebtAndBalance", {
+                  account: variable["account"],
+                  debt: variable["debt"],
+                  saving: variable["saving"]
+                });
+
+              case 4:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
+    }
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (moduleAnalytics);
 
 /***/ }),
 
@@ -27464,9 +28156,10 @@ var moduleBalance = {
                 _context5.next = 3;
                 return dispatch("globalValidate", {
                   title: changedAccountData["title"],
-                  description: "notValidate",
-                  amount: changedAccountData["amount"],
+                  description: "notValidateCode",
+                  amount: "notValidateCode",
                   time: "notValidateCode",
+                  timeTwo: "notValidateCode",
                   selected: "notValidateCode",
                   img: "notValidateCode"
                 });
@@ -27569,9 +28262,10 @@ var moduleBalance = {
                 _context8.next = 4;
                 return dispatch("globalValidate", {
                   title: newAccountData["title"],
-                  description: "notValidate",
-                  amount: newAccountData["amount"],
+                  description: "notValidateCode",
+                  amount: "notValidateCode",
                   time: "notValidateCode",
+                  timeTwo: "notValidateCode",
                   selected: "notValidateCode",
                   img: "notValidateCode"
                 });
@@ -27711,7 +28405,7 @@ var moduleCategory = {
 
               case 3:
                 dispatch("loadIncomeOperatonsByCat", variable);
-                commit("setCategories", variable);
+                commit("setCategories", variable); // dispatch("loadCurrentBalanceByUserId");
 
               case 5:
               case "end":
@@ -27759,7 +28453,7 @@ var moduleCategory = {
 
               case 3:
                 dispatch("loadExpensesOperatonsByCat");
-                commit("setCategories", variable);
+                commit("setCategories", variable); // dispatch("loadCurrentBalanceByUserId");
 
               case 5:
               case "end":
@@ -27980,6 +28674,7 @@ var moduleCategory = {
                   description: "notValidateCode",
                   amount: "notValidateCode",
                   time: "notValidateCode",
+                  timeTwo: "notValidateCode",
                   selected: "notValidateCode",
                   img: newDataCategory["img_url"]
                 });
@@ -28043,6 +28738,7 @@ var moduleCategory = {
                   description: "notValidateCode",
                   amount: "notValidateCode",
                   time: "notValidateCode",
+                  timeTwo: "notValidateCode",
                   selected: "notValidateCode",
                   img: changedDataCategory["img_url"]
                 });
@@ -28168,6 +28864,7 @@ var moduleGlobalValidate = {
       descriptionError: "",
       amountError: "",
       timeError: "",
+      timeTwoError: "",
       selectedError: "",
       imgError: ""
     };
@@ -28178,12 +28875,14 @@ var moduleGlobalValidate = {
           descriptionError = _ref.descriptionError,
           amountError = _ref.amountError,
           timeError = _ref.timeError,
+          timeTwoError = _ref.timeTwoError,
           selectedError = _ref.selectedError,
           imgError = _ref.imgError;
       state.titleError = titleError;
       state.descriptionError = descriptionError;
       state.amountError = amountError;
       state.timeError = timeError;
+      state.timeTwoError = timeTwoError;
       state.selectedError = selectedError;
       state.imgError = imgError;
     },
@@ -28192,6 +28891,7 @@ var moduleGlobalValidate = {
       state.descriptionError = "";
       state.amountError = "";
       state.timeError = "";
+      state.timeTwoError = "";
       state.selectedError = "";
       state.imgError = "";
     },
@@ -28207,6 +28907,9 @@ var moduleGlobalValidate = {
     setTimeError: function setTimeError(state, value) {
       state.timeError = value;
     },
+    setTimeTwoError: function setTimeTwoError(state, value) {
+      state.timeTwoError = value;
+    },
     setSelectedError: function setSelectedError(state, value) {
       state.selectedError = value;
     },
@@ -28221,12 +28924,13 @@ var moduleGlobalValidate = {
         descriptionError: state.descriptionError,
         amountError: state.amountError,
         timeError: state.timeError,
+        timeTwoError: state.timeTwoError,
         selectedError: state.selectedError,
         imgError: state.imgError
       };
     },
     getErrorStatus: function getErrorStatus(state) {
-      if (state.titleError === "" && state.descriptionError === "" && state.amountError === "" && state.timeError === "" && state.selectedError === "" && state.imgError === "") {
+      if (state.titleError === "" && state.descriptionError === "" && state.amountError === "" && state.timeError === "" && state.timeTwoError === "" && state.selectedError === "" && state.imgError === "") {
         return 0;
       } else {
         return {
@@ -28234,6 +28938,7 @@ var moduleGlobalValidate = {
           descriptionError: state.descriptionError,
           amountError: state.amountError,
           timeError: state.timeError,
+          timeTwoError: state.timeTwoError,
           selectedError: state.selectedError,
           imgError: state.imgError
         };
@@ -28250,6 +28955,9 @@ var moduleGlobalValidate = {
     },
     getTimeError: function getTimeError(state) {
       return state.timeError;
+    },
+    getTimeTwoError: function getTimeTwoError(state) {
+      return state.timeTwoError;
     },
     getSelectedError: function getSelectedError(state) {
       return state.selectedError;
@@ -28310,6 +29018,7 @@ var moduleGlobalValidate = {
                     descriptionError: variable["description"],
                     amountError: variable["amount"],
                     timeError: variable["time"],
+                    timeTwoError: variable["timeTwo"],
                     selectedError: variable["selected"],
                     imgError: variable["img"]
                   });
@@ -28319,6 +29028,7 @@ var moduleGlobalValidate = {
                     descriptionError: "",
                     amountError: "",
                     timeError: "",
+                    timeTwoError: "",
                     selectedError: "",
                     imgError: ""
                   });
@@ -28365,7 +29075,9 @@ var moduleOperation = {
     return {
       operations: [],
       ChangedDataOperation: [],
-      searchCrit: ""
+      searchCrit: "",
+      searchRangeStart: "",
+      searchRangeEnd: ""
     };
   },
   mutations: {
@@ -28377,6 +29089,12 @@ var moduleOperation = {
     },
     setSearchCrit: function setSearchCrit(state, value) {
       state.searchCrit = value;
+    },
+    setSearchRangeStart: function setSearchRangeStart(state, value) {
+      state.searchRangeStart = value;
+    },
+    setSearchRangeEnd: function setSearchRangeEnd(state, value) {
+      state.searchRangeEnd = value;
     }
   },
   getters: {
@@ -28388,22 +29106,60 @@ var moduleOperation = {
     },
     getSearchCrit: function getSearchCrit(state) {
       return state.searchCrit;
+    },
+    getSearchRangeStart: function getSearchRangeStart(state) {
+      return state.searchRangeStart;
+    },
+    getSearchRangeEnd: function getSearchRangeEnd(state) {
+      return state.searchRangeEnd;
     }
   },
   actions: {
     loadOperationByUserId: function loadOperationByUserId(_ref) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
-        var commit, getters, data, variable;
+        var commit, getters, dispatch, data, variable;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                commit = _ref.commit, getters = _ref.getters;
+                commit = _ref.commit, getters = _ref.getters, dispatch = _ref.dispatch;
                 data = {
                   userId: getters.getAuthStatus.userId,
-                  searchCrit: getters.getSearchCrit
+                  searchCrit: getters.getSearchCrit,
+                  searchRangeStart: getters.getSearchRangeStart,
+                  searchRangeEnd: getters.getSearchRangeEnd
                 };
-                _context2.next = 4;
+
+                if (!(data["searchCrit"].length === 0)) {
+                  _context2.next = 7;
+                  break;
+                }
+
+                _context2.next = 5;
+                return dispatch("globalValidate", {
+                  title: "notValidateCode",
+                  description: "notValidateCode",
+                  amount: "notValidateCode",
+                  time: data["searchRangeStart"],
+                  timeTwo: data["searchRangeEnd"],
+                  selected: "notValidateCode",
+                  img: "notValidateCode"
+                });
+
+              case 5:
+                _context2.next = 8;
+                break;
+
+              case 7:
+                commit("clearAllErrors");
+
+              case 8:
+                if (!(getters.getErrorStatus === 0)) {
+                  _context2.next = 14;
+                  break;
+                }
+
+                _context2.next = 11;
                 return fetch("/api/getOperationByUserId/", {
                   method: "POST",
                   body: JSON.stringify(data),
@@ -28437,14 +29193,17 @@ var moduleOperation = {
                   return console.log(error);
                 });
 
-              case 4:
+              case 11:
                 if (variable !== 0) {
                   commit("setOperations", variable);
                 } else {
                   commit("setOperations", 0);
                 }
 
-              case 5:
+                commit("setSearchRangeStart", "");
+                commit("setSearchRangeEnd", "");
+
+              case 14:
               case "end":
                 return _context2.stop();
             }
@@ -28517,6 +29276,7 @@ var moduleOperation = {
                   description: changedDataOperation["description"],
                   amount: changedDataOperation["amount"],
                   time: changedDataOperation["time"],
+                  timeTwo: "notValidateCode",
                   selected: "notValidateCode",
                   img: "notValidateCode"
                 });
@@ -28567,6 +29327,7 @@ var moduleOperation = {
                   description: newDataOperation["description"],
                   amount: newDataOperation["amount"],
                   time: newDataOperation["time"],
+                  timeTwo: "notValidateCode",
                   selected: "notValidateCode",
                   img: "notValidateCode"
                 });
@@ -28660,6 +29421,7 @@ var modulePopupControl = {
       popupNav: false,
       popupAuth: false,
       popupReg: false,
+      popupSetting: true,
       popupBalanceChange: {
         status: false,
         typeAction: "",
@@ -28706,6 +29468,11 @@ var modulePopupControl = {
       } else {
         state.popupReg = value;
       }
+    },
+    togglePopupSetting: function togglePopupSetting(state, value) {
+      state.popupAuth = false;
+      state.popupReg = false;
+      state.popupSetting = value;
     },
     togglePopupBalanceChange: function togglePopupBalanceChange(state, _ref) {
       var status = _ref.status,
@@ -28771,6 +29538,9 @@ var modulePopupControl = {
     },
     popupReg: function popupReg(state) {
       return state.popupReg;
+    },
+    popupSetting: function popupSetting(state) {
+      return state.popupSetting;
     },
     popupBalanceChange: function popupBalanceChange(state) {
       return state.popupBalanceChange;
@@ -34007,6 +34777,21 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./public/assets/files/images/circle-exclamation.svg":
+/*!***********************************************************!*\
+  !*** ./public/assets/files/images/circle-exclamation.svg ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/circle-exclamation.svg?441cc7fb28300da080a041de0a3467c2");
+
+/***/ }),
+
 /***/ "./public/assets/files/images/eraser-solid.svg":
 /*!*****************************************************!*\
   !*** ./public/assets/files/images/eraser-solid.svg ***!
@@ -34064,6 +34849,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/key-solid.svg?93713afabc9d1328add2dbdd7d4ef5df");
+
+/***/ }),
+
+/***/ "./public/assets/files/images/magnifying-glass.svg":
+/*!*********************************************************!*\
+  !*** ./public/assets/files/images/magnifying-glass.svg ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/magnifying-glass.svg?cd761af2e6d53d07ac6129e7f885fa95");
 
 /***/ }),
 
@@ -74708,6 +75508,34 @@ if (false) {}
 
 /***/ }),
 
+/***/ "./resources/js/components/blocks/globalPopup/PopupSetting.vue":
+/*!*********************************************************************!*\
+  !*** ./resources/js/components/blocks/globalPopup/PopupSetting.vue ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _PopupSetting_vue_vue_type_template_id_73ad2718__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PopupSetting.vue?vue&type=template&id=73ad2718 */ "./resources/js/components/blocks/globalPopup/PopupSetting.vue?vue&type=template&id=73ad2718");
+/* harmony import */ var _PopupSetting_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PopupSetting.vue?vue&type=script&lang=js */ "./resources/js/components/blocks/globalPopup/PopupSetting.vue?vue&type=script&lang=js");
+/* harmony import */ var P_Programs_OpenServer_domains_CourseProject1_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,P_Programs_OpenServer_domains_CourseProject1_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_PopupSetting_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_PopupSetting_vue_vue_type_template_id_73ad2718__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/blocks/globalPopup/PopupSetting.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
 /***/ "./resources/js/components/blocks/operation/DateBlock.vue":
 /*!****************************************************************!*\
   !*** ./resources/js/components/blocks/operation/DateBlock.vue ***!
@@ -75344,6 +76172,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/blocks/globalPopup/PopupSetting.vue?vue&type=script&lang=js":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/blocks/globalPopup/PopupSetting.vue?vue&type=script&lang=js ***!
+  \*********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PopupSetting_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PopupSetting_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./PopupSetting.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/blocks/globalPopup/PopupSetting.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
 /***/ "./resources/js/components/blocks/operation/DateBlock.vue?vue&type=script&lang=js":
 /*!****************************************************************************************!*\
   !*** ./resources/js/components/blocks/operation/DateBlock.vue?vue&type=script&lang=js ***!
@@ -75820,6 +76664,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PopupReg_vue_vue_type_template_id_1f70b148__WEBPACK_IMPORTED_MODULE_0__.render)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PopupReg_vue_vue_type_template_id_1f70b148__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./PopupReg.vue?vue&type=template&id=1f70b148 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/blocks/globalPopup/PopupReg.vue?vue&type=template&id=1f70b148");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/blocks/globalPopup/PopupSetting.vue?vue&type=template&id=73ad2718":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/blocks/globalPopup/PopupSetting.vue?vue&type=template&id=73ad2718 ***!
+  \***************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PopupSetting_vue_vue_type_template_id_73ad2718__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_PopupSetting_vue_vue_type_template_id_73ad2718__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./PopupSetting.vue?vue&type=template&id=73ad2718 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/blocks/globalPopup/PopupSetting.vue?vue&type=template&id=73ad2718");
 
 
 /***/ }),

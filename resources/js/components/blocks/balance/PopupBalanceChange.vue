@@ -13,14 +13,6 @@
                     :value="title"
                 />
                 <p class="error-p">{{ titleError }}</p>
-                <h2 class="change__block-title">Сумма</h2>
-                <input
-                    type="text"
-                    class="change__block-input"
-                    @input="(e) => (amount = e.target.value)"
-                    :value="amount"
-                />
-                <p class="error-p">{{ amountError }}</p>
             </div>
             <div
                 v-if="currentPopupBalanceChange['typeAction'] === 'change'"
@@ -70,7 +62,6 @@ export default {
         return {
             id: "",
             title: "",
-            amount: " ",
             type: "",
             computedWork: true,
         };
@@ -78,12 +69,13 @@ export default {
     mounted() {},
     computed: {
         currentData() {
-            if (this.computedWork && this.currentPopupBalanceChange["typeAction"] === "change") {
-                console.log("!!!")
+            if (
+                this.computedWork &&
+                this.currentPopupBalanceChange["typeAction"] === "change"
+            ) {
                 const getData = this.$store.getters.getChangedAccountData;
                 this.type = getData["type"];
                 this.title = getData["title"];
-                this.amount = getData["amount"];
                 this.id = getData["id"];
                 if (this.title) {
                     this.computedWork = false;
@@ -97,9 +89,6 @@ export default {
         titleError() {
             return this.$store.getters.getAllErrors["titleError"];
         },
-        amountError() {
-            return this.$store.getters.getAllErrors["amountError"];
-        },
     },
     methods: {
         togglePopupBalanceChange() {
@@ -109,21 +98,18 @@ export default {
                 typeBlock: "",
             });
             this.$store.commit("setChangedAccountData", []);
-            this.$store.commit("clearAllErrors")
+            this.$store.commit("clearAllErrors");
         },
         updateAccountItem() {
-            console.log(this.title);
             this.$store.dispatch("updateAccountById", {
                 id: this.id,
                 title: this.title,
-                amount: this.amount,
                 type: this.type,
             });
         },
         addAccountItem() {
             this.$store.dispatch("insertAccountByType", {
                 title: this.title,
-                amount: this.amount,
                 type: this.currentPopupBalanceChange["typeBlock"],
             });
         },

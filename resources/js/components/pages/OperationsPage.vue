@@ -2,7 +2,8 @@
     <main class="balance-history">
         <OperationsSearch
             v-model="searchCrit"
-            @goSearch="loadDateByUserId"
+            @updateSearchText="loadDateByUserIdText"
+            @updateSearchTime="loadDateByUserIdTime"
         ></OperationsSearch>
         <div class="container-for-vue" v-if="currentOperations.length">
             <DateBlock
@@ -16,7 +17,7 @@
             <h3 class="data-title">Операции нет</h3>
             <div class="data-list">
                 <div class="data-stroke">
-                    <p class="data-item">Операции осутствуют</p>
+                    <p class="data-item--empty">Операции осутствуют</p>
                 </div>
             </div>
         </div>
@@ -36,10 +37,19 @@ export default {
         };
     },
     mounted() {
-        this.loadDateByUserId();
+        this.loadDateByUserIdText();
     },
     methods: {
-        loadDateByUserId() {
+        loadDateByUserIdText() {
+            this.$store.dispatch("loadOperationByUserId");
+        },
+        loadDateByUserIdTime(range) {
+            console.log(range);
+            this.$store.commit(
+                "setSearchRangeStart",
+                range["rangeStart"] + ":00"
+            );
+            this.$store.commit("setSearchRangeEnd", range["rangeEnd"] + ":00");
             this.$store.dispatch("loadOperationByUserId");
         },
     },

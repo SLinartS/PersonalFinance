@@ -24,13 +24,18 @@
             </li> -->
         </ul>
         <div v-if="!authStatus.status" class="header__buttons-section">
-            <button type="button" class="button header__button button--auth" @click="togglePopupAuth">Войти</button>
-            <button type="button" class="button header__button button--reg" @click="togglePopupReg">Регистрация</button>
+            <button type="button" class="button header__button button--auth" @click="togglePopupAuth">
+                Войти
+            </button>
+            <button type="button" class="button header__button button--reg" @click="togglePopupReg">
+                Регистрация
+            </button>
         </div>
         <div v-else class="header__buttons-section">
             <p class="header__buttons-section__user-name">{{ userName }}</p>
-            <button type="button" class="button header__button button--exit" @click="exitAccount">Выйти из
-                аккаунта</button>
+            <button type="button" class="button header__button button--exit" @click="exitAccount">
+                Выйти из аккаунта
+            </button>
             <button type="button" class="icon-setting button">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
                     <path
@@ -49,6 +54,7 @@
         <PopupNav v-if="popupNav"></PopupNav>
         <PopupAuth v-if="popupAuth"></PopupAuth>
         <PopupReg v-if="popupReg"></PopupReg>
+        <PopupSetting v-if="popupSetting"></PopupSetting>
         <PopupBalanceChange v-if="popupBalanceChange['status']"></PopupBalanceChange>
         <PopupBalanceDelete v-if="popupBalanceDelete['status']"></PopupBalanceDelete>
         <PopupOperationChange v-if="popupOperationChange['status']"></PopupOperationChange>
@@ -70,6 +76,7 @@ import PopupOperationChange from "../blocks/operation/PopupOperationChange.vue";
 import PopupOperationDelete from "../blocks/operation/PopupOperationDelete.vue";
 import PopupOperationAdd from "../blocks/category/PopupOperationAdd.vue";
 import PopupCategoryChange from "../blocks/category/PopupCategoryChange.vue";
+import PopupSetting from "../blocks/globalPopup/PopupSetting.vue";
 
 export default {
     name: "Header",
@@ -77,12 +84,13 @@ export default {
         PopupReg,
         PopupAuth,
         PopupNav,
+        PopupSetting,
         PopupBalanceChange,
         PopupBalanceDelete,
         PopupOperationChange,
         PopupOperationDelete,
         PopupOperationAdd,
-        PopupCategoryChange
+        PopupCategoryChange,
     },
     computed: {
         userName() {
@@ -99,6 +107,9 @@ export default {
         },
         popupReg() {
             return this.$store.getters.popupReg;
+        },
+        popupSetting() {
+            return this.$store.getters.popupSetting;
         },
         popupBalanceChange() {
             return this.$store.getters.popupBalanceChange;
@@ -117,27 +128,30 @@ export default {
         },
         PopupCategoryChange() {
             return this.$store.getters.popupCategoryChange;
-        }
-
+        },
     },
     methods: {
         exitAccount() {
-            this.$router.push({ name: 'main', params: {} })
-            this.$store.commit("setAuthStatus", { field: "status", value: false })
+            this.$router.push({ name: "main", params: {} });
+            this.$store.commit("setAuthStatus", {
+                field: "status",
+                value: false,
+            });
         },
         togglePopupNav() {
-            this.$store.commit("togglePopupNav", true)
+            this.$store.commit("togglePopupNav", true);
         },
         togglePopupAuth() {
-            this.$store.commit("changeErrors", {})
-            this.$store.commit("togglePopupAuth", true)
+            this.$store.commit("changeErrors", {});
+            this.$store.commit("togglePopupAuth", true);
         },
         togglePopupReg() {
-            this.$store.commit("changeErrors", {})
-            this.$store.commit("togglePopupReg", true)
+            this.$store.commit("changeErrors", {});
+            this.$store.commit("togglePopupReg", true);
         },
     },
-}
+};
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>

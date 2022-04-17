@@ -4,6 +4,7 @@ const modulePopupControl = {
             popupNav: false,
             popupAuth: false,
             popupReg: false,
+            popupSetting: true,
             popupBalanceChange: {
                 status: false,
                 typeAction: "",
@@ -51,6 +52,11 @@ const modulePopupControl = {
                 state.popupReg = value;
             }
         },
+        togglePopupSetting(state, value) {
+            state.popupAuth = false;
+            state.popupReg = false;
+            state.popupSetting = value;
+        },
         togglePopupBalanceChange(state, { status, typeAction, typeBlock }) {
             state.popupBalanceChange = {
                 status: status,
@@ -70,7 +76,10 @@ const modulePopupControl = {
                 status: status,
             };
         },
-        togglePopupOperationDelete(state, { status, categoryId, typeAction, typeBlock }) {
+        togglePopupOperationDelete(
+            state,
+            { status, categoryId, typeAction, typeBlock }
+        ) {
             state.popupOperationDelete = {
                 status: status,
                 categoryId: categoryId,
@@ -100,6 +109,9 @@ const modulePopupControl = {
         },
         popupReg(state) {
             return state.popupReg;
+        },
+        popupSetting(state) {
+            return state.popupSetting;
         },
         popupBalanceChange(state) {
             return state.popupBalanceChange;

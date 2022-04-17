@@ -23,6 +23,13 @@
 
 }
 
+.analytics__main-bar__elem-result {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: flex-start;
+    column-gap: 1rem;
+}
+
 .analytics__main-bar__elem-middle-day,
 .analytics__main-bar__elem-middle-week,
 .analytics__two-block {
@@ -31,12 +38,20 @@
 
 .analytics__main-bar {
     font-size: 2.4rem;
-    height: 8rem;
+    height: 13rem;
+}
+
+.analytics-input-block {
+    display: flex;
+    align-items: center;
+    min-height: 100%;
+    /* flex-direction: column; */
 }
 
 .analytics__main-bar__calendar {
     margin-left: 2rem;
 }
+
 
 .icon-calendar {
     fill: var(--main-black);
@@ -44,8 +59,16 @@
     margin-right: 2rem;
 }
 
+.search-error-img,
+.icon-search {
+    margin: 0 1rem 0 1rem;
+    width: 4rem;
+}
+
+
+
 .analytics__main-bar__title {
-    margin-right: 2rem;
+    margin: 0 2rem 0 2rem;
 }
 
 

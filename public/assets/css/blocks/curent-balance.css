@@ -9,18 +9,22 @@
     width: 100%;
     border-top: 0.1rem solid var(--main-black);
     border-bottom: 0.1rem solid var(--main-black);
-    position: relative;
+    /* position: relative; */
     z-index: 1;
 }
 
-.current-balance::after {
+.current-balance__color-block {
+    background: linear-gradient(to right, var(--current-balance-green) 80%, var(--current-balance-reg) 20%);
+}
+
+/* .current-balance::after {
     content: "";
     opacity: 10%;
     background: linear-gradient(to right, var(--main-green) 80%, var(--main-red) 20%);
     top: 0; left: 0; bottom: 0; right: 0;
     position: absolute;
     z-index: -1;
-}
+} */
 
 .current-balance__elem {
     display: flex;
@@ -38,6 +42,10 @@
     margin: 1rem 0 1rem 0;
 }
 
-.current-balance__amount--result {
+.current-balance__amount--result--income {
     color: var(--main-green);
+}
+
+.current-balance__amount--result--expenses {
+    color: var(--main-red);
 }

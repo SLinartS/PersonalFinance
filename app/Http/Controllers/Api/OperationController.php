@@ -14,8 +14,11 @@ class OperationController extends Controller
     {
         $data = $request->post();
 
-
-        if (isset($data["searchCrit"])) {
+        if (
+            isset($data["searchCrit"]) &&
+            isset($data["searchRangeStart"]) &&
+            isset($data["searchRangeEnd"])
+        ) {
             $unsortedOperations = Operation::join("accounts", "operations.account_id", "accounts.id")
                 ->join("categories", "operations.category_id", "categories.id")
                 ->select(
@@ -28,9 +31,54 @@ class OperationController extends Controller
                     "accounts.title as accountTitle"
                 )
                 ->where("operations.user_id", $data["userId"])
-                ->where("operations.description", $data["searchCrit"])
+                ->where("operations.description", "like", "%" . $data["searchCrit"] . "%")
+                ->where("operations.time", ">", $data["searchRangeStart"])
+                ->where("operations.time", "<", $data["searchRangeEnd"])
                 ->get()->toArray();
-        } else {
+        } elseif (
+            isset($data["searchCrit"]) &&
+            empty($data["searchRangeStart"]) &&
+            empty($data["searchRangeEnd"])
+        ) {
+            $unsortedOperations = Operation::join("accounts", "operations.account_id", "accounts.id")
+                ->join("categories", "operations.category_id", "categories.id")
+                ->select(
+                    "operations.id",
+                    "operations.description",
+                    "categories.type",
+                    "operations.amount",
+                    "operations.time",
+                    "accounts.type as accountType",
+                    "accounts.title as accountTitle"
+                )
+                ->where("operations.user_id", $data["userId"])
+                ->where("operations.description", "like", "%" . $data["searchCrit"] . "%")
+                ->get()->toArray();
+        } elseif (
+            empty($data["searchCrit"]) &&
+            isset($data["searchRangeStart"]) &&
+            isset($data["searchRangeEnd"])
+        ) {
+            $unsortedOperations = Operation::join("accounts", "operations.account_id", "accounts.id")
+                ->join("categories", "operations.category_id", "categories.id")
+                ->select(
+                    "operations.id",
+                    "operations.description",
+                    "categories.type",
+                    "operations.amount",
+                    "operations.time",
+                    "accounts.type as accountType",
+                    "accounts.title as accountTitle"
+                )
+                ->where("operations.user_id", $data["userId"])
+                ->where("operations.time", ">", $data["searchRangeStart"])
+                ->where("operations.time", "<", $data["searchRangeEnd"])
+                ->get()->toArray();
+        } elseif (
+            empty($data["searchCrit"]) &&
+            empty($data["searchRangeStart"]) &&
+            empty($data["searchRangeEnd"])
+        ) {
             $unsortedOperations = Operation::join("accounts", "operations.account_id", "accounts.id")
                 ->join("categories", "operations.category_id", "categories.id")
                 ->select(
@@ -45,6 +93,7 @@ class OperationController extends Controller
                 ->where("operations.user_id", $data["userId"])
                 ->get()->toArray();
         }
+
         $packagedOperations = [];
         if (count($unsortedOperations) !== 0) {
 
@@ -134,5 +183,55 @@ class OperationController extends Controller
             "account_id" => $data["account_id"],
             "user_id" => $data["userId"],
         ]);
+    }
+
+    public function loadCurrentBalanceByUserId(Request $request)
+    {
+        $data = $request->post();
+
+        $operations = null;
+
+        if (isset($data["rangeStart"]) && isset($data["rangeEnd"])) {
+            $operation = Operation::join("categories", "operations.category_id", "categories.id")
+                ->select(
+                    "operations.id",
+                    "operations.description",
+                    "operations.amount",
+                    "operations.time",
+                    "categories.type"
+                )
+                ->where("operations.time", ">", $data["rangeStart"])
+                ->where("operations.time", "<", $data["rangeEnd"])
+                ->where("operations.user_id", $data["userId"])
+                ->get();
+        } else {
+            $operation = Operation::join("categories", "operations.category_id", "categories.id")
+                ->select(
+                    "operations.id",
+                    "operations.description",
+                    "operations.amount",
+                    "operations.time",
+                    "categories.type"
+                )
+                ->where("operations.user_id", $data["userId"])
+                ->get();
+        }
+
+
+
+        $curBalSum = [
+            "income" => 0,
+            "expenses" => 0,
+        ];
+
+        for ($i = 0; $i < count($operation); $i++) {
+            if ($operation[$i]["type"] === "income") {
+                $curBalSum["income"] = (float)$curBalSum["income"] + (float)$operation[$i]["amount"];
+            } else {
+                $curBalSum["expenses"] = (float)$curBalSum["expenses"] + (float)$operation[$i]["amount"];
+            }
+        }
+
+        return $curBalSum;
     }
 }

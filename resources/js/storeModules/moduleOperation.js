@@ -5,6 +5,8 @@ const moduleOperation = {
             operations: [],
             ChangedDataOperation: [],
             searchCrit: "",
+            searchRangeStart: "",
+            searchRangeEnd: "",
         };
     },
     mutations: {
@@ -17,6 +19,12 @@ const moduleOperation = {
         setSearchCrit(state, value) {
             state.searchCrit = value;
         },
+        setSearchRangeStart(state, value) {
+            state.searchRangeStart = value;
+        },
+        setSearchRangeEnd(state, value) {
+            state.searchRangeEnd = value;
+        },
     },
     getters: {
         currentOperations(state) {
@@ -28,28 +36,56 @@ const moduleOperation = {
         getSearchCrit(state) {
             return state.searchCrit;
         },
+        getSearchRangeStart(state) {
+            return state.searchRangeStart;
+        },
+        getSearchRangeEnd(state) {
+            return state.searchRangeEnd;
+        },
     },
     actions: {
-        async loadOperationByUserId({ commit, getters }) {
+        async loadOperationByUserId({ commit, getters, dispatch }) {
             const data = {
                 userId: getters.getAuthStatus.userId,
                 searchCrit: getters.getSearchCrit,
+                searchRangeStart: getters.getSearchRangeStart,
+                searchRangeEnd: getters.getSearchRangeEnd,
             };
-            let variable;
 
-            await fetch("/api/getOperationByUserId/", {
-                method: "POST",
-                body: JSON.stringify(data),
-                headers: {
-                    "Content-Type": "application/json;charset=UTF-8",
-                },
-            })
-                .then(async (response) => (variable = await response.json()))
-                .catch((error) => console.log(error));
-            if (variable !== 0) {
-                commit("setOperations", variable);
+            if (data["searchCrit"].length === 0) {
+                await dispatch("globalValidate", {
+                    title: "notValidateCode",
+                    description: "notValidateCode",
+                    amount: "notValidateCode",
+                    time: data["searchRangeStart"],
+                    timeTwo: data["searchRangeEnd"],
+                    selected: "notValidateCode",
+                    img: "notValidateCode",
+                });
             } else {
-                commit("setOperations", 0);
+                commit("clearAllErrors");
+            }
+
+            if (getters.getErrorStatus === 0) {
+                let variable;
+                await fetch("/api/getOperationByUserId/", {
+                    method: "POST",
+                    body: JSON.stringify(data),
+                    headers: {
+                        "Content-Type": "application/json;charset=UTF-8",
+                    },
+                })
+                    .then(
+                        async (response) => (variable = await response.json())
+                    )
+                    .catch((error) => console.log(error));
+                if (variable !== 0) {
+                    commit("setOperations", variable);
+                } else {
+                    commit("setOperations", 0);
+                }
+                commit("setSearchRangeStart", "");
+                commit("setSearchRangeEnd", "");
             }
         },
 
@@ -74,8 +110,9 @@ const moduleOperation = {
                 description: changedDataOperation["description"],
                 amount: changedDataOperation["amount"],
                 time: changedDataOperation["time"],
+                timeTwo: "notValidateCode",
                 selected: "notValidateCode",
-                img: "notValidateCode"
+                img: "notValidateCode",
             });
             if (getters.getErrorStatus === 0) {
                 await fetch("/api/updateOperationById", {
@@ -105,8 +142,9 @@ const moduleOperation = {
                 description: newDataOperation["description"],
                 amount: newDataOperation["amount"],
                 time: newDataOperation["time"],
+                timeTwo: "notValidateCode",
                 selected: "notValidateCode",
-                img: "notValidateCode"
+                img: "notValidateCode",
             });
             if (getters.getErrorStatus === 0) {
                 newDataOperation["userId"] = getters.getAuthStatus["userId"];

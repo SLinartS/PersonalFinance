@@ -2,57 +2,112 @@
     <main class="analytics">
         <div class="analytics__main-bar">
             <div class="analytics__main-bar__calendar">
-                <svg class="icon-calendar" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                    <path
-                        d="M160 32V64H288V32C288 14.33 302.3 0 320 0C337.7 0 352 14.33 352 32V64H400C426.5 64 448 85.49 448 112V160H0V112C0 85.49 21.49 64 48 64H96V32C96 14.33 110.3 0 128 0C145.7 0 160 14.33 160 32zM0 192H448V464C448 490.5 426.5 512 400 512H48C21.49 512 0 490.5 0 464V192zM64 304C64 312.8 71.16 320 80 320H112C120.8 320 128 312.8 128 304V272C128 263.2 120.8 256 112 256H80C71.16 256 64 263.2 64 272V304zM192 304C192 312.8 199.2 320 208 320H240C248.8 320 256 312.8 256 304V272C256 263.2 248.8 256 240 256H208C199.2 256 192 263.2 192 272V304zM336 256C327.2 256 320 263.2 320 272V304C320 312.8 327.2 320 336 320H368C376.8 320 384 312.8 384 304V272C384 263.2 376.8 256 368 256H336zM64 432C64 440.8 71.16 448 80 448H112C120.8 448 128 440.8 128 432V400C128 391.2 120.8 384 112 384H80C71.16 384 64 391.2 64 400V432zM208 384C199.2 384 192 391.2 192 400V432C192 440.8 199.2 448 208 448H240C248.8 448 256 440.8 256 432V400C256 391.2 248.8 384 240 384H208zM320 432C320 440.8 327.2 448 336 448H368C376.8 448 384 440.8 384 432V400C384 391.2 376.8 384 368 384H336C327.2 384 320 391.2 320 400V432z"/>
-                </svg>
-                <p class="analytics__main-bar__date">14-20 марта 2022</p>
+                <div class="change__block__time-block">
+                    <div class="analytics-input-block">
+                        <input
+                            class="input-calendar"
+                            id="timeAnalytics"
+                            type="button"
+                        />
+                        <input
+                            id="inputOperAddStart"
+                            ref="operAddTimeStart"
+                            type="datetime"
+                            class="change__block-input change__block-input--datetime"
+                        />
+                        <img
+                            :class="['search-error-img', {'hiddenOpacity': !timeError}]"
+                            class="search-error-img"
+                            :src="errorImg"
+                            alt=""
+                        />
+                    </div>
+                    <div class="analytics-input-block">
+                        <img
+                            class="icon-search"
+                            :src="searchImg"
+                            @click="updateSearch"
+                            alt=""
+                        />
+                        <input
+                            id="inputOperAddEnd"
+                            ref="operAddTimeEnd"
+                            type="datetime"
+                            class="change__block-input change__block-input--datetime"
+                        />
+                        <img
+                            :class="['search-error-img', {'hiddenOpacity': !timeTwoError}]"
+                            class="search-error-img"
+                            :src="errorImg"
+                            alt=""
+                        />
+                    </div>
+                </div>
             </div>
+
             <div class="analytics__main-bar__elem-result">
-                <h3 class="analytics__main-bar__title">Текущий баланс:</h3>
-                <p class="analytics__main-bar__amount-result result">106 457,69 ₽</p>
+                <h3 class="analytics__main-bar__title">Тек. баланс:</h3>
+                <p class="analytics__main-bar__amount-result result">
+                    {{ currentAccount }} ₽
+                </p>
+                <h3 class="analytics__main-bar__title">Тек. долги:</h3>
+                <p class="analytics__main-bar__amount-result result">
+                    {{ currentDebt }} ₽
+                </p>
+                <h3 class="analytics__main-bar__title">Тек. накопления:</h3>
+                <p class="analytics__main-bar__amount-result result">
+                    {{ currentSaving }} ₽
+                </p>
             </div>
+
             <div class="analytics__main-bar__additional-information">
                 <div class="analytics__main-bar__elem-middle-day">
                     <h3 class="analytics__main-bar__title">Ср. день</h3>
-                    <p class="analytics__main-bar__amount analytics__setting-amount--middle-day expenses">16 417,72
-                        ₽</p>
+                    <p
+                        class="analytics__main-bar__amount analytics__setting-amount--middle-day expenses"
+                    >
+                        16 417,72 ₽
+                    </p>
                 </div>
                 <div class="analytics__main-bar__elem-middle-week">
                     <h3 class="analytics__main-bar__title">Ср. неделя</h3>
-                    <p class="analytics__main-bar__amount analytics__setting__amount--middle-week expenses">9 046,14
-                        ₽</p>
+                    <p
+                        class="analytics__main-bar__amount analytics__setting__amount--middle-week expenses"
+                    >
+                        9 046,14 ₽
+                    </p>
                 </div>
             </div>
         </div>
-        <div class="current-balance">
-            <div class="current-balance__elem current-balance__elem--income">
-                <h3 class="current-balance__title">Поступления</h3>
-                <p class="current-balance__amount income">25 463,86 ₽</p>
-            </div>
-            <div class="current-balance__elem current-balance__elem--result">
-                <h3 class="current-balance__title">Итог</h3>
-                <p class="current-balance__amount current-balance__amount--result">16 417,72 ₽</p>
-            </div>
-            <div class="current-balance__elem current-balance__elem--expenses">
-                <h3 class="current-balance__title">Расходы</h3>
-                <p class="current-balance__amount expenses">9 046,14 ₽</p>
-            </div>
-        </div>
+        <CurrentBalance
+            :rangeStart="rangeStart"
+            :rangeEnd="rangeEnd"
+            :updateSearchTrigger="updateSearchTrigger"
+        ></CurrentBalance>
         <div class="analytics__all-blocks">
             <div class="analytics__one-block">
                 <div class="analytics__circle-diagram-">
-                    <img src="../../../../public/assets/files/images/chart.svg" alt="">
+                    <img
+                        src="../../../../public/assets/files/images/chart.svg"
+                        alt=""
+                    />
                     <!--                Здесь должена быть круговая диаграмма-->
                 </div>
             </div>
             <div class="analytics__two-block">
                 <div class="analytics__buttons-section">
-                    <a class="button analytics__button bgincome" href="">Поступления</a>
-                    <a class="button analytics__button bgexpenses" href="">Расходы</a>
+                    <a class="button analytics__button bgincome" href=""
+                        >Поступления</a
+                    >
+                    <a class="button analytics__button bgexpenses" href=""
+                        >Расходы</a
+                    >
                 </div>
                 <div class="analytics__graph-diagram">
-                    <img src="../../../../public/assets/files/images/graph.svg" alt="">
+                    <img
+                        src="../../../../public/assets/files/images/graph.svg"
+                        alt=""
+                    />
                     <!--                Здесь должен быть график по дням-->
                 </div>
             </div>
@@ -61,14 +116,80 @@
 </template>
 
 <script>
+import moment from "moment";
+import AirDatepicker from "air-datepicker";
+import "air-datepicker/air-datepicker.css";
+
+import searchImg from "../../../../public/assets/files/images/magnifying-glass.svg";
+import errorImg from "../../../../public/assets/files/images/circle-exclamation.svg";
+
+import CurrentBalance from "../blocks/category/CurrentBalance.vue";
 export default {
     name: "AnalyticsPage",
+    components: { CurrentBalance },
     data() {
-        return {}
-    }
-}
+        return {
+            searchImg: searchImg,
+            errorImg: errorImg,
+            time: "",
+            rangeStart: "",
+            rangeEnd: "",
+            updateSearchTrigger: 1,
+        };
+    },
+    computed: {
+        getCurrentDebtAndBalance() {
+            return this.$store.getters.getCurrentDebtAndBalance;
+        },
+        currentAccount() {
+            return this.getCurrentDebtAndBalance["account"];
+        },
+        currentDebt() {
+            return this.getCurrentDebtAndBalance["debt"];
+        },
+        currentSaving() {
+            return this.getCurrentDebtAndBalance["saving"];
+        },
+        timeError() {
+            return this.$store.getters.getAllErrors["timeError"];
+        },
+        timeTwoError() {
+            return this.$store.getters.getAllErrors["timeTwoError"];
+        },
+    },
+    methods: {
+        updateSearch() {
+            this.rangeStart = this.$refs.operAddTimeStart.value;
+            this.rangeEnd = this.$refs.operAddTimeEnd.value;
+            this.updateSearchTrigger = !this.updateSearchTrigger;
+        },
+    },
+    mounted() {
+        new AirDatepicker("#timeAnalytics", {
+            timepicker: true,
+            minutesStep: 5,
+            autoClose: true,
+            range: true,
+            dateFormat: "yyyy-MM-dd",
+            onSelect({ date, formattedDate, datepicker }) {
+                if (formattedDate[0]) {
+                    document.querySelector("#inputOperAddStart").value =
+                        formattedDate[0];
+                } else {
+                    document.querySelector("#inputOperAddStart").value = "";
+                }
+
+                if (formattedDate[1]) {
+                    document.querySelector("#inputOperAddEnd").value =
+                        formattedDate[1];
+                } else {
+                    document.querySelector("#inputOperAddEnd").value = "";
+                }
+            },
+        });
+        this.$store.dispatch("loadDebtAndBalanceByUserId");
+    },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

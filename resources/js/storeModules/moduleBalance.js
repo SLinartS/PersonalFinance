@@ -55,9 +55,10 @@ const moduleBalance = {
         ) {
             await dispatch("globalValidate", {
                 title: changedAccountData["title"],
-                description: "notValidate",
-                amount: changedAccountData["amount"],
+                description: "notValidateCode",
+                amount: "notValidateCode",
                 time: "notValidateCode",
+                timeTwo: "notValidateCode",
                 selected: "notValidateCode",
                 img: "notValidateCode"
             });
@@ -108,9 +109,10 @@ const moduleBalance = {
 
             await dispatch("globalValidate", {
                 title: newAccountData["title"],
-                description: "notValidate",
-                amount: newAccountData["amount"],
+                description: "notValidateCode",
+                amount: "notValidateCode",
                 time: "notValidateCode",
+                timeTwo: "notValidateCode",
                 selected: "notValidateCode",
                 img: "notValidateCode"
             });

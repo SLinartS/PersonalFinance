@@ -111,11 +111,15 @@
 .change__block-input--datetime {
     width: 19rem;
     text-align: center;
+    margin: 0.5rem 0 0.5rem 0;
 }
 
 .change__block__time-block {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-left: 4rem;
+    margin-right: 3rem;
 }
 
 .input-calendar {
@@ -126,7 +130,7 @@
     color: transparent;
     z-index: 2;
     display: inline-block;
-    margin-left: 1rem;
+    margin: 0 1rem 0 1rem;
 }
 
 .change__block-input--operation-search {
