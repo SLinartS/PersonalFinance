@@ -117,20 +117,21 @@ class AccountController extends Controller
         ]);
     }
 
+
+
+
+
     public function loadDebtAndBalanceByUserId($userId)
     {
-
         $accounts = Account::where("user_id", $userId)
             ->select("id", "title", "type")
             ->get()->toArray();
-
         $outputData =
             [
                 "account" => [],
                 "debt" => [],
                 "saving" => [],
             ];
-
         $operations = Operation::join("categories", "operations.category_id", "categories.id")
             ->select(
                 "operations.id",
@@ -139,7 +140,6 @@ class AccountController extends Controller
                 "categories.type"
             )
             ->get()->toArray();
-
         for ($i = 0; $i < count($accounts); $i++) {
             $accounts[$i]["amount"] = 0;
             for ($k = 0; $k < count($operations); $k++) {
@@ -169,17 +169,15 @@ class AccountController extends Controller
                     break;
             }
         }
-
-        if(empty($outputData["account"])) {
+        if (empty($outputData["account"])) {
             $outputData["account"] = 0;
         }
-        if(empty($outputData["debt"])) {
+        if (empty($outputData["debt"])) {
             $outputData["debt"] = 0;
         }
-        if(empty($outputData["saving"])) {
+        if (empty($outputData["saving"])) {
             $outputData["saving"] = 0;
         }
-
         return $outputData;
     }
 }

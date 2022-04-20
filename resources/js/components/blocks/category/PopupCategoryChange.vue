@@ -137,7 +137,6 @@ export default {
             // this.$store.commit("setChangedDataCategory", []);
         },
         addCategoryItem() {
-            console.log(this.type);
             this.$store.dispatch("insertCategoryById", {
                 title: this.title,
                 type: this.currentPopupCategoryChange["typeBlock"],

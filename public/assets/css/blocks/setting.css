@@ -1,0 +1,81 @@
+.setting {
+    height: 46rem;
+    width: 65rem;
+    z-index: 2;
+    box-shadow: 0 0 20px rgb(34, 34, 34);
+    border-radius: 1rem;
+    font-size: 2.4rem;
+    position: absolute;
+    left: 30%;
+    top: 200%;
+    display: block;
+    background: var(--main-white);
+    color: var(--main-black);
+    overflow: hidden;
+}
+
+.link--setting-account {
+    font-size: 1.6rem;
+}
+
+.setting__header {
+    height: 5rem;
+    font-size: 2.8rem;
+    display: flex;
+    color: var(--main-white);
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--main-blue);
+    z-index: 2;
+}
+
+.setting__header__title {
+    margin-left: 2rem;
+}
+
+.setting__account-blocks {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 1rem 0 1rem;
+}
+
+.setting__account-block {
+    display: grid;
+    align-items: center;
+    margin: 1rem 1rem 1rem 1rem;
+    grid-template-columns: 2fr 1fr 1fr;
+}
+
+.setting__setting-blocks {
+    display: flex;
+    flex-direction: column;
+    margin: 2rem 1rem 0 1rem;
+}
+
+.setting__setting-block {
+    display: grid;
+    align-items: center;
+    margin: 1rem 1rem 1rem 1rem;
+    grid-template-columns: 2fr 1fr;
+}
+
+.setting-select {
+    width: 15rem;
+    font-size: 2rem;
+    height: 4rem;
+}
+
+.setting__button-section {
+    display: flex;
+    justify-items: right;
+    justify-content: flex-end;
+    margin: 2rem 2rem 2rem 2rem;
+}
+
+.setting__button {
+    background-color: var(--main-blue);
+    width: 25rem;
+    padding: 0.8rem 1rem 0.8rem 1rem;
+    font-size: 2.4rem;
+    margin: 0 1rem 0 1rem;
+}

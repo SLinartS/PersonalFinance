@@ -36,12 +36,17 @@ export default {
     },
     methods: {
         loadDateFromDB() {
-            this.$store.dispatch("loadIncomeCategoriesFromDB");
+            if (this.AuthStatusStatus) {
+                this.$store.dispatch("loadIncomeCategoriesFromDB");
+            }
         },
     },
     computed: {
         currentCategories() {
             return this.$store.getters.getCategories;
+        },
+        AuthStatusStatus() {
+            return this.$store.getters.getAuthStatusStatus;
         },
     },
 };

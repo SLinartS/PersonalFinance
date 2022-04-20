@@ -37,31 +37,39 @@ export default {
         };
     },
     mounted() {
+        this.$store.commit("setOperations", [])
         this.loadDateByUserIdText();
     },
     methods: {
         loadDateByUserIdText() {
-            this.$store.dispatch("loadOperationByUserId");
+            if (this.AuthStatusStatus) {
+                this.$store.dispatch("loadOperationByUserId");
+            }
         },
         loadDateByUserIdTime(range) {
-            console.log(range);
-            this.$store.commit(
-                "setSearchRangeStart",
-                range["rangeStart"] + ":00"
-            );
-            this.$store.commit("setSearchRangeEnd", range["rangeEnd"] + ":00");
-            this.$store.dispatch("loadOperationByUserId");
+            if (this.AuthStatusStatus) {
+                this.$store.commit(
+                    "setSearchRangeStart",
+                    range["rangeStart"] + ":00"
+                );
+                this.$store.commit(
+                    "setSearchRangeEnd",
+                    range["rangeEnd"] + ":00"
+                );
+                this.$store.dispatch("loadOperationByUserId");
+            }
         },
     },
     computed: {
         currentOperations() {
             return this.$store.getters.currentOperations;
         },
+        AuthStatusStatus() {
+            return this.$store.getters.getAuthStatusStatus;
+        },
     },
     watch: {
         searchCrit() {
-            console.log(this.searchCrit);
-
             this.$store.commit("setSearchCrit", this.searchCrit);
         },
     },

@@ -78,7 +78,6 @@ class CategoryController extends Controller
 
     public function getCategoryById($id)
     {
-
         $category = Category::query()
             ->join("colors", "categories.color_id", "colors.id")
             ->select(
@@ -103,10 +102,6 @@ class CategoryController extends Controller
             )
             ->where("categories.id", $id)
             ->get()->toArray();
-
-        for ($i = 0; $i < count($accounts); $i++) {
-
-        }
 
         $operations = Operation::join("categories", "operations.category_id", "categories.id")
             ->select(
@@ -142,16 +137,13 @@ class CategoryController extends Controller
     public function insertCategoryByUserId(Request $request)
     {
         $data = $request->post();
-
         Category::insert([
             "type" => $data["type"],
             "title" => $data["title"],
             "img_url" => $data["img_url"],
             "color_id" => $data["color_id"],
         ]);
-
         $currentCategory = Category::select("id", "type", "title")->where("title", $data["title"])->first();
-
         UserCategory::insert([
             "user_id" => $data["userId"],
             "category_id" => $currentCategory["id"]
@@ -161,7 +153,6 @@ class CategoryController extends Controller
     public function updateCategoryById(Request $request)
     {
         $data = $request->post();
-
         Category::where("id", $data["id"])->update([
             "title" => $data["title"],
             "img_url" => $data["img_url"],
@@ -171,23 +162,16 @@ class CategoryController extends Controller
 
     public function deleteCategoryById($id)
     {
-
         $category = Category::where("id", $id)->first()->toArray();
-
         if ($category["type"] === "income") {
             Operation::query()
                 ->join("categories", "operations.category_id", "categories.id")
-                ->where("categories.id", $id)->update([
-                    "category_id" => 1
-                ]);
+                ->where("categories.id", $id)->update(["category_id" => 1]);
         } elseif ($category["type"] === "expenses") {
             Operation::query()
                 ->join("categories", "operations.category_id", "categories.id")
-                ->where("categories.id", $id)->update([
-                    "category_id" => 2
-                ]);
+                ->where("categories.id", $id)->update(["category_id" => 2]);
         }
-
         UserCategory::where("category_id", $id)->delete();
         Category::where("id", $id)->delete();
     }

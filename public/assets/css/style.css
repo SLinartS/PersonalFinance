@@ -18,8 +18,8 @@
 
 @import "../css/blocks/popup.css";
 @import "../css/blocks/auth-reg.css";
+@import "../css/blocks/setting.css";
 @import "../css/blocks/balance-change.css";
 
 @import "../css/global/screen-queries.css";
-@import "../css/global/calendar.css";
 

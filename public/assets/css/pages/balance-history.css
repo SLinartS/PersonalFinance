@@ -81,10 +81,6 @@
 
 } */
 
-.data-item--empty a {
-    color: var(--main-blue);
-}
-
 .data-list {
     padding-bottom: 2rem;
     box-shadow:

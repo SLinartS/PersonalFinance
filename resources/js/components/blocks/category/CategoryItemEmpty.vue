@@ -19,22 +19,28 @@ import addCategoryImg from "../../../../../public/assets/files/images/categories
 export default {
     name: "categoryItemEmpty",
     props: {
-        type: String
+        type: String,
     },
     data() {
         return {
             addCategoryImg: addCategoryImg,
         };
     },
-    computed: {},
+    computed: {
+        AuthStatusStatus() {
+            return this.$store.getters.getAuthStatusStatus;
+        },
+    },
     methods: {
         togglePopupCategoryChange() {
-            this.$store.dispatch("loadColorsList");
-            this.$store.commit("togglePopupCategoryChange", {
-                status: true,
-                typeAction: "add",
-                typeBlock: this.type,
-            });
+            if (this.AuthStatusStatus) {
+                this.$store.dispatch("loadColorsList");
+                this.$store.commit("togglePopupCategoryChange", {
+                    status: true,
+                    typeAction: "add",
+                    typeBlock: this.type,
+                });
+            }
         },
     },
 };

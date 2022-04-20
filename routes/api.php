@@ -2,12 +2,9 @@
 
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\AccountController;
-use App\Http\Controllers\Api\DebtController;
-use App\Http\Controllers\Api\SavingController;
 use App\Http\Controllers\Api\OptionController;
 use App\Http\Controllers\Api\OperationController;
 use App\Http\Controllers\Api\CategoryController;
-use App\Http\Controllers\Api\BudgetController;
 use App\Http\Controllers\Api\ColorController;
 use App\Http\Controllers\Api\ValidateController;
 
@@ -26,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get("getColorsList", [ColorController::class, "getColorsList"]);
+Route::get("getOptionsList/{userId}", [OptionController::class, "getOptionsList"]);
 Route::post("validateField", [ValidateController::class, "validateField"]);
 
 Route::get("getCategoriesByType/{id}/{type}", [CategoryController::class, "getCategoriesByType"]);

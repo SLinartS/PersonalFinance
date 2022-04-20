@@ -1,43 +1,56 @@
 <template>
     <main class="general">
         <div class="general__content">
-            <h3 class="general__title"> Крутая кликбейтная фраза?</h3>
-            <img class="general__analytics" :src='img_analytics' alt="analytics image">
+            <h3 class="general__title">70% людей в мире не следят за своими финансами</h3>
+            <img
+                class="general__analytics"
+                :src="img_analytics"
+                alt="analytics image"
+            />
             <div class="general__text-block">
-                <p>Противоположная точка зрения подразумевает, что сделанные на базе интернет-аналитики выводы могут быть
-                    обнародованы.
-                    Имеется спорная точка зрения, гласящая примерно следующее: интерактивные прототипы призваны к
-                    ответу.</p>
-                <p>Значимость этих проблем настолько очевидна, что базовый вектор развития требует определения и уточнения
-                    направлений прогрессивного развития.
-                    Равным образом, убеждённость некоторых оппонентов обеспечивает широкому кругу (специалистов)
-                    участие.</p>
-                <p>Попробуй воспользоваться, удивись, обрадуйся, прими.
-                    Регистрируйся прямо сейчас по кнопке ниже.</p>
-                <button type="button" @click="togglePopupReg" class="button general__button button--start-reg" href="">Зарегистрироваться</button>
+                <p>
+                    В современных экономических условиях одной из самых
+                    актуальных проблем человека является контроль над личными
+                    финансами. Основой для надёжного контролирования личных
+                    финансов является ведение записей о каждой операции с ними.
+                </p>
+                <p>
+                    Бесплатный учёт личных финансов, гибкие настрочки, приятный
+                    дизайн Ваш финансовый навигатор в браузере и смартфоне.
+                </p>
+                <p>
+                    Ещё не попробовал? Воспользуйся возможностью прямо сейчас
+                    Регистрируйся прямо сейчас по кнопке ниже.
+                </p>
+                <button
+                    type="button"
+                    @click="togglePopupReg"
+                    class="button general__button button--start-reg"
+                    href=""
+                >
+                    Зарегистрироваться
+                </button>
             </div>
         </div>
     </main>
 </template>
 
 <script>
-import img_analytics from "../../../../public/assets/files/images/analytics.png"
+import img_analytics from "../../../../public/assets/files/images/analytics.png";
 export default {
     name: "MainPage",
     data() {
         return {
-            img_analytics: img_analytics
-        }
+            img_analytics: img_analytics,
+        };
     },
     methods: {
         togglePopupReg() {
-            this.$store.commit("changeErrors", {})
-            this.$store.commit("togglePopupReg", true)
+            this.$store.commit("changeErrors", {});
+            this.$store.commit("togglePopupReg", true);
         },
     },
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -36,6 +36,46 @@ class DatabaseSeeder extends Seeder
             'password' => "test2password",
             'avatar_url' => 'link2'
         ]);
+
+        //----------------------------------------------------------------------------------------------------------------------
+
+
+        DB::table('currencies')->insert([
+            'value' => '₽',
+        ]);
+        DB::table('currencies')->insert([
+            'value' => '$',
+        ]);
+        DB::table('currencies')->insert([
+            'value' => '€',
+        ]);
+
+
+        DB::table('separators')->insert([
+            'value' => '.',
+        ]);
+        DB::table('separators')->insert([
+            'value' => ',',
+        ]);
+
+
+        DB::table('spaces')->insert([
+            'value' => 'Пробел',
+        ]);
+        DB::table('spaces')->insert([
+            'value' => 'Нет',
+        ]);
+        DB::table('spaces')->insert([
+            'value' => 'Дефис',
+        ]);
+
+        DB::table('options')->insert([
+            'user_id' => 2,
+            'currency_id' => 1,
+            'space_id' => 1,
+            'separator_id' => 1,
+        ]);
+
         //----------------------------------------------------------------------------------------------------------------------
 
         DB::table('accounts')->insert([
@@ -148,6 +188,10 @@ class DatabaseSeeder extends Seeder
             'title' => 'CategoryDarkGreen',
             'value' => '#14721F',
         ]);
+        DB::table('colors')->insert([
+            'title' => 'CategoryGray',
+            'value' => '#aaaaaa',
+        ]);
 
         //----------------------------------------------------------------------------------------------------------------------
 
@@ -155,14 +199,14 @@ class DatabaseSeeder extends Seeder
             'type' => 'income',
             'title' => 'Неизв. пополнения',
             'img_url' => 'assets/files/images/question-solid.svg',
-            'color_id' => 1,
+            'color_id' => 13,
         ]);
 
         DB::table('categories')->insert([
             'type' => 'expenses',
             'title' => 'Неизв. расходы',
             'img_url' => 'assets/files/images/question-solid.svg',
-            'color_id' => 1,
+            'color_id' => 13,
         ]);
 
         DB::table('categories')->insert([
@@ -238,6 +282,14 @@ class DatabaseSeeder extends Seeder
             'description' => 'Зарплата',
             'amount' => "10000",
             'time' => "2022-04-01 01:00:00",
+            "account_id" => 3,
+            "category_id" => 12,
+            "user_id" => 2,
+        ]);
+        DB::table('operations')->insert([
+            'description' => 'Нашёл деньги у банкомата',
+            'amount' => "1000",
+            'time' => "2022-04-01 01:00:00",
             "account_id" => 1,
             "category_id" => 12,
             "user_id" => 2,
@@ -252,6 +304,14 @@ class DatabaseSeeder extends Seeder
         ]);
         DB::table('operations')->insert([
             'description' => 'Корм коту',
+            'amount' => "700",
+            'time' => "2022-04-03 12:00:00",
+            "account_id" => 3,
+            "category_id" => 10,
+            "user_id" => 2,
+        ]);
+        DB::table('operations')->insert([
+            'description' => 'Доехал до дома',
             'amount' => "300",
             'time' => "2022-04-03 12:00:00",
             "account_id" => 3,
@@ -260,17 +320,9 @@ class DatabaseSeeder extends Seeder
         ]);
         DB::table('operations')->insert([
             'description' => 'Еда для дома',
-            'amount' => "8000",
+            'amount' => "2000",
             'time' => "2022-04-10 06:25:00",
             "account_id" => 4,
-            "category_id" => 4,
-            "user_id" => 2,
-        ]);
-        DB::table('operations')->insert([
-            'description' => 'Потерял деньги',
-            'amount' => "2000",
-            'time' => "2022-04-24 23:59:00",
-            "account_id" => 5,
             "category_id" => 4,
             "user_id" => 2,
         ]);

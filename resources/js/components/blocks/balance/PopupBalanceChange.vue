@@ -66,7 +66,6 @@ export default {
             computedWork: true,
         };
     },
-    mounted() {},
     computed: {
         currentData() {
             if (

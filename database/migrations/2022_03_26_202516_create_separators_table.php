@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('separators', function (Blueprint $table) {
             $table->id();
-            $table->string('title', 10);
+            $table->string('value', 10);
         });
     }
 

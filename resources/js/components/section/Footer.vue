@@ -1,8 +1,7 @@
 <template>
     <footer class="footer">
         <div>
-            <p>Работа студента 19ИСП-329</p>
-            <p>Автор: Акимов Дмитрий Александрович</p>
+            <p>© 2022 RЭSourses | ООО «Финансовые системы» </p>
         </div>
     </footer>
 </template>

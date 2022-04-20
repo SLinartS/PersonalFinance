@@ -93,13 +93,18 @@ export default {
             const sum = this.currentIncome + this.currentExpenses;
             return Math.round((this.currentExpenses / sum) * 100);
         },
+        AuthStatusStatus() {
+            return this.$store.getters.getAuthStatusStatus;
+        },
     },
     methods: {
         getCurrentBalanceByUserId() {
-            this.$store.dispatch("loadCurrentBalanceByUserId", {
-                rangeStart: "1970-01-01 00:00:00",
-                rangeEnd: moment().format("YYYY-MM-DD HH:mm:ss"),
-            });
+            if (this.AuthStatusStatus) {
+                this.$store.dispatch("loadCurrentBalanceByUserId", {
+                    rangeStart: "1970-01-01 00:00:00",
+                    rangeEnd: moment().format("YYYY-MM-DD HH:mm:ss"),
+                });
+            }
         },
     },
     mounted() {

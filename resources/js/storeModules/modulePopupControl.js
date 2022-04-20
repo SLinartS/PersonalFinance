@@ -4,7 +4,7 @@ const modulePopupControl = {
             popupNav: false,
             popupAuth: false,
             popupReg: false,
-            popupSetting: true,
+            popupSetting: false,
             popupBalanceChange: {
                 status: false,
                 typeAction: "",

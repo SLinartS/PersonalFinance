@@ -29,7 +29,7 @@
                 <div class="auth-reg__input-block">
                     <img class="auth-reg__image" src="../../../../../public/assets/files/images/key-solid.svg" alt="">
                     <div class="auth-reg__input-container">
-                        <input v-model="fieldPassword" class="input" type="text" id="password" name="password"
+                        <input v-model="fieldPassword" class="input" type="password" id="password" name="password"
                                placeholder="Пароль">
                         <p class="error-p">{{ passwordExist }}</p>
                     </div>
@@ -37,7 +37,7 @@
                 <div class="auth-reg__input-block">
                     <img class="auth-reg__image" src="../../../../../public/assets/files/images/key-solid.svg" alt="">
                     <div class="auth-reg__input-container">
-                        <input v-model="fieldPasswordRepeat" class="input" type="text" id="repeat-password"
+                        <input v-model="fieldPasswordRepeat" class="input" type="password" id="repeat-password"
                                name="repeat-password"
                                placeholder="Повторите пароль">
                         <p class="error-p"> {{ passwordRepeatExist }}</p>

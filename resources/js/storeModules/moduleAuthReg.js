@@ -66,6 +66,9 @@ const moduleAuthReg = {
         getAuthStatus(state) {
             return state.authStatus;
         },
+        getAuthStatusStatus(state) {
+            return state.authStatus["status"];
+        },
         getNameExist(state) {
             if (state.errors.nameExist) {
                 return state.errors.nameExist;

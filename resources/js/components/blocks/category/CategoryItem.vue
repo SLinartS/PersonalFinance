@@ -6,23 +6,25 @@
             class="categories__item__background bgcolor-1"
             :style="{ backgroundColor: color }"
         >
-            <img class="categories__item__image" :src="currentImgUrl" alt="icon-item" />
+            <img
+                class="categories__item__image"
+                :src="currentImgUrl"
+                alt="icon-item"
+            />
         </div>
-        <p
-            v-if="currentSumOperation"
-            class="categories__item__price color-1"
-        >{{ currentSumOperation }} ₽</p>
+        <p v-if="currentSumOperation" class="categories__item__price color-1">
+            {{ currentSumOperation }} ₽
+        </p>
         <p v-else class="categories__item__price color-1">0 ₽</p>
     </div>
 </template>
 
 <script>
+import moment from "moment";
 // import { computed } from '@vue/runtime-core'
 export default {
     data() {
-        return {
-
-        }
+        return {};
     },
     name: "categoryItem",
     props: {
@@ -30,25 +32,37 @@ export default {
         type: String,
         title: String,
         imgUrl: String,
-        color: String
+        color: String,
     },
     computed: {
         currentImgUrl() {
-            return "../" + this.imgUrl
+            return "../" + this.imgUrl;
         },
         currentSumOperation() {
-            return this.$store.getters.getSumOperation[this.title]
-        }
+            return this.$store.getters.getSumOperation[this.title];
+        },
+        AuthStatusStatus() {
+            return this.$store.getters.getAuthStatusStatus;
+        },
     },
     methods: {
         togglePopupOperationAdd() {
-            this.$store.dispatch("loadCategoryById", this.id)
-            this.$store.dispatch("loadOperationByUserId")
-            this.$store.commit("togglePopupOperationAdd", { status: true })
+            if (this.AuthStatusStatus) {
+                this.$store.dispatch("loadCategoryById", this.id);
+                this.$store.commit(
+                    "setSearchRangeStart",
+                    "1970-01-01 00:00:00"
+                );
+                this.$store.commit(
+                    "setSearchRangeEnd",
+                    moment().format("YYYY-MM-DD HH:mm:ss")
+                );
+                this.$store.dispatch("loadOperationByUserId");
+                this.$store.commit("togglePopupOperationAdd", { status: true });
+            }
         },
-    }
-}
+    },
+};
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

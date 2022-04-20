@@ -24,7 +24,7 @@
 .general::-webkit-scrollbar,
 .balance-history::-webkit-scrollbar,
 .categories::-webkit-scrollbar,
-.analytics::-webkit-scrollbar{
+.analytics::-webkit-scrollbar {
     width: 1rem;
 }
 
@@ -93,6 +93,10 @@ a {
     text-decoration: none;
     color: inherit;
     display: inline-block;
+}
+
+.link {
+    color: var(--main-blue);
 }
 
 ul,

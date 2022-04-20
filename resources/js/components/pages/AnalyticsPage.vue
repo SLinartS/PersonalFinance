@@ -2,7 +2,7 @@
     <main class="analytics">
         <div class="analytics__main-bar">
             <div class="analytics__main-bar__calendar">
-                <div class="change__block__time-block">
+                <div class="change__block__time-block time-block--oper-an">
                     <div class="analytics-input-block">
                         <input
                             class="input-calendar"
@@ -16,7 +16,10 @@
                             class="change__block-input change__block-input--datetime"
                         />
                         <img
-                            :class="['search-error-img', {'hiddenOpacity': !timeError}]"
+                            :class="[
+                                'search-error-img',
+                                { hiddenOpacity: !timeError },
+                            ]"
                             class="search-error-img"
                             :src="errorImg"
                             alt=""
@@ -36,7 +39,10 @@
                             class="change__block-input change__block-input--datetime"
                         />
                         <img
-                            :class="['search-error-img', {'hiddenOpacity': !timeTwoError}]"
+                            :class="[
+                                'search-error-img',
+                                { hiddenOpacity: !timeTwoError },
+                            ]"
                             class="search-error-img"
                             :src="errorImg"
                             alt=""
@@ -62,19 +68,19 @@
 
             <div class="analytics__main-bar__additional-information">
                 <div class="analytics__main-bar__elem-middle-day">
-                    <h3 class="analytics__main-bar__title">Ср. день</h3>
+                    <h3 class="analytics__main-bar__title"></h3>
                     <p
                         class="analytics__main-bar__amount analytics__setting-amount--middle-day expenses"
                     >
-                        16 417,72 ₽
+                        <!-- 16 417,72 ₽ -->
                     </p>
                 </div>
                 <div class="analytics__main-bar__elem-middle-week">
-                    <h3 class="analytics__main-bar__title">Ср. неделя</h3>
+                    <h3 class="analytics__main-bar__title"></h3>
                     <p
                         class="analytics__main-bar__amount analytics__setting__amount--middle-week expenses"
                     >
-                        9 046,14 ₽
+                        <!-- 9 046,14 ₽ -->
                     </p>
                 </div>
             </div>
@@ -85,31 +91,8 @@
             :updateSearchTrigger="updateSearchTrigger"
         ></CurrentBalance>
         <div class="analytics__all-blocks">
-            <div class="analytics__one-block">
-                <div class="analytics__circle-diagram-">
-                    <img
-                        src="../../../../public/assets/files/images/chart.svg"
-                        alt=""
-                    />
-                    <!--                Здесь должена быть круговая диаграмма-->
-                </div>
-            </div>
-            <div class="analytics__two-block">
-                <div class="analytics__buttons-section">
-                    <a class="button analytics__button bgincome" href=""
-                        >Поступления</a
-                    >
-                    <a class="button analytics__button bgexpenses" href=""
-                        >Расходы</a
-                    >
-                </div>
-                <div class="analytics__graph-diagram">
-                    <img
-                        src="../../../../public/assets/files/images/graph.svg"
-                        alt=""
-                    />
-                    <!--                Здесь должен быть график по дням-->
-                </div>
+            <div id="analytics__circle-diagram">
+                <CircleDiagram></CircleDiagram>
             </div>
         </div>
     </main>
@@ -124,9 +107,10 @@ import searchImg from "../../../../public/assets/files/images/magnifying-glass.s
 import errorImg from "../../../../public/assets/files/images/circle-exclamation.svg";
 
 import CurrentBalance from "../blocks/category/CurrentBalance.vue";
+import CircleDiagram from "../blocks/circleDiagram.vue";
 export default {
     name: "AnalyticsPage",
-    components: { CurrentBalance },
+    components: { CurrentBalance, CircleDiagram },
     data() {
         return {
             searchImg: searchImg,

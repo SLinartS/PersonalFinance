@@ -188,9 +188,7 @@ class OperationController extends Controller
     public function loadCurrentBalanceByUserId(Request $request)
     {
         $data = $request->post();
-
         $operations = null;
-
         if (isset($data["rangeStart"]) && isset($data["rangeEnd"])) {
             $operation = Operation::join("categories", "operations.category_id", "categories.id")
                 ->select(
@@ -216,8 +214,6 @@ class OperationController extends Controller
                 ->where("operations.user_id", $data["userId"])
                 ->get();
         }
-
-
 
         $curBalSum = [
             "income" => 0,

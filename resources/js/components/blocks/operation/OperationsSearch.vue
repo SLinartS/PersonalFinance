@@ -1,6 +1,6 @@
 <template>
     <div class="operation-search">
-        <div class="change__block__time-block">
+        <div class="change__block__time-block time-block--oper-an">
             <div class="analytics-input-block">
                 <input
                     class="input-calendar"

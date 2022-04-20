@@ -1,8 +1,16 @@
 <template>
     <div class="data-stroke">
         <div class="data-stroke__button-block">
-            <img :src="deleteImg" class="data-title__button" @click="togglePopupBalanceDelete" />
-            <img :src="changeImg" class="data-title__button" @click="togglePopupBalanceChange" />
+            <img
+                :src="deleteImg"
+                class="data-title__button"
+                @click="togglePopupBalanceDelete"
+            />
+            <img
+                :src="changeImg"
+                class="data-title__button"
+                @click="togglePopupBalanceChange"
+            />
             <p class="data-item data-item--decription">{{ title }}</p>
         </div>
         <p class="data-item">{{ amount }} ₽</p>
@@ -10,35 +18,50 @@
 </template>
 
 <script>
-import changeImg from "../../../../../public/assets/files/images/arrows-rotate-solid.svg"
-import deleteImg from "../../../../../public/assets/files/images/trash-can-solid.svg"
+import changeImg from "../../../../../public/assets/files/images/arrows-rotate-solid.svg";
+import deleteImg from "../../../../../public/assets/files/images/trash-can-solid.svg";
 
 export default {
     name: "AccountBlock",
     data() {
         return {
             changeImg: changeImg,
-            deleteImg: deleteImg
-        }
+            deleteImg: deleteImg,
+        };
     },
     props: {
         id: Number,
         title: String,
-        amount: String
+        amount: String,
+    },
+    computed: {
+        AuthStatusStatus() {
+            return this.$store.getters.getAuthStatusStatus;
+        },
     },
     methods: {
         togglePopupBalanceChange() {
-            this.$store.dispatch("loadAccountById", this.id)
-            this.$store.commit("togglePopupBalanceChange", { status: true, typeAction: "change", typeBlock: "account" })
+            if (this.AuthStatusStatus) {
+                this.$store.dispatch("loadAccountById", this.id);
+                this.$store.commit("togglePopupBalanceChange", {
+                    status: true,
+                    typeAction: "change",
+                    typeBlock: "account",
+                });
+            }
         },
         togglePopupBalanceDelete() {
-            this.$store.dispatch("loadAccountById",  this.id)
-            this.$store.commit("togglePopupBalanceDelete", { status: true, typeAction: "delete", typeBlock: "account" })
-
-        }
+            if (this.AuthStatusStatus) {
+                this.$store.dispatch("loadAccountById", this.id);
+                this.$store.commit("togglePopupBalanceDelete", {
+                    status: true,
+                    typeAction: "delete",
+                    typeBlock: "account",
+                });
+            }
+        },
     },
-}
+};
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

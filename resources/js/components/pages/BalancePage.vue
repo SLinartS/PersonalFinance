@@ -60,7 +60,7 @@
           <div class="data-stroke__button-block">
             <p class="data-item data-item--empty">
               Накоплений нет.
-              <a>Добавить</a>
+              <a class="link">Добавить</a>
             </p>
           </div>
         </div>

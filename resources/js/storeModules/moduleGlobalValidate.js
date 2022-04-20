@@ -131,7 +131,6 @@ const moduleGlobalValidate = {
             })
                 .then(async (response) => (variable = await response.json()))
                 .catch((error) => console.log(error));
-            console.log(variable);
 
             if (variable !== 0) {
                 commit("setAllErrors", {

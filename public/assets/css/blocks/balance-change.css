@@ -3,7 +3,7 @@
 */
 
 .balance-change {
-    height: 38rem;
+    height: 25rem;
     width: 60rem;
     z-index: 2;
     box-shadow: 0 0 20px rgb(34, 34, 34);
@@ -19,7 +19,7 @@
 }
 
 .balance-change--delete {
-    height: 25rem;
+    height: 22rem;
 }
 
 .balance-change--operation {
@@ -74,7 +74,7 @@
 .balance-change__button-section {
     display: flex;
     justify-content: center;
-    margin: 3rem 0 0 0;
+    margin: 2rem 0 0 0;
 }
 
 .balance-change__button {
@@ -117,9 +117,12 @@
 .change__block__time-block {
     display: flex;
     align-items: flex-start;
-    flex-direction: column;
     margin-left: 4rem;
     margin-right: 3rem;
+}
+
+.time-block--oper-an {
+    flex-direction: column;
 }
 
 .input-calendar {
