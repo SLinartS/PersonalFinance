@@ -64,6 +64,15 @@
     width: 4rem;
 }
 
+.icon-search {
+    opacity: 0.5;
+    transition: all 0.2s ease-in-out;
+}
+
+.icon-search:hover {
+    opacity: 1;
+}
+
 
 
 .analytics__main-bar__title {

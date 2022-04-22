@@ -10,10 +10,12 @@
 .categories__item,
 .categories__item__background {
     justify-content: center;
+    transition: all 0.2s ease-in-out;
 }
 
 .categories__item__background:hover {
-    justify-content: center;
+    filter: brightness(110%);
+    transform: scale(1.05);
 }
 
 .categories__list {

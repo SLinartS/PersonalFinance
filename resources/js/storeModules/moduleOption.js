@@ -27,6 +27,25 @@ const moduleOption = {
                 commit("setOptionsList", 0);
             }
         },
+        async updateOptionsByUserId({ getters, commit }, newOptionsData) {
+            const postData = {
+                userId: getters.getAuthStatus["userId"],
+                optionCurrencies: newOptionsData["optionCurrencies"],
+                optionSeparators: newOptionsData["optionSeparators"],
+                optionSpaces: newOptionsData["optionSpaces"]
+            };
+            await fetch("/api/updateOptionsList", {
+                method: "POST",
+                body: JSON.stringify(postData),
+                headers: {
+                    "Content-Type": "application/json;charset=UTF-8",
+                },
+            })
+                .then()
+                .catch((error) => console.log(error));
+
+            commit("togglePopupSetting", false);
+        },
     },
 };
 

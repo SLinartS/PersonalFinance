@@ -66,7 +66,7 @@ class DatabaseSeeder extends Seeder
             'value' => 'Нет',
         ]);
         DB::table('spaces')->insert([
-            'value' => 'Дефис',
+            'value' => 'Слэш',
         ]);
 
         DB::table('options')->insert([

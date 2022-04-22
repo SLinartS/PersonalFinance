@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get("getColorsList", [ColorController::class, "getColorsList"]);
 Route::get("getOptionsList/{userId}", [OptionController::class, "getOptionsList"]);
+Route::post("updateOptionsList", [OptionController::class, "updateOptionsList"]);
 Route::post("validateField", [ValidateController::class, "validateField"]);
 
 Route::get("getCategoriesByType/{id}/{type}", [CategoryController::class, "getCategoriesByType"]);

@@ -11,6 +11,7 @@ const moduleAnalytics = {
                 debt: 0,
                 saving: 0,
             },
+            searchTrigger: true
         };
     },
     mutations: {
@@ -23,6 +24,9 @@ const moduleAnalytics = {
             state.currentBalance["debt"] = debt;
             state.currentBalance["saving"] = saving;
         },
+        toggleSearchTrigger(state) {
+            state.searchTrigger = !state.searchTrigger
+        },
     },
     getters: {
         getCurrentBalance(state) {
@@ -31,6 +35,9 @@ const moduleAnalytics = {
         getCurrentDebtAndBalance(state) {
             return state.currentBalance;
         },
+        readSearchTrigger(state) {
+            return state.searchTrigger;
+        },
     },
     actions: {
         async loadCurrentBalanceByUserId(
@@ -38,7 +45,7 @@ const moduleAnalytics = {
             dateRange
         ) {
             dateRange["userId"] = getters.getAuthStatus.userId;
-
+            
             await dispatch("globalValidate", {
                 title: "notValidateCode",
                 description: "notValidateCode",
@@ -91,6 +98,8 @@ const moduleAnalytics = {
                 saving: variable["saving"],
             });
         },
+
+
     },
 };
 

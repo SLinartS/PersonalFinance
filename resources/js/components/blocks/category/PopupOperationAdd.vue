@@ -194,8 +194,8 @@ export default {
     watch: {
         storageType() {
             this.time = this.$refs.operAddTime.value;
-        }
-    }
+        },
+    },
 };
 </script>
 

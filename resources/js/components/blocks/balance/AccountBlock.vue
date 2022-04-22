@@ -13,7 +13,9 @@
             />
             <p class="data-item data-item--decription">{{ title }}</p>
         </div>
-        <p class="data-item">{{ amount }} ₽</p>
+        <p class="data-item">
+            {{ refactorAmount }} {{ options["options"]["currencyValue"] }}
+        </p>
     </div>
 </template>
 
@@ -27,6 +29,7 @@ export default {
         return {
             changeImg: changeImg,
             deleteImg: deleteImg,
+            spaceValue: " ",
         };
     },
     props: {
@@ -34,9 +37,47 @@ export default {
         title: String,
         amount: String,
     },
+    mounted() {
+        this.loadOptions();
+    },
     computed: {
         AuthStatusStatus() {
             return this.$store.getters.getAuthStatusStatus;
+        },
+        options() {
+            if (this.$store.getters.getOptionsList) {
+                switch (
+                    this.$store.getters.getOptionsList["options"][
+                        "spaceValue"
+                    ]
+                ) {
+                    case "Нет":
+                        this.spaceValue = "";
+                        break;
+                    case "Пробел":
+                        this.spaceValue = " ";
+                        break;
+                    case "Слэш":
+                        this.spaceValue = "/";
+                        break;
+                }
+                return this.$store.getters.getOptionsList;
+            } else {
+                return {
+                    options: {
+                        currencyValue: "",
+                        separatorValue: "",
+                        spaceValue: "",
+                    },
+                };
+            }
+        },
+        refactorAmount() {
+            var parts = this.amount
+                .replaceAll(".", this.options["options"]["separatorValue"])
+                .split(".");
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, this.spaceValue);
+            return parts.join(".");
         },
     },
     methods: {
@@ -58,6 +99,11 @@ export default {
                     typeAction: "delete",
                     typeBlock: "account",
                 });
+            }
+        },
+        loadOptions() {
+            if (this.AuthStatusStatus) {
+                this.$store.dispatch("loadOptionsByUserId");
             }
         },
     },

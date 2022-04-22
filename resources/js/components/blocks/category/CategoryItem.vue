@@ -13,9 +13,9 @@
             />
         </div>
         <p v-if="currentSumOperation" class="categories__item__price color-1">
-            {{ currentSumOperation }} ₽
+            {{ currentSumOperation }} {{ options["options"]["currencyValue"] }}
         </p>
-        <p v-else class="categories__item__price color-1">0 ₽</p>
+        <p v-else class="categories__item__price color-1">0 {{ options["options"]["currencyValue"] }}</p>
     </div>
 </template>
 
@@ -44,6 +44,20 @@ export default {
         AuthStatusStatus() {
             return this.$store.getters.getAuthStatusStatus;
         },
+        options() {
+            if (this.$store.getters.getOptionsList) {
+                return this.$store.getters.getOptionsList;
+            } else {
+                return {
+                    options: {
+                        currencyValue: "",
+                    },
+                };
+            }
+        },
+    },
+    mounted() {
+        this.loadOptions();
     },
     methods: {
         togglePopupOperationAdd() {
@@ -59,6 +73,11 @@ export default {
                 );
                 this.$store.dispatch("loadOperationByUserId");
                 this.$store.commit("togglePopupOperationAdd", { status: true });
+            }
+        },
+        loadOptions() {
+            if (this.AuthStatusStatus) {
+                this.$store.dispatch("loadOptionsByUserId");
             }
         },
     },

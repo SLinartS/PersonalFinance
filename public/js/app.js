@@ -23002,7 +23002,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       changeImg: _public_assets_files_images_arrows_rotate_solid_svg__WEBPACK_IMPORTED_MODULE_0__["default"],
-      deleteImg: _public_assets_files_images_trash_can_solid_svg__WEBPACK_IMPORTED_MODULE_1__["default"]
+      deleteImg: _public_assets_files_images_trash_can_solid_svg__WEBPACK_IMPORTED_MODULE_1__["default"],
+      spaceValue: " "
     };
   },
   props: {
@@ -23010,9 +23011,44 @@ __webpack_require__.r(__webpack_exports__);
     title: String,
     amount: String
   },
+  mounted: function mounted() {
+    this.loadOptions();
+  },
   computed: {
     AuthStatusStatus: function AuthStatusStatus() {
       return this.$store.getters.getAuthStatusStatus;
+    },
+    options: function options() {
+      if (this.$store.getters.getOptionsList) {
+        switch (this.$store.getters.getOptionsList["options"]["spaceValue"]) {
+          case "Нет":
+            this.spaceValue = "";
+            break;
+
+          case "Пробел":
+            this.spaceValue = " ";
+            break;
+
+          case "Слэш":
+            this.spaceValue = "/";
+            break;
+        }
+
+        return this.$store.getters.getOptionsList;
+      } else {
+        return {
+          options: {
+            currencyValue: "",
+            separatorValue: "",
+            spaceValue: ""
+          }
+        };
+      }
+    },
+    refactorAmount: function refactorAmount() {
+      var parts = this.amount.replaceAll(".", this.options["options"]["separatorValue"]).split(".");
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, this.spaceValue);
+      return parts.join(".");
     }
   },
   methods: {
@@ -23034,6 +23070,11 @@ __webpack_require__.r(__webpack_exports__);
           typeAction: "delete",
           typeBlock: "account"
         });
+      }
+    },
+    loadOptions: function loadOptions() {
+      if (this.AuthStatusStatus) {
+        this.$store.dispatch("loadOptionsByUserId");
       }
     }
   }
@@ -23294,7 +23335,21 @@ __webpack_require__.r(__webpack_exports__);
     },
     AuthStatusStatus: function AuthStatusStatus() {
       return this.$store.getters.getAuthStatusStatus;
+    },
+    options: function options() {
+      if (this.$store.getters.getOptionsList) {
+        return this.$store.getters.getOptionsList;
+      } else {
+        return {
+          options: {
+            currencyValue: ""
+          }
+        };
+      }
     }
+  },
+  mounted: function mounted() {
+    this.loadOptions();
   },
   methods: {
     togglePopupOperationAdd: function togglePopupOperationAdd() {
@@ -23306,6 +23361,11 @@ __webpack_require__.r(__webpack_exports__);
         this.$store.commit("togglePopupOperationAdd", {
           status: true
         });
+      }
+    },
+    loadOptions: function loadOptions() {
+      if (this.AuthStatusStatus) {
+        this.$store.dispatch("loadOptionsByUserId");
       }
     }
   }
@@ -23388,6 +23448,27 @@ __webpack_require__.r(__webpack_exports__);
         case "saving":
           return "Накопление";
       }
+    },
+    options: function options() {
+      if (this.$store.getters.getOptionsList) {
+        return this.$store.getters.getOptionsList;
+      } else {
+        return {
+          options: {
+            currencyValue: ""
+          }
+        };
+      }
+    }
+  },
+  mounted: function mounted() {
+    this.loadOptions();
+  },
+  methods: {
+    loadOptions: function loadOptions() {
+      if (this.AuthStatusStatus) {
+        this.$store.dispatch("loadOptionsByUserId");
+      }
     }
   }
 });
@@ -23438,16 +23519,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   props: {
     rangeStart: String,
-    rangeEnd: String,
-    updateSearchTrigger: Number
-  },
-  watch: {
-    updateSearchTrigger: function updateSearchTrigger() {
-      this.$store.dispatch("loadCurrentBalanceByUserId", {
-        rangeStart: this.rangeStart + ":00",
-        rangeEnd: this.rangeEnd + ":00"
-      });
-    }
+    rangeEnd: String
   },
   // watch: {
   //     $route(to, from) {
@@ -23455,6 +23527,13 @@ __webpack_require__.r(__webpack_exports__);
   //     },
   // },
   computed: {
+    updateSearchTrigger: function updateSearchTrigger() {
+      this.$store.dispatch("loadCurrentBalanceByUserId", {
+        rangeStart: this.rangeStart + ":00",
+        rangeEnd: this.rangeEnd + ":00"
+      });
+      return this.$store.getters.readSearchTrigger;
+    },
     getCurrentBalance: function getCurrentBalance() {
       return this.$store.getters.getCurrentBalance;
     },
@@ -23487,6 +23566,17 @@ __webpack_require__.r(__webpack_exports__);
     },
     AuthStatusStatus: function AuthStatusStatus() {
       return this.$store.getters.getAuthStatusStatus;
+    },
+    options: function options() {
+      if (this.$store.getters.getOptionsList) {
+        return this.$store.getters.getOptionsList;
+      } else {
+        return {
+          options: {
+            currencyValue: ""
+          }
+        };
+      }
     }
   },
   methods: {
@@ -23497,10 +23587,16 @@ __webpack_require__.r(__webpack_exports__);
           rangeEnd: moment__WEBPACK_IMPORTED_MODULE_0___default()().format("YYYY-MM-DD HH:mm:ss")
         });
       }
+    },
+    loadOptions: function loadOptions() {
+      if (this.AuthStatusStatus) {
+        this.$store.dispatch("loadOptionsByUserId");
+      }
     }
   },
   mounted: function mounted() {
     this.getCurrentBalanceByUserId();
+    this.loadOptions();
   }
 });
 
@@ -23989,21 +24085,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "PopupSetting",
   data: function data() {
-    return {};
+    return {
+      optionCurrencies: "",
+      optionSeparators: "",
+      optionSpaces: ""
+    };
   },
   watch: {},
   computed: {
     currentOptionsList: function currentOptionsList() {
+      if (this.$store.getters.getOptionsList) {
+        this.optionCurrencies = this.$store.getters.getOptionsList["options"]["currency_id"];
+        this.optionSeparators = this.$store.getters.getOptionsList["options"]["separator_id"];
+        this.optionSpaces = this.$store.getters.getOptionsList["options"]["space_id"];
+      }
+
       return this.$store.getters.getOptionsList;
     }
   },
   methods: {
     togglePopupSetting: function togglePopupSetting() {
       this.$store.commit("togglePopupSetting", false);
-      this.$store.commit("changeErrors", {});
     },
     loadOptions: function loadOptions() {
       this.$store.dispatch("loadOptionsByUserId");
+    },
+    updateOptions: function updateOptions() {
+      this.$store.dispatch("updateOptionsByUserId", {
+        optionCurrencies: this.optionCurrencies,
+        optionSeparators: this.optionSeparators,
+        optionSpaces: this.optionSpaces
+      });
+      this.loadOptions();
     }
   },
   mounted: function mounted() {
@@ -24116,6 +24229,8 @@ __webpack_require__.r(__webpack_exports__);
       this.operationMark = "-";
       this.operationClass = "expenses";
     }
+
+    this.loadOptions();
   },
   methods: {
     togglePopupOperationChange: function togglePopupOperationChange() {
@@ -24132,6 +24247,11 @@ __webpack_require__.r(__webpack_exports__);
         typeAction: "",
         typeBlock: "operation"
       });
+    },
+    loadOptions: function loadOptions() {
+      if (this.AuthStatusStatus) {
+        this.$store.dispatch("loadOptionsByUserId");
+      }
     }
   },
   computed: {
@@ -24166,6 +24286,20 @@ __webpack_require__.r(__webpack_exports__);
         return description.substring(0, 15) + "..";
       } else {
         return description;
+      }
+    },
+    AuthStatusStatus: function AuthStatusStatus() {
+      return this.$store.getters.getAuthStatusStatus;
+    },
+    options: function options() {
+      if (this.$store.getters.getOptionsList) {
+        return this.$store.getters.getOptionsList;
+      } else {
+        return {
+          options: {
+            currencyValue: ""
+          }
+        };
       }
     }
   }
@@ -24490,8 +24624,7 @@ __webpack_require__.r(__webpack_exports__);
       errorImg: _public_assets_files_images_circle_exclamation_svg__WEBPACK_IMPORTED_MODULE_4__["default"],
       time: "",
       rangeStart: "",
-      rangeEnd: "",
-      updateSearchTrigger: 1
+      rangeEnd: ""
     };
   },
   computed: {
@@ -24512,13 +24645,32 @@ __webpack_require__.r(__webpack_exports__);
     },
     timeTwoError: function timeTwoError() {
       return this.$store.getters.getAllErrors["timeTwoError"];
+    },
+    AuthStatusStatus: function AuthStatusStatus() {
+      return this.$store.getters.getAuthStatusStatus;
+    },
+    options: function options() {
+      if (this.$store.getters.getOptionsList) {
+        return this.$store.getters.getOptionsList;
+      } else {
+        return {
+          options: {
+            currencyValue: ""
+          }
+        };
+      }
     }
   },
   methods: {
     updateSearch: function updateSearch() {
       this.rangeStart = this.$refs.operAddTimeStart.value;
       this.rangeEnd = this.$refs.operAddTimeEnd.value;
-      this.updateSearchTrigger = !this.updateSearchTrigger;
+      this.$store.commit("toggleSearchTrigger");
+    },
+    loadOptions: function loadOptions() {
+      if (this.AuthStatusStatus) {
+        this.$store.dispatch("loadOptionsByUserId");
+      }
     }
   },
   mounted: function mounted() {
@@ -24547,6 +24699,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     });
     this.$store.dispatch("loadDebtAndBalanceByUserId");
+    this.loadOptions();
   }
 });
 
@@ -25096,7 +25249,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , _hoisted_4), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.title), 1
   /* TEXT */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.amount) + " ₽", 1
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.refactorAmount) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.options["options"]["currencyValue"]), 1
   /* TEXT */
   )]);
 }
@@ -25362,9 +25515,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , _hoisted_3)], 4
   /* STYLE */
-  ), $options.currentSumOperation ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.currentSumOperation) + " ₽ ", 1
+  ), $options.currentSumOperation ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.currentSumOperation) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.options["options"]["currencyValue"]), 1
   /* TEXT */
-  )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_5, "0 ₽"))]);
+  )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_5, "0 " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.options["options"]["currencyValue"]), 1
+  /* TEXT */
+  ))]);
 }
 
 /***/ }),
@@ -25420,7 +25575,7 @@ var _hoisted_1 = ["value"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
     value: $props.id
-  }, "| " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.currentType) + " | " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.title) + " [" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.amount) + " ₽]", 9
+  }, " | " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.currentType) + " | " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.title) + " [" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.amount) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.options["options"]["currencyValue"]) + "] ", 9
   /* TEXT, PROPS */
   , _hoisted_1);
 }
@@ -25506,13 +25661,18 @@ var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 var _hoisted_9 = {
   "class": "current-balance__amount expenses"
 };
+var _hoisted_10 = {
+  style: {
+    "display": "none"
+  }
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
     "class": "current-balance__color-block",
     style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
       background: "linear-gradient(to right, var(--current-balance-green) ".concat($options.incomePersent, "%, var(--current-balance-reg) ").concat($options.incomePersent, "%)")
     })
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.currentIncome) + " ₽ ", 1
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.currentIncome) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.options["options"]["currencyValue"]), 1
   /* TEXT */
   )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(['current-balance__amount', {
@@ -25520,9 +25680,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }, {
       'current-balance__amount--result--expenses': $data.exColor
     }])
-  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.currentResult) + " ₽ ", 3
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.currentResult) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.options["options"]["currencyValue"]), 3
   /* TEXT, CLASS */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.currentExpenses) + " ₽ ", 1
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.currentExpenses) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.options["options"]["currencyValue"]), 1
+  /* TEXT */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.updateSearchTrigger), 1
   /* TEXT */
   )])])], 4
   /* STYLE */
@@ -26407,46 +26569,28 @@ var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_12 = {
-  key: 0,
-  "class": "setting-select"
-};
-var _hoisted_13 = {
   "class": "setting__setting-block"
 };
 
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
   "class": "setting__setting-block__title"
 }, "Разделитель", -1
 /* HOISTED */
 );
 
-var _hoisted_15 = {
-  key: 0,
-  "class": "setting-select"
-};
-var _hoisted_16 = {
+var _hoisted_14 = {
   "class": "setting__setting-block"
 };
 
-var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
   "class": "setting__setting-block__title"
 }, " Разделитель десятков ", -1
 /* HOISTED */
 );
 
-var _hoisted_18 = {
-  key: 0,
-  "class": "setting-select"
-};
-
-var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_16 = {
   "class": "setting__button-section"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-  "class": "button setting__button"
-}, "Сохранить")], -1
-/* HOISTED */
-);
-
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_SettingSelectOption = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("SettingSelectOption");
 
@@ -26465,7 +26609,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "setting__account-blocks"
   }, _hoisted_8, 32
   /* HYDRATE_EVENTS */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, $options.currentOptionsList ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("select", _hoisted_12, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.currentOptionsList['currencies'], function (currency) {
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, $options.currentOptionsList ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("select", {
+    key: 0,
+    "class": "setting-select",
+    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+      return $data.optionCurrencies = $event;
+    })
+  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.currentOptionsList['currencies'], function (currency) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_SettingSelectOption, {
       key: currency['id'],
       id: currency['id'],
@@ -26475,7 +26625,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     , ["id", "value"]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, $options.currentOptionsList ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("select", _hoisted_15, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.currentOptionsList['separators'], function (separator) {
+  ))], 512
+  /* NEED_PATCH */
+  )), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.optionCurrencies]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [_hoisted_13, $options.currentOptionsList ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("select", {
+    key: 0,
+    "class": "setting-select",
+    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+      return $data.optionSeparators = $event;
+    })
+  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.currentOptionsList['separators'], function (separator) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_SettingSelectOption, {
       key: separator['id'],
       id: separator['id'],
@@ -26485,7 +26643,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     , ["id", "value"]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [_hoisted_17, $options.currentOptionsList ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("select", _hoisted_18, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.currentOptionsList['spaces'], function (space) {
+  ))], 512
+  /* NEED_PATCH */
+  )), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.optionSeparators]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [_hoisted_15, $options.currentOptionsList ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("select", {
+    key: 0,
+    "class": "setting-select",
+    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+      return $data.optionSpaces = $event;
+    })
+  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.currentOptionsList['spaces'], function (space) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_SettingSelectOption, {
       key: space['id'],
       id: space['id'],
@@ -26495,7 +26661,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     , ["id", "value"]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), _hoisted_19]);
+  ))], 512
+  /* NEED_PATCH */
+  )), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.optionSpaces]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: _cache[5] || (_cache[5] = function () {
+      return $options.updateOptions && $options.updateOptions.apply($options, arguments);
+    }),
+    type: "button",
+    "class": "button setting__button"
+  }, " Сохранить ")])]);
 }
 
 /***/ }),
@@ -26625,7 +26799,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* TEXT */
   )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$data.operationClass, 'data-item data-item--amount'])
-  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.operationMark) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.amount) + " ₽", 3
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.operationMark) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.amount) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.options["options"]["currencyValue"]), 3
   /* TEXT, CLASS */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.formattedAccountTitle), 1
   /* TEXT */
@@ -27053,19 +27227,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     alt: ""
   }, null, 10
   /* CLASS, PROPS */
-  , _hoisted_12)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.currentAccount) + " ₽ ", 1
+  , _hoisted_12)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.currentAccount) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.options["options"]["currencyValue"]), 1
   /* TEXT */
-  ), _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.currentDebt) + " ₽ ", 1
+  ), _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.currentDebt) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.options["options"]["currencyValue"]), 1
   /* TEXT */
-  ), _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.currentSaving) + " ₽ ", 1
+  ), _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.currentSaving) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.options["options"]["currencyValue"]), 1
   /* TEXT */
   )]), _hoisted_20]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_CurrentBalance, {
     rangeStart: $data.rangeStart,
-    rangeEnd: $data.rangeEnd,
-    updateSearchTrigger: $data.updateSearchTrigger
+    rangeEnd: $data.rangeEnd
   }, null, 8
   /* PROPS */
-  , ["rangeStart", "rangeEnd", "updateSearchTrigger"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_CircleDiagram)])])]);
+  , ["rangeStart", "rangeEnd"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_CircleDiagram)])])]);
 }
 
 /***/ }),
@@ -27877,7 +28050,8 @@ var moduleAnalytics = {
         account: 0,
         debt: 0,
         saving: 0
-      }
+      },
+      searchTrigger: true
     };
   },
   mutations: {
@@ -27894,6 +28068,9 @@ var moduleAnalytics = {
       state.currentBalance["account"] = account;
       state.currentBalance["debt"] = debt;
       state.currentBalance["saving"] = saving;
+    },
+    toggleSearchTrigger: function toggleSearchTrigger(state) {
+      state.searchTrigger = !state.searchTrigger;
     }
   },
   getters: {
@@ -27902,6 +28079,9 @@ var moduleAnalytics = {
     },
     getCurrentDebtAndBalance: function getCurrentDebtAndBalance(state) {
       return state.currentBalance;
+    },
+    readSearchTrigger: function readSearchTrigger(state) {
+      return state.searchTrigger;
     }
   },
   actions: {
@@ -28756,7 +28936,7 @@ var moduleCategory = {
 
               case 3:
                 dispatch("loadIncomeOperatonsByCat", variable);
-                commit("setCategories", variable); // dispatch("loadCurrentBalanceByUserId");
+                commit("setCategories", variable);
 
               case 5:
               case "end":
@@ -28804,7 +28984,7 @@ var moduleCategory = {
 
               case 3:
                 dispatch("loadExpensesOperatonsByCat");
-                commit("setCategories", variable); // dispatch("loadCurrentBalanceByUserId");
+                commit("setCategories", variable);
 
               case 5:
               case "end":
@@ -29410,8 +29590,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -29683,7 +29863,7 @@ var moduleOperation = {
 
               case 3:
                 if (!(getters.getErrorStatus === 0)) {
-                  _context6.next = 16;
+                  _context6.next = 17;
                   break;
                 }
 
@@ -29717,8 +29897,12 @@ var moduleOperation = {
                   status: false
                 });
                 commit("setChangedDataCategory", []);
+                dispatch("loadCurrentBalanceByUserId", {
+                  rangeStart: "1970-01-01 00:00:00",
+                  rangeEnd: moment__WEBPACK_IMPORTED_MODULE_1___default()().format("YYYY-MM-DD HH:mm:ss")
+                });
 
-              case 16:
+              case 17:
               case "end":
                 return _context6.stop();
             }
@@ -29838,6 +30022,42 @@ var moduleOption = {
             }
           }
         }, _callee2);
+      }))();
+    },
+    updateOptionsByUserId: function updateOptionsByUserId(_ref3, newOptionsData) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        var getters, commit, postData;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                getters = _ref3.getters, commit = _ref3.commit;
+                postData = {
+                  userId: getters.getAuthStatus["userId"],
+                  optionCurrencies: newOptionsData["optionCurrencies"],
+                  optionSeparators: newOptionsData["optionSeparators"],
+                  optionSpaces: newOptionsData["optionSpaces"]
+                };
+                _context3.next = 4;
+                return fetch("/api/updateOptionsList", {
+                  method: "POST",
+                  body: JSON.stringify(postData),
+                  headers: {
+                    "Content-Type": "application/json;charset=UTF-8"
+                  }
+                }).then()["catch"](function (error) {
+                  return console.log(error);
+                });
+
+              case 4:
+                commit("togglePopupSetting", false);
+
+              case 5:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
       }))();
     }
   }

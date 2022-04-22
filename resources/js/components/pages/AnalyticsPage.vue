@@ -54,15 +54,17 @@
             <div class="analytics__main-bar__elem-result">
                 <h3 class="analytics__main-bar__title">Тек. баланс:</h3>
                 <p class="analytics__main-bar__amount-result result">
-                    {{ currentAccount }} ₽
+                    {{ currentAccount }}
+                    {{ options["options"]["currencyValue"] }}
                 </p>
                 <h3 class="analytics__main-bar__title">Тек. долги:</h3>
                 <p class="analytics__main-bar__amount-result result">
-                    {{ currentDebt }} ₽
+                    {{ currentDebt }} {{ options["options"]["currencyValue"] }}
                 </p>
                 <h3 class="analytics__main-bar__title">Тек. накопления:</h3>
                 <p class="analytics__main-bar__amount-result result">
-                    {{ currentSaving }} ₽
+                    {{ currentSaving }}
+                    {{ options["options"]["currencyValue"] }}
                 </p>
             </div>
 
@@ -88,7 +90,6 @@
         <CurrentBalance
             :rangeStart="rangeStart"
             :rangeEnd="rangeEnd"
-            :updateSearchTrigger="updateSearchTrigger"
         ></CurrentBalance>
         <div class="analytics__all-blocks">
             <div id="analytics__circle-diagram">
@@ -118,7 +119,6 @@ export default {
             time: "",
             rangeStart: "",
             rangeEnd: "",
-            updateSearchTrigger: 1,
         };
     },
     computed: {
@@ -140,12 +140,31 @@ export default {
         timeTwoError() {
             return this.$store.getters.getAllErrors["timeTwoError"];
         },
+        AuthStatusStatus() {
+            return this.$store.getters.getAuthStatusStatus;
+        },
+        options() {
+            if (this.$store.getters.getOptionsList) {
+                return this.$store.getters.getOptionsList;
+            } else {
+                return {
+                    options: {
+                        currencyValue: "",
+                    },
+                };
+            }
+        },
     },
     methods: {
         updateSearch() {
             this.rangeStart = this.$refs.operAddTimeStart.value;
             this.rangeEnd = this.$refs.operAddTimeEnd.value;
-            this.updateSearchTrigger = !this.updateSearchTrigger;
+            this.$store.commit("toggleSearchTrigger");
+        },
+        loadOptions() {
+            if (this.AuthStatusStatus) {
+                this.$store.dispatch("loadOptionsByUserId");
+            }
         },
     },
     mounted() {
@@ -172,6 +191,7 @@ export default {
             },
         });
         this.$store.dispatch("loadDebtAndBalanceByUserId");
+        this.loadOptions();
     },
 };
 </script>

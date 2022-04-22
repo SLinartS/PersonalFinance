@@ -32,7 +32,11 @@
         <div class="setting__setting-blocks">
             <div class="setting__setting-block">
                 <h3 class="setting__setting-block__title">Валюта</h3>
-                <select class="setting-select" v-if="currentOptionsList">
+                <select
+                    class="setting-select"
+                    v-if="currentOptionsList"
+                    v-model="optionCurrencies"
+                >
                     <SettingSelectOption
                         v-for="currency in currentOptionsList['currencies']"
                         :key="currency['id']"
@@ -43,7 +47,11 @@
             </div>
             <div class="setting__setting-block">
                 <h3 class="setting__setting-block__title">Разделитель</h3>
-                <select class="setting-select" v-if="currentOptionsList">
+                <select
+                    class="setting-select"
+                    v-if="currentOptionsList"
+                    v-model="optionSeparators"
+                >
                     <SettingSelectOption
                         v-for="separator in currentOptionsList['separators']"
                         :key="separator['id']"
@@ -56,7 +64,11 @@
                 <h3 class="setting__setting-block__title">
                     Разделитель десятков
                 </h3>
-                <select class="setting-select" v-if="currentOptionsList">
+                <select
+                    class="setting-select"
+                    v-if="currentOptionsList"
+                    v-model="optionSpaces"
+                >
                     <SettingSelectOption
                         v-for="space in currentOptionsList['spaces']"
                         :key="space['id']"
@@ -67,7 +79,13 @@
             </div>
         </div>
         <div class="setting__button-section">
-            <button class="button setting__button">Сохранить</button>
+            <button
+                @click="updateOptions"
+                type="button"
+                class="button setting__button"
+            >
+                Сохранить
+            </button>
         </div>
     </div>
 </template>
@@ -77,21 +95,44 @@ import SettingSelectOption from "./SettingSelectOption.vue";
 export default {
     name: "PopupSetting",
     data() {
-        return {};
+        return {
+            optionCurrencies: "",
+            optionSeparators: "",
+            optionSpaces: "",
+        };
     },
     watch: {},
     computed: {
         currentOptionsList() {
+            if (this.$store.getters.getOptionsList) {
+                this.optionCurrencies =
+                    this.$store.getters.getOptionsList["options"][
+                        "currency_id"
+                    ];
+                this.optionSeparators =
+                    this.$store.getters.getOptionsList["options"][
+                        "separator_id"
+                    ];
+                this.optionSpaces =
+                    this.$store.getters.getOptionsList["options"]["space_id"];
+            }
             return this.$store.getters.getOptionsList;
         },
     },
     methods: {
         togglePopupSetting() {
             this.$store.commit("togglePopupSetting", false);
-            this.$store.commit("changeErrors", {});
         },
         loadOptions() {
             this.$store.dispatch("loadOptionsByUserId");
+        },
+        updateOptions() {
+            this.$store.dispatch("updateOptionsByUserId", {
+                optionCurrencies: this.optionCurrencies,
+                optionSeparators: this.optionSeparators,
+                optionSpaces: this.optionSpaces,
+            });
+            this.loadOptions()
         },
     },
     mounted() {

@@ -9,7 +9,8 @@
             <div class="current-balance__elem current-balance__elem--income">
                 <h3 class="current-balance__title">Поступления</h3>
                 <p class="current-balance__amount income">
-                    {{ currentIncome }} ₽
+                    {{ currentIncome }}
+                    {{ options["options"]["currencyValue"] }}
                 </p>
             </div>
             <div class="current-balance__elem current-balance__elem--result">
@@ -24,14 +25,17 @@
                         },
                     ]"
                 >
-                    {{ currentResult }} ₽
+                    {{ currentResult }}
+                    {{ options["options"]["currencyValue"] }}
                 </p>
             </div>
             <div class="current-balance__elem current-balance__elem--expenses">
                 <h3 class="current-balance__title">Расходы</h3>
                 <p class="current-balance__amount expenses">
-                    {{ currentExpenses }} ₽
+                    {{ currentExpenses }}
+                    {{ options["options"]["currencyValue"] }}
                 </p>
+                <p style="display:none">{{updateSearchTrigger}}</p>
             </div>
         </div>
     </div>
@@ -49,15 +53,6 @@ export default {
     props: {
         rangeStart: String,
         rangeEnd: String,
-        updateSearchTrigger: Number,
-    },
-    watch: {
-        updateSearchTrigger() {
-            this.$store.dispatch("loadCurrentBalanceByUserId", {
-                rangeStart: this.rangeStart + ":00",
-                rangeEnd: this.rangeEnd + ":00",
-            });
-        },
     },
     // watch: {
     //     $route(to, from) {
@@ -65,6 +60,13 @@ export default {
     //     },
     // },
     computed: {
+        updateSearchTrigger() {
+            this.$store.dispatch("loadCurrentBalanceByUserId", {
+                rangeStart: this.rangeStart + ":00",
+                rangeEnd: this.rangeEnd + ":00",
+            });
+            return this.$store.getters.readSearchTrigger;
+        },
         getCurrentBalance() {
             return this.$store.getters.getCurrentBalance;
         },
@@ -96,6 +98,17 @@ export default {
         AuthStatusStatus() {
             return this.$store.getters.getAuthStatusStatus;
         },
+        options() {
+            if (this.$store.getters.getOptionsList) {
+                return this.$store.getters.getOptionsList;
+            } else {
+                return {
+                    options: {
+                        currencyValue: "",
+                    },
+                };
+            }
+        },
     },
     methods: {
         getCurrentBalanceByUserId() {
@@ -106,9 +119,15 @@ export default {
                 });
             }
         },
+        loadOptions() {
+            if (this.AuthStatusStatus) {
+                this.$store.dispatch("loadOptionsByUserId");
+            }
+        },
     },
     mounted() {
         this.getCurrentBalanceByUserId();
+        this.loadOptions();
     },
 };
 </script>

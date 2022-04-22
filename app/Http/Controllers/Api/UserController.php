@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Account;
+use App\Models\Category;
+use App\Models\Option;
+use App\Models\UserCategory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -127,6 +131,39 @@ class UserController extends Controller
             "email" => $request["email"],
             "password" => Hash::make($request["password"]),
             "avatar_url" => "none",
+        ]);
+
+        $newUserId = User::select("id")->where("email", $request["email"])->first()["id"];
+
+        Option::insert([
+            "user_id" => $newUserId,
+            "currency_id" => 1,
+            "space_id" => 1,
+            "separator_id" => 1,
+        ]);
+
+        Category::insert([
+            'type' => 'income',
+            'title' => 'Неизв. пополнения',
+            'img_url' => 'assets/files/images/question-solid.svg',
+            'color_id' => 13,
+        ]);
+
+        Category::insert([
+            'type' => 'expenses',
+            'title' => 'Неизв. расходы',
+            'img_url' => 'assets/files/images/question-solid.svg',
+            'color_id' => 13,
+        ]);
+
+        UserCategory::insert([
+            'user_id' => $newUserId,
+            'category_id' => 1,
+        ]);
+
+        UserCategory::insert([
+            'user_id' => $newUserId,
+            'category_id' => 2,
         ]);
     }
 }

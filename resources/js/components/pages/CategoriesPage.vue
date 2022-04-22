@@ -1,8 +1,8 @@
 <template>
-  <main class="categories">
-      <CurrentBalance></CurrentBalance>
-    <router-view></router-view>
-  </main>
+    <main class="categories">
+        <CurrentBalance></CurrentBalance>
+        <router-view></router-view>
+    </main>
 </template>
 
 <script>
@@ -12,9 +12,8 @@ export default {
     data() {
         return {};
     },
-    components: { CurrentBalance }
+    components: { CurrentBalance },
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

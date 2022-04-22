@@ -1,4 +1,4 @@
-import axios from "axios";
+import moment from "moment";
 const moduleOperation = {
     state() {
         return {
@@ -170,6 +170,11 @@ const moduleOperation = {
                     status: false,
                 });
                 commit("setChangedDataCategory", []);
+
+                dispatch("loadCurrentBalanceByUserId", {
+                    rangeStart: "1970-01-01 00:00:00",
+                    rangeEnd: moment().format("YYYY-MM-DD HH:mm:ss")
+                });
             }
         },
 
