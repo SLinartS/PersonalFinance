@@ -18,7 +18,7 @@
             </p>
         </div>
         <p :class="[operationClass, 'data-item data-item--amount']">
-            {{ operationMark }} {{ amount }}
+            {{ operationMark }} {{ formattedAmount }}
             {{ options["options"]["currencyValue"] }}
         </p>
         <p class="data-item date-item--title">{{ formattedAccountTitle }}</p>
@@ -38,13 +38,14 @@ export default {
             operationMark: "+",
             changeImg: changeImg,
             deleteImg: deleteImg,
+            spaceValue: " ",
         };
     },
     name: "OperationBlock",
     props: {
         id: Number,
         description: String,
-        amount: String,
+        amount: Number,
         type: String,
         datetime: String,
         accountType: String,
@@ -110,16 +111,42 @@ export default {
                 return description;
             }
         },
+        formattedAmount() {
+            let parts = this.amount
+                .toFixed(2)
+                .replaceAll(".", this.options["options"]["separatorValue"])
+                .split(".");
+            parts[0] = parts[0].replace(
+                /\B(?=(\d{3})+(?!\d))/g,
+                this.spaceValue
+            );
+            return parts.join(".");
+        },
         AuthStatusStatus() {
             return this.$store.getters.getAuthStatusStatus;
         },
         options() {
             if (this.$store.getters.getOptionsList) {
+                switch (
+                    this.$store.getters.getOptionsList["options"]["spaceValue"]
+                ) {
+                    case "Нет":
+                        this.spaceValue = "";
+                        break;
+                    case "Пробел":
+                        this.spaceValue = " ";
+                        break;
+                    case "Слэш":
+                        this.spaceValue = "/";
+                        break;
+                }
                 return this.$store.getters.getOptionsList;
             } else {
                 return {
                     options: {
                         currencyValue: "",
+                        separatorValue: "",
+                        spaceValue: "",
                     },
                 };
             }

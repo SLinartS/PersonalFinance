@@ -15,6 +15,14 @@
     overflow-y: scroll;
 }
 
+#analytics__circle-diagram {
+    display: flex;
+}
+
+#diagramSeparator {
+    width: 10rem;
+}
+
 .hiddenOpacity {
     opacity: 0;
 }

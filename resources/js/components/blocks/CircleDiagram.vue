@@ -1,15 +1,17 @@
 <template>
-    <Bar
-        :chart-options="chartOptions"
-        :chart-data="chartData"
-        :chart-id="chartId"
-        :dataset-id-key="datasetIdKey"
-        :plugins="plugins"
-        :css-classes="cssClasses"
-        :styles="styles"
-        :width="width"
-        :height="height"
-    ></Bar>
+    <div>
+        <Bar v-if="loaded"
+            :chart-options="chartOptions"
+            :chart-data="chartData"
+            :chart-id="chartId"
+            :dataset-id-key="datasetIdKey"
+            :plugins="plugins"
+            :css-classes="cssClasses"
+            :styles="styles"
+            :width="width"
+            :height="height"
+        ></Bar>
+    </div>
 </template>
 
 <script>
@@ -28,9 +30,14 @@ import {
 
 ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale);
 
-export default defineComponent({
+export default {
     components: {
-        Doughnut,
+        Doughnut
+    },
+    data() {
+        return {
+            loaded: false,
+        };
     },
     props: {
         chartId: {
@@ -57,18 +64,31 @@ export default defineComponent({
             type: Array,
             default: () => [],
         },
+        labels: {
+            type: Array,
+            default: () => [],
+        },
+        colorsChart: {
+            type: Array,
+            default: () => [],
+        },
+        dataChart: {
+            type: Array,
+            default: () => [],
+        },
+    },
+    computed: {
+        chartData() {
+            return;
+        },
     },
     setup(props) {
         const chartData = {
-            labels: ["Транспорт", "Продукты", "Животные"],
+            labels: props.labels,
             datasets: [
                 {
-                    backgroundColor: [
-                        "rgb(66, 133, 244)",
-                        "rgb(240, 98, 146)",
-                        "rgb(139, 204, 0)",
-                    ],
-                    data: [300, 3050, 700],
+                    backgroundColor: props.colorsChart,
+                    data: props.dataChart,
                 },
             ],
         };
@@ -100,10 +120,7 @@ export default defineComponent({
                 plugins: props.plugins,
             });
     },
-    compited: {
-        chartData() {},
-    },
-});
+};
 </script>
 
 <style></style>

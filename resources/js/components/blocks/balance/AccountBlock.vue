@@ -35,7 +35,7 @@ export default {
     props: {
         id: Number,
         title: String,
-        amount: String,
+        amount: Number,
     },
     mounted() {
         this.loadOptions();
@@ -47,9 +47,7 @@ export default {
         options() {
             if (this.$store.getters.getOptionsList) {
                 switch (
-                    this.$store.getters.getOptionsList["options"][
-                        "spaceValue"
-                    ]
+                    this.$store.getters.getOptionsList["options"]["spaceValue"]
                 ) {
                     case "Нет":
                         this.spaceValue = "";
@@ -73,10 +71,13 @@ export default {
             }
         },
         refactorAmount() {
-            var parts = this.amount
+            let parts = this.amount.toFixed(2)
                 .replaceAll(".", this.options["options"]["separatorValue"])
                 .split(".");
-            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, this.spaceValue);
+            parts[0] = parts[0].replace(
+                /\B(?=(\d{3})+(?!\d))/g,
+                this.spaceValue
+            );
             return parts.join(".");
         },
     },

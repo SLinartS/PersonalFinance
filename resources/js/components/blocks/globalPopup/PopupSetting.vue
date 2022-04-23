@@ -20,11 +20,11 @@
             class="setting__account-blocks"
         >
             <div class="setting__account-block">
-                <h3 class="setting__account-block__title">Андрей</h3>
+                <h3 class="setting__account-block__title">{{ userName }}</h3>
                 <a class="link link--setting-account">Изменить имя</a>
             </div>
             <div class="setting__account-block">
-                <h3 class="setting__account-block__title">1test@gmail.com</h3>
+                <h3 class="setting__account-block__title">{{ userEmail }}</h3>
                 <a class="link link--setting-account">Изменить почту</a>
                 <a class="link link--setting-account">Изменить пароль</a>
             </div>
@@ -118,6 +118,12 @@ export default {
             }
             return this.$store.getters.getOptionsList;
         },
+        userName() {
+            return this.$store.getters.getAuthStatus["userName"];
+        },
+        userEmail() {
+            return this.$store.getters.getAuthStatus["userEmail"];
+        },
     },
     methods: {
         togglePopupSetting() {
@@ -132,7 +138,7 @@ export default {
                 optionSeparators: this.optionSeparators,
                 optionSpaces: this.optionSpaces,
             });
-            this.loadOptions()
+            this.loadOptions();
         },
     },
     mounted() {

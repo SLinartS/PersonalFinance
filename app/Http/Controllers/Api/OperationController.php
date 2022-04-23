@@ -32,8 +32,8 @@ class OperationController extends Controller
                 )
                 ->where("operations.user_id", $data["userId"])
                 ->where("operations.description", "like", "%" . $data["searchCrit"] . "%")
-                ->where("operations.time", ">", $data["searchRangeStart"])
-                ->where("operations.time", "<", $data["searchRangeEnd"])
+                ->where("operations.time", ">=", $data["searchRangeStart"])
+                ->where("operations.time", "<=", $data["searchRangeEnd"])
                 ->get()->toArray();
         } elseif (
             isset($data["searchCrit"]) &&
@@ -71,8 +71,8 @@ class OperationController extends Controller
                     "accounts.title as accountTitle"
                 )
                 ->where("operations.user_id", $data["userId"])
-                ->where("operations.time", ">", $data["searchRangeStart"])
-                ->where("operations.time", "<", $data["searchRangeEnd"])
+                ->where("operations.time", ">=", $data["searchRangeStart"])
+                ->where("operations.time", "<=", $data["searchRangeEnd"])
                 ->get()->toArray();
         } elseif (
             empty($data["searchCrit"]) &&
@@ -93,6 +93,11 @@ class OperationController extends Controller
                 ->where("operations.user_id", $data["userId"])
                 ->get()->toArray();
         }
+
+        for($i = 0; $i < count($unsortedOperations); $i++) {
+            $unsortedOperations[$i]["amount"] = (float)$unsortedOperations[$i]["amount"];
+        }
+
 
         $packagedOperations = [];
         if (count($unsortedOperations) !== 0) {
@@ -198,8 +203,8 @@ class OperationController extends Controller
                     "operations.time",
                     "categories.type"
                 )
-                ->where("operations.time", ">", $data["rangeStart"])
-                ->where("operations.time", "<", $data["rangeEnd"])
+                ->where("operations.time", ">=", $data["rangeStart"])
+                ->where("operations.time", "<=", $data["rangeEnd"])
                 ->where("operations.user_id", $data["userId"])
                 ->get();
         } else {

@@ -2,7 +2,11 @@ const moduleCategory = {
     state() {
         return {
             categories: [],
+            categoriesInc: [],
+            categoriesExp: [],
             sumOperation: {},
+            sumOperationInc: {},
+            sumOperationExp: {},
             changedDataCategory: [],
             colorsList: [],
         };
@@ -11,8 +15,20 @@ const moduleCategory = {
         setCategories(state, value) {
             state.categories = value;
         },
+        setCategoriesInc(state, value) {
+            state.categoriesInc = value;
+        },
+        setCategoriesExp(state, value) {
+            state.categoriesExp = value;
+        },
         setSumOperation(state, value) {
             state.sumOperation = value;
+        },
+        setSumOperationExp(state, value) {
+            state.sumOperationExp = value;
+        },
+        setSumOperationInc(state, value) {
+            state.sumOperationInc = value;
         },
         setChangedDataCategory(state, value) {
             state.changedDataCategory = value;
@@ -25,8 +41,20 @@ const moduleCategory = {
         getCategories(state) {
             return state.categories;
         },
+        getCategoriesExp(state) {
+            return state.categoriesExp;
+        },
+        getCategoriesInc(state) {
+            return state.categoriesInc;
+        },
         getSumOperation(state) {
             return state.sumOperation;
+        },
+        getSumOperationExp(state) {
+            return state.sumOperationExp;
+        },
+        getSumOperationInc(state) {
+            return state.sumOperationInc;
         },
         getChangedDataCategory(state) {
             return state.changedDataCategory;
@@ -45,8 +73,9 @@ const moduleCategory = {
             )
                 .then(async (response) => (variable = await response.json()))
                 .catch((error) => console.log(error));
-            dispatch("loadIncomeOperatonsByCat", variable);
+            dispatch("loadIncomeOperationsByCat", variable);
             commit("setCategories", variable);
+            commit("setCategoriesInc", variable);
         },
         async loadExpensesCategoriesFromDB({ commit, getters, dispatch }) {
             let variable;
@@ -57,10 +86,11 @@ const moduleCategory = {
             )
                 .then(async (response) => (variable = await response.json()))
                 .catch((error) => console.log(error));
-            dispatch("loadExpensesOperatonsByCat");
+            dispatch("loadExpensesOperationsByCat");
             commit("setCategories", variable);
+            commit("setCategoriesExp", variable);
         },
-        async loadIncomeOperatonsByCat({ commit, getters }) {
+        async loadIncomeOperationsByCat({ commit, getters }) {
             let variable;
             await fetch(
                 "/api/getSumCategoryOperations/" +
@@ -70,8 +100,9 @@ const moduleCategory = {
                 .then(async (response) => (variable = await response.json()))
                 .catch((error) => console.log(error));
             commit("setSumOperation", variable);
+            commit("setSumOperationInc", variable);
         },
-        async loadExpensesOperatonsByCat({ commit, getters }) {
+        async loadExpensesOperationsByCat({ commit, getters }) {
             let variable;
             await fetch(
                 "/api/getSumCategoryOperations/" +
@@ -81,6 +112,7 @@ const moduleCategory = {
                 .then(async (response) => (variable = await response.json()))
                 .catch((error) => console.log(error));
             commit("setSumOperation", variable);
+            commit("setSumOperationExp", variable);
         },
 
         async loadCategoryById({ commit }, id) {

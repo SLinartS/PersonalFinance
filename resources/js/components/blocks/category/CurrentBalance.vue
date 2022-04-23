@@ -35,7 +35,9 @@
                     {{ currentExpenses }}
                     {{ options["options"]["currencyValue"] }}
                 </p>
-                <p style="display:none">{{updateSearchTrigger}}</p>
+                <p style="display: none">
+                    {{ updateSearchTrigger }}
+                </p>
             </div>
         </div>
     </div>
@@ -48,11 +50,18 @@ export default {
         return {
             inColor: false,
             exColor: false,
+            spaceValue: " ",
+            incomeNumber: 0,
+            expensesNumber: 0,
         };
     },
     props: {
         rangeStart: String,
         rangeEnd: String,
+    },
+    mounted() {
+        this.getCurrentBalanceByUserId();
+        this.loadOptions();
     },
     // watch: {
     //     $route(to, from) {
@@ -60,24 +69,78 @@ export default {
     //     },
     // },
     computed: {
+        options() {
+            if (this.$store.getters.getOptionsList) {
+                switch (
+                    this.$store.getters.getOptionsList["options"]["spaceValue"]
+                ) {
+                    case "Нет":
+                        this.spaceValue = "";
+                        break;
+                    case "Пробел":
+                        this.spaceValue = " ";
+                        break;
+                    case "Слэш":
+                        this.spaceValue = "/";
+                        break;
+                }
+                return this.$store.getters.getOptionsList;
+            } else {
+                return {
+                    options: {
+                        currencyValue: "",
+                        separatorValue: "",
+                        spaceValue: "",
+                    },
+                };
+            }
+        },
         updateSearchTrigger() {
-            this.$store.dispatch("loadCurrentBalanceByUserId", {
-                rangeStart: this.rangeStart + ":00",
-                rangeEnd: this.rangeEnd + ":00",
-            });
+            if (!this.rangeStart) {
+                this.$store.dispatch("loadCurrentBalanceByUserId", {
+                    rangeStart: "1970-01-01 00:00:00",
+                    rangeEnd: moment().format("YYYY-MM-DD HH:mm:ss"),
+                });
+
+            } else {
+                this.$store.dispatch("loadCurrentBalanceByUserId", {
+                    rangeStart: this.rangeStart + " 00:00:00",
+                    rangeEnd: this.rangeEnd + " 23:59:59",
+                });
+
+            }
             return this.$store.getters.readSearchTrigger;
         },
         getCurrentBalance() {
+            this.incomeNumber = this.$store.getters.getCurrentBalance["income"];
+            this.expensesNumber =
+                this.$store.getters.getCurrentBalance["expenses"];
             return this.$store.getters.getCurrentBalance;
         },
         currentIncome() {
-            return this.getCurrentBalance["income"];
+            let parts = this.getCurrentBalance["income"]
+                .toFixed(2)
+                .replaceAll(".", this.options["options"]["separatorValue"])
+                .split(".");
+            parts[0] = parts[0].replace(
+                /\B(?=(\d{3})+(?!\d))/g,
+                this.spaceValue
+            );
+            return parts.join(".");
         },
         currentExpenses() {
-            return this.getCurrentBalance["expenses"];
+            let parts = this.getCurrentBalance["expenses"]
+                .toFixed(2)
+                .replaceAll(".", this.options["options"]["separatorValue"])
+                .split(".");
+            parts[0] = parts[0].replace(
+                /\B(?=(\d{3})+(?!\d))/g,
+                this.spaceValue
+            );
+            return parts.join(".");
         },
         currentResult() {
-            const result = this.currentIncome - this.currentExpenses;
+            const result = this.incomeNumber - this.expensesNumber;
             if (result < 0) {
                 this.inColor = false;
                 this.exColor = true;
@@ -85,29 +148,27 @@ export default {
                 this.inColor = true;
                 this.exColor = false;
             }
-            return result.toFixed(2);
+
+            let parts = result
+                .toFixed(2)
+                .replaceAll(".", this.options["options"]["separatorValue"])
+                .split(".");
+            parts[0] = parts[0].replace(
+                /\B(?=(\d{3})+(?!\d))/g,
+                this.spaceValue
+            );
+            return parts.join(".");
         },
         incomePersent() {
-            const sum = this.currentIncome + this.currentExpenses;
-            return Math.round((this.currentIncome / sum) * 100);
+            const sum = this.incomeNumber + this.expensesNumber;
+            return Math.round((this.incomeNumber / sum) * 100);
         },
         expensesPersent() {
-            const sum = this.currentIncome + this.currentExpenses;
-            return Math.round((this.currentExpenses / sum) * 100);
+            const sum = this.incomeNumber + this.expensesNumber;
+            return Math.round((this.expensesNumber / sum) * 100);
         },
         AuthStatusStatus() {
             return this.$store.getters.getAuthStatusStatus;
-        },
-        options() {
-            if (this.$store.getters.getOptionsList) {
-                return this.$store.getters.getOptionsList;
-            } else {
-                return {
-                    options: {
-                        currencyValue: "",
-                    },
-                };
-            }
         },
     },
     methods: {
@@ -124,10 +185,6 @@ export default {
                 this.$store.dispatch("loadOptionsByUserId");
             }
         },
-    },
-    mounted() {
-        this.getCurrentBalanceByUserId();
-        this.loadOptions();
     },
 };
 </script>

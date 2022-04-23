@@ -48,7 +48,7 @@ class AccountController extends Controller
                     }
                 }
             }
-            $accounts[$i]["amount"] = (string)$accounts[$i]["amount"];
+            $accounts[$i]["amount"] = $accounts[$i]["amount"];
         }
         for ($i = 0; $i < count($accounts); $i++) {
             switch ($accounts[$i]["type"]) {

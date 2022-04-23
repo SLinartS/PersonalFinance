@@ -13,7 +13,7 @@
                             id="inputOperAddStart"
                             ref="operAddTimeStart"
                             type="datetime"
-                            class="change__block-input change__block-input--datetime"
+                            class="change__block-input change__block-input--date"
                         />
                         <img
                             :class="[
@@ -36,7 +36,7 @@
                             id="inputOperAddEnd"
                             ref="operAddTimeEnd"
                             type="datetime"
-                            class="change__block-input change__block-input--datetime"
+                            class="change__block-input change__block-input--date"
                         />
                         <img
                             :class="[
@@ -93,8 +93,21 @@
         ></CurrentBalance>
         <div class="analytics__all-blocks">
             <div id="analytics__circle-diagram">
-                <CircleDiagram></CircleDiagram>
+                <CircleDiagram
+                    :key="keyForDiagram"
+                    :labels="labels"
+                    :dataChart="dataChart"
+                    :colorsChart="colorsChart"
+                ></CircleDiagram>
+                <div id="diagramSeparator"></div>
+                <CircleDiagram
+                    :key="keyForDiagramExp"
+                    :labels="labelsExp"
+                    :dataChart="dataChartExp"
+                    :colorsChart="colorsChartExp"
+                ></CircleDiagram>
             </div>
+            <p style="display: none">{{ diargamData }}</p>
         </div>
     </main>
 </template>
@@ -119,20 +132,110 @@ export default {
             time: "",
             rangeStart: "",
             rangeEnd: "",
+            spaceValue: " ",
+            labels: [],
+            dataChart: [],
+            colorsChart: [],
+            labelsExp: [],
+            dataChartExp: [],
+            colorsChartExp: [],
+            keyForDiagram: 1,
+            keyForDiagramExp: 1,
         };
     },
     computed: {
         getCurrentDebtAndBalance() {
             return this.$store.getters.getCurrentDebtAndBalance;
         },
+        diargamData() {
+            const categories = this.$store.getters.getCategoriesInc;
+            const sumCategories = this.$store.getters.getSumOperationInc;
+
+            let labels = [];
+            let dataChart = [];
+            let colorsChart = [];
+            if (sumCategories) {
+                for (const [key, value] of Object.entries(sumCategories)) {
+                    labels.push(key);
+                    dataChart.push(value);
+                    categories.forEach((el) => {
+                        if (el["title"] === key) {
+                            colorsChart.push(el["color"]);
+                        }
+                    });
+                }
+            }
+            if (this.labels.length === 0) {
+                this.labels = labels;
+                this.dataChart = dataChart;
+                this.colorsChart = colorsChart;
+                this.keyForDiagram += 1;
+            }
+
+            const categoriesExp = this.$store.getters.getCategoriesExp;
+            const sumCategoriesExp = this.$store.getters.getSumOperationExp;
+
+            let labelsExp = [];
+            let dataChartExp = [];
+            let colorsChartExp = [];
+            if (sumCategories) {
+                for (const [key, value] of Object.entries(sumCategoriesExp)) {
+                    labelsExp.push(key);
+                    dataChartExp.push(value);
+                    categoriesExp.forEach((el) => {
+                        if (el["title"] === key) {
+                            colorsChartExp.push(el["color"]);
+                        }
+                    });
+                }
+            }
+            if (this.labelsExp.length === 0) {
+                this.labelsExp = labelsExp;
+                this.dataChartExp = dataChartExp;
+                this.colorsChartExp = colorsChartExp;
+                this.keyForDiagramExp += 1;
+            }
+
+            return this.$store.getters.getSumOperation;
+        },
         currentAccount() {
-            return this.getCurrentDebtAndBalance["account"];
+            if (this.getCurrentDebtAndBalance["account"]) {
+                let parts = this.getCurrentDebtAndBalance["account"]
+                    .toFixed(2)
+                    .replaceAll(".", this.options["options"]["separatorValue"])
+                    .split(".");
+                parts[0] = parts[0].replace(
+                    /\B(?=(\d{3})+(?!\d))/g,
+                    this.spaceValue
+                );
+                return parts.join(".");
+            }
         },
         currentDebt() {
-            return this.getCurrentDebtAndBalance["debt"];
+            if (this.getCurrentDebtAndBalance["debt"]) {
+                let parts = this.getCurrentDebtAndBalance["debt"]
+                    .toFixed(2)
+                    .replaceAll(".", this.options["options"]["separatorValue"])
+                    .split(".");
+                parts[0] = parts[0].replace(
+                    /\B(?=(\d{3})+(?!\d))/g,
+                    this.spaceValue
+                );
+                return parts.join(".");
+            }
         },
         currentSaving() {
-            return this.getCurrentDebtAndBalance["saving"];
+            if (this.getCurrentDebtAndBalance["debt"]) {
+                let parts = this.getCurrentDebtAndBalance["saving"]
+                    .toFixed(2)
+                    .replaceAll(".", this.options["options"]["separatorValue"])
+                    .split(".");
+                parts[0] = parts[0].replace(
+                    /\B(?=(\d{3})+(?!\d))/g,
+                    this.spaceValue
+                );
+                return parts.join(".");
+            }
         },
         timeError() {
             return this.$store.getters.getAllErrors["timeError"];
@@ -145,11 +248,26 @@ export default {
         },
         options() {
             if (this.$store.getters.getOptionsList) {
+                switch (
+                    this.$store.getters.getOptionsList["options"]["spaceValue"]
+                ) {
+                    case "Нет":
+                        this.spaceValue = "";
+                        break;
+                    case "Пробел":
+                        this.spaceValue = " ";
+                        break;
+                    case "Слэш":
+                        this.spaceValue = "/";
+                        break;
+                }
                 return this.$store.getters.getOptionsList;
             } else {
                 return {
                     options: {
                         currencyValue: "",
+                        separatorValue: "",
+                        spaceValue: "",
                     },
                 };
             }
@@ -169,8 +287,6 @@ export default {
     },
     mounted() {
         new AirDatepicker("#timeAnalytics", {
-            timepicker: true,
-            minutesStep: 5,
             autoClose: true,
             range: true,
             dateFormat: "yyyy-MM-dd",
@@ -191,6 +307,8 @@ export default {
             },
         });
         this.$store.dispatch("loadDebtAndBalanceByUserId");
+        this.$store.dispatch("loadExpensesCategoriesFromDB");
+        this.$store.dispatch("loadIncomeCategoriesFromDB");
         this.loadOptions();
     },
 };

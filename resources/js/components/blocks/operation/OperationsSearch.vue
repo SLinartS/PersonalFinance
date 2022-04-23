@@ -11,7 +11,7 @@
                     id="timeOperationSearchStart"
                     ref="operSearchTimeStart"
                     type="datetime"
-                    class="change__block-input change__block-input--datetime"
+                    class="change__block-input change__block-input--date"
                 />
                 <img
                     :class="['search-error-img', { hiddenOpacity: !timeError }]"
@@ -30,7 +30,7 @@
                     id="timeOperationSearchEnd"
                     ref="operSearchTimeEnd"
                     type="datetime"
-                    class="change__block-input change__block-input--datetime"
+                    class="change__block-input change__block-input--date"
                 />
                 <img
                     v-if="timeTwoError"
@@ -94,8 +94,6 @@ export default {
     },
     mounted() {
         new AirDatepicker("#timeAnalytics", {
-            timepicker: true,
-            minutesStep: 5,
             autoClose: true,
             range: true,
             dateFormat: "yyyy-MM-dd",

@@ -50,11 +50,11 @@ export default {
             if (this.AuthStatusStatus) {
                 this.$store.commit(
                     "setSearchRangeStart",
-                    range["rangeStart"] + ":00"
+                    range["rangeStart"] + " 00:00:00"
                 );
                 this.$store.commit(
                     "setSearchRangeEnd",
-                    range["rangeEnd"] + ":00"
+                    range["rangeEnd"] + " 23:59:59"
                 );
                 this.$store.dispatch("loadOperationByUserId");
             }

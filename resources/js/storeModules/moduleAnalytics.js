@@ -45,7 +45,7 @@ const moduleAnalytics = {
             dateRange
         ) {
             dateRange["userId"] = getters.getAuthStatus.userId;
-            
+
             await dispatch("globalValidate", {
                 title: "notValidateCode",
                 description: "notValidateCode",
