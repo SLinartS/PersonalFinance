@@ -9,11 +9,17 @@ const moduleAuthReg = {
             fieldPasswordRepeat: "",
             errors: {},
             authStatus: {
-                status: true,
-                userId: 2,
-                userName: "Андрей",
-                userEmail: "test1@gmail.com",
+                status: false,
+                userId: 0,
+                userName: "",
+                userEmail: "",
             },
+            // authStatus: {
+            //     status: true,
+            //     userId: 2,
+            //     userName: "Андрей",
+            //     userEmail: "test1@gmail.com",
+            // },
         };
     },
     mutations: {

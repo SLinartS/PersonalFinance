@@ -23038,7 +23038,7 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         return {
           options: {
-            currencyValue: "",
+            currencyValue: "₽",
             separatorValue: "",
             spaceValue: ""
           }
@@ -23342,7 +23342,9 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         return {
           options: {
-            currencyValue: ""
+            currencyValue: "₽",
+            separatorValue: "",
+            spaceValue: ""
           }
         };
       }
@@ -23455,7 +23457,9 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         return {
           options: {
-            currencyValue: ""
+            currencyValue: "₽",
+            separatorValue: "",
+            spaceValue: ""
           }
         };
       }
@@ -23509,6 +23513,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -23533,7 +23539,10 @@ __webpack_require__.r(__webpack_exports__);
   //         this.getCurrentBalanceByUserId();
   //     },
   // },
-  computed: {
+  computed: _defineProperty({
+    AuthStatusStatus: function AuthStatusStatus() {
+      return this.$store.getters.getAuthStatusStatus;
+    },
     options: function options() {
       if (this.$store.getters.getOptionsList) {
         switch (this.$store.getters.getOptionsList["options"]["spaceValue"]) {
@@ -23554,7 +23563,7 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         return {
           options: {
-            currencyValue: "",
+            currencyValue: "₽",
             separatorValue: "",
             spaceValue: ""
           }
@@ -23562,24 +23571,35 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     updateSearchTrigger: function updateSearchTrigger() {
-      if (!this.rangeStart) {
-        this.$store.dispatch("loadCurrentBalanceByUserId", {
-          rangeStart: "1970-01-01 00:00:00",
-          rangeEnd: moment__WEBPACK_IMPORTED_MODULE_0___default()().format("YYYY-MM-DD HH:mm:ss")
-        });
-      } else {
-        this.$store.dispatch("loadCurrentBalanceByUserId", {
-          rangeStart: this.rangeStart + " 00:00:00",
-          rangeEnd: this.rangeEnd + " 23:59:59"
-        });
-      }
+      if (this.AuthStatusStatus) {
+        if (!this.rangeStart) {
+          this.$store.dispatch("loadCurrentBalanceByUserId", {
+            rangeStart: "1970-01-01 00:00:00",
+            rangeEnd: moment__WEBPACK_IMPORTED_MODULE_0___default()().format("YYYY-MM-DD HH:mm:ss")
+          });
+        } else {
+          this.$store.dispatch("loadCurrentBalanceByUserId", {
+            rangeStart: this.rangeStart + " 00:00:00",
+            rangeEnd: this.rangeEnd + " 23:59:59"
+          });
+        }
 
-      return this.$store.getters.readSearchTrigger;
+        return this.$store.getters.readSearchTrigger;
+      }
     },
     getCurrentBalance: function getCurrentBalance() {
-      this.incomeNumber = this.$store.getters.getCurrentBalance["income"];
-      this.expensesNumber = this.$store.getters.getCurrentBalance["expenses"];
-      return this.$store.getters.getCurrentBalance;
+      if (this.$store.getters.getCurrentBalance) {
+        this.incomeNumber = this.$store.getters.getCurrentBalance["income"];
+        this.expensesNumber = this.$store.getters.getCurrentBalance["expenses"];
+        return this.$store.getters.getCurrentBalance;
+      } else {
+        this.incomeNumber = 0;
+        this.expensesNumber = 0;
+        return {
+          income: 0,
+          expenses: 0
+        };
+      }
     },
     currentIncome: function currentIncome() {
       var parts = this.getCurrentBalance["income"].toFixed(2).replaceAll(".", this.options["options"]["separatorValue"]).split(".");
@@ -23607,17 +23627,24 @@ __webpack_require__.r(__webpack_exports__);
       return parts.join(".");
     },
     incomePersent: function incomePersent() {
-      var sum = this.incomeNumber + this.expensesNumber;
-      return Math.round(this.incomeNumber / sum * 100);
+      if (this.incomeNumbe && this.expensesNumber) {
+        var sum = this.incomeNumber + this.expensesNumber;
+        return Math.round(this.incomeNumber / sum * 100);
+      } else {
+        return 50;
+      }
     },
     expensesPersent: function expensesPersent() {
-      var sum = this.incomeNumber + this.expensesNumber;
-      return Math.round(this.expensesNumber / sum * 100);
-    },
-    AuthStatusStatus: function AuthStatusStatus() {
-      return this.$store.getters.getAuthStatusStatus;
+      if (this.incomeNumbe && this.expensesNumber) {
+        var sum = this.incomeNumber + this.expensesNumber;
+        return Math.round(this.expensesNumber / sum * 100);
+      } else {
+        return 50;
+      }
     }
-  },
+  }, "AuthStatusStatus", function AuthStatusStatus() {
+    return this.$store.getters.getAuthStatusStatus;
+  }),
   methods: {
     getCurrentBalanceByUserId: function getCurrentBalanceByUserId() {
       if (this.AuthStatusStatus) {
@@ -23972,7 +23999,6 @@ chart_js__WEBPACK_IMPORTED_MODULE_1__.Chart.register(chart_js__WEBPACK_IMPORTED_
       plugins: {
         legend: {
           position: "right",
-          fullSize: ture,
           labels: {
             font: {
               size: 20
@@ -24384,7 +24410,7 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         return {
           options: {
-            currencyValue: "",
+            currencyValue: "₽",
             separatorValue: "",
             spaceValue: ""
           }
@@ -24813,6 +24839,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         var parts = this.getCurrentDebtAndBalance["account"].toFixed(2).replaceAll(".", this.options["options"]["separatorValue"]).split(".");
         parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, this.spaceValue);
         return parts.join(".");
+      } else {
+        return 0;
       }
     },
     currentDebt: function currentDebt() {
@@ -24820,6 +24848,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         var parts = this.getCurrentDebtAndBalance["debt"].toFixed(2).replaceAll(".", this.options["options"]["separatorValue"]).split(".");
         parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, this.spaceValue);
         return parts.join(".");
+      } else {
+        return 0;
       }
     },
     currentSaving: function currentSaving() {
@@ -24827,6 +24857,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         var parts = this.getCurrentDebtAndBalance["saving"].toFixed(2).replaceAll(".", this.options["options"]["separatorValue"]).split(".");
         parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, this.spaceValue);
         return parts.join(".");
+      } else {
+        return 0;
       }
     },
     timeError: function timeError() {
@@ -24858,7 +24890,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       } else {
         return {
           options: {
-            currencyValue: "",
+            currencyValue: "₽",
             separatorValue: "",
             spaceValue: ""
           }
@@ -25063,7 +25095,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.$store.commit("setOperations", []);
     this.loadDateByUserIdText();
   },
   methods: {
@@ -25203,6 +25234,10 @@ __webpack_require__.r(__webpack_exports__);
         name: "main",
         params: {}
       });
+      this.$store.commit("clearAccounts");
+      this.$store.commit("clearCategoryData");
+      this.$store.commit("clearOperationData");
+      this.$store.commit("clearAnalytictData");
       this.$store.commit("setAuthStatus", {
         field: "status",
         value: false
@@ -27544,7 +27579,9 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   "class": "data-stroke__button-block"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
   "class": "data-item data-item--empty"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Счетов нет. "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", null, "Добавить")])], -1
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Счетов нет. "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  "class": "link"
+}, "Добавить")])], -1
 /* HOISTED */
 );
 
@@ -27568,7 +27605,9 @@ var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   "class": "data-stroke__button-block"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
   "class": "data-item data-item--empty"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Долгов нет. "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", null, "Добавить")])], -1
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Долгов нет. "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  "class": "link"
+}, "Добавить")])], -1
 /* HOISTED */
 );
 
@@ -28032,7 +28071,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     _: 1
     /* STABLE */
 
-  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <li class=\"navigation-item\">\r\n                <router-link to=\"/budget\">Бюджет</router-link>\r\n            </li> ")]), !$options.authStatus.status ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <li class=\"navigation-item\">\n                <router-link to=\"/budget\">Бюджет</router-link>\n            </li> ")]), !$options.authStatus.status ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "button header__button button--auth",
     onClick: _cache[0] || (_cache[0] = function () {
@@ -28337,6 +28376,17 @@ var moduleAnalytics = {
     },
     toggleSearchTrigger: function toggleSearchTrigger(state) {
       state.searchTrigger = !state.searchTrigger;
+    },
+    clearAnalytictData: function clearAnalytictData(state) {
+      state.currentBalance = {
+        income: 0,
+        expenses: 0
+      };
+      state.currentDebtAndBalance = {
+        account: 0,
+        debt: 0,
+        saving: 0
+      };
     }
   },
   getters: {
@@ -28519,11 +28569,17 @@ var moduleAuthReg = {
       fieldPasswordRepeat: "",
       errors: {},
       authStatus: {
-        status: true,
-        userId: 2,
-        userName: "Андрей",
-        userEmail: "test1@gmail.com"
-      }
+        status: false,
+        userId: 0,
+        userName: "",
+        userEmail: ""
+      } // authStatus: {
+      //     status: true,
+      //     userId: 2,
+      //     userName: "Андрей",
+      //     userEmail: "test1@gmail.com",
+      // },
+
     };
   },
   mutations: {
@@ -28825,6 +28881,10 @@ var moduleBalance = {
   mutations: {
     setAccounts: function setAccounts(state, value) {
       state.accounts = value;
+    },
+    clearAccounts: function clearAccounts(state) {
+      state.accounts = [];
+      state.changedAccountData = [];
     },
     setChangedAccountData: function setChangedAccountData(state, value) {
       state.changedAccountData = value;
@@ -29163,6 +29223,16 @@ var moduleCategory = {
     },
     setColorsList: function setColorsList(state, value) {
       state.colorsList = value;
+    },
+    clearCategoryData: function clearCategoryData(state) {
+      state.colorsList = [];
+      state.changedDataCategory = [];
+      state.sumOperation = {};
+      state.sumOperationInc = {};
+      state.sumOperationExp = {};
+      state.categoriesExp = [];
+      state.categoriesInc = [];
+      state.categories = [];
     }
   },
   getters: {
@@ -29922,6 +29992,13 @@ var moduleOperation = {
     },
     setSearchRangeEnd: function setSearchRangeEnd(state, value) {
       state.searchRangeEnd = value;
+    },
+    clearOperationData: function clearOperationData(state) {
+      state.operations = [];
+      state.ChangedDataOperation = [];
+      state.searchCrit = "";
+      state.searchRangeStart = "";
+      state.searchRangeEnd = "";
     }
   },
   getters: {

@@ -69,6 +69,9 @@ export default {
     //     },
     // },
     computed: {
+        AuthStatusStatus() {
+            return this.$store.getters.getAuthStatusStatus;
+        },
         options() {
             if (this.$store.getters.getOptionsList) {
                 switch (
@@ -88,7 +91,7 @@ export default {
             } else {
                 return {
                     options: {
-                        currencyValue: "",
+                        currencyValue: "₽",
                         separatorValue: "",
                         spaceValue: "",
                     },
@@ -96,26 +99,36 @@ export default {
             }
         },
         updateSearchTrigger() {
-            if (!this.rangeStart) {
-                this.$store.dispatch("loadCurrentBalanceByUserId", {
-                    rangeStart: "1970-01-01 00:00:00",
-                    rangeEnd: moment().format("YYYY-MM-DD HH:mm:ss"),
-                });
-
-            } else {
-                this.$store.dispatch("loadCurrentBalanceByUserId", {
-                    rangeStart: this.rangeStart + " 00:00:00",
-                    rangeEnd: this.rangeEnd + " 23:59:59",
-                });
-
+            if (this.AuthStatusStatus) {
+                if (!this.rangeStart) {
+                    this.$store.dispatch("loadCurrentBalanceByUserId", {
+                        rangeStart: "1970-01-01 00:00:00",
+                        rangeEnd: moment().format("YYYY-MM-DD HH:mm:ss"),
+                    });
+                } else {
+                    this.$store.dispatch("loadCurrentBalanceByUserId", {
+                        rangeStart: this.rangeStart + " 00:00:00",
+                        rangeEnd: this.rangeEnd + " 23:59:59",
+                    });
+                }
+                return this.$store.getters.readSearchTrigger;
             }
-            return this.$store.getters.readSearchTrigger;
         },
         getCurrentBalance() {
-            this.incomeNumber = this.$store.getters.getCurrentBalance["income"];
-            this.expensesNumber =
-                this.$store.getters.getCurrentBalance["expenses"];
-            return this.$store.getters.getCurrentBalance;
+            if (this.$store.getters.getCurrentBalance) {
+                this.incomeNumber =
+                    this.$store.getters.getCurrentBalance["income"];
+                this.expensesNumber =
+                    this.$store.getters.getCurrentBalance["expenses"];
+                return this.$store.getters.getCurrentBalance;
+            } else {
+                this.incomeNumber = 0;
+                this.expensesNumber = 0;
+                return {
+                    income: 0,
+                    expenses: 0,
+                }
+            }
         },
         currentIncome() {
             let parts = this.getCurrentBalance["income"]
@@ -160,12 +173,20 @@ export default {
             return parts.join(".");
         },
         incomePersent() {
-            const sum = this.incomeNumber + this.expensesNumber;
-            return Math.round((this.incomeNumber / sum) * 100);
+            if (this.incomeNumbe && this.expensesNumber) {
+                const sum = this.incomeNumber + this.expensesNumber;
+                return Math.round((this.incomeNumber / sum) * 100);
+            } else {
+                return 50;
+            }
         },
         expensesPersent() {
-            const sum = this.incomeNumber + this.expensesNumber;
-            return Math.round((this.expensesNumber / sum) * 100);
+            if (this.incomeNumbe && this.expensesNumber) {
+                const sum = this.incomeNumber + this.expensesNumber;
+                return Math.round((this.expensesNumber / sum) * 100);
+            } else {
+                return 50;
+            }
         },
         AuthStatusStatus() {
             return this.$store.getters.getAuthStatusStatus;

@@ -25,6 +25,13 @@ const moduleOperation = {
         setSearchRangeEnd(state, value) {
             state.searchRangeEnd = value;
         },
+        clearOperationData(state) {
+            state.operations = [];
+            state.ChangedDataOperation = [];
+            state.searchCrit = "";
+            state.searchRangeStart = "";
+            state.searchRangeEnd = "";
+        },
     },
     getters: {
         currentOperations(state) {
@@ -173,7 +180,7 @@ const moduleOperation = {
 
                 dispatch("loadCurrentBalanceByUserId", {
                     rangeStart: "1970-01-01 00:00:00",
-                    rangeEnd: moment().format("YYYY-MM-DD HH:mm:ss")
+                    rangeEnd: moment().format("YYYY-MM-DD HH:mm:ss"),
                 });
             }
         },

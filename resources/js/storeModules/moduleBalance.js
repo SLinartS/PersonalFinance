@@ -9,6 +9,10 @@ const moduleBalance = {
         setAccounts(state, value) {
             state.accounts = value;
         },
+        clearAccounts(state) {
+            state.accounts = [];
+            state.changedAccountData = [];
+        },
         setChangedAccountData(state, value) {
             state.changedAccountData = value;
         },
@@ -60,7 +64,7 @@ const moduleBalance = {
                 time: "notValidateCode",
                 timeTwo: "notValidateCode",
                 selected: "notValidateCode",
-                img: "notValidateCode"
+                img: "notValidateCode",
             });
             if (getters.getErrorStatus === 0) {
                 await fetch("/api/updateAccountById", {
@@ -104,7 +108,10 @@ const moduleBalance = {
                 .catch((error) => console.log(error));
         },
 
-        async insertAccountByType({ commit, getters, dispatch}, newAccountData) {
+        async insertAccountByType(
+            { commit, getters, dispatch },
+            newAccountData
+        ) {
             newAccountData["userId"] = getters.getAuthStatus["userId"];
 
             await dispatch("globalValidate", {
@@ -114,7 +121,7 @@ const moduleBalance = {
                 time: "notValidateCode",
                 timeTwo: "notValidateCode",
                 selected: "notValidateCode",
-                img: "notValidateCode"
+                img: "notValidateCode",
             });
             if (getters.getErrorStatus === 0) {
                 await fetch("/api/insertAccountByUserId/", {

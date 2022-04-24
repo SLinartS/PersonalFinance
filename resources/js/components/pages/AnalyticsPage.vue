@@ -50,7 +50,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="analytics__main-bar__elem-result">
                 <h3 class="analytics__main-bar__title">Тек. баланс:</h3>
                 <p class="analytics__main-bar__amount-result result">
@@ -67,7 +66,6 @@
                     {{ options["options"]["currencyValue"] }}
                 </p>
             </div>
-
             <div class="analytics__main-bar__additional-information">
                 <div class="analytics__main-bar__elem-middle-day">
                     <h3 class="analytics__main-bar__title"></h3>
@@ -209,6 +207,8 @@ export default {
                     this.spaceValue
                 );
                 return parts.join(".");
+            } else {
+                return 0;
             }
         },
         currentDebt() {
@@ -222,6 +222,8 @@ export default {
                     this.spaceValue
                 );
                 return parts.join(".");
+            } else {
+                return 0;
             }
         },
         currentSaving() {
@@ -235,6 +237,8 @@ export default {
                     this.spaceValue
                 );
                 return parts.join(".");
+            } else {
+                return 0;
             }
         },
         timeError() {
@@ -265,7 +269,7 @@ export default {
             } else {
                 return {
                     options: {
-                        currencyValue: "",
+                        currencyValue: "₽",
                         separatorValue: "",
                         spaceValue: "",
                     },

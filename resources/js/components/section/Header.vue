@@ -168,6 +168,11 @@ export default {
     methods: {
         exitAccount() {
             this.$router.push({ name: "main", params: {} });
+            this.$store.commit("clearAccounts");
+            this.$store.commit("clearCategoryData");
+            this.$store.commit("clearOperationData");
+            this.$store.commit("clearAnalytictData");
+
             this.$store.commit("setAuthStatus", {
                 field: "status",
                 value: false,

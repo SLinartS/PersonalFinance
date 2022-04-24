@@ -30,7 +30,9 @@ export default {
             } else {
                 return {
                     options: {
-                        currencyValue: "",
+                        currencyValue: "₽",
+                        separatorValue: "",
+                        spaceValue: "",
                     },
                 };
             }

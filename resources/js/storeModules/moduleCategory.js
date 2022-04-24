@@ -36,6 +36,16 @@ const moduleCategory = {
         setColorsList(state, value) {
             state.colorsList = value;
         },
+        clearCategoryData(state) {
+            state.colorsList = [];
+            state.changedDataCategory = [];
+            state.sumOperation = {};
+            state.sumOperationInc = {};
+            state.sumOperationExp = {};
+            state.categoriesExp = [];
+            state.categoriesInc = [];
+            state.categories = [];
+        },
     },
     getters: {
         getCategories(state) {

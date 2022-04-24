@@ -11,7 +11,7 @@ const moduleAnalytics = {
                 debt: 0,
                 saving: 0,
             },
-            searchTrigger: true
+            searchTrigger: true,
         };
     },
     mutations: {
@@ -25,7 +25,18 @@ const moduleAnalytics = {
             state.currentBalance["saving"] = saving;
         },
         toggleSearchTrigger(state) {
-            state.searchTrigger = !state.searchTrigger
+            state.searchTrigger = !state.searchTrigger;
+        },
+        clearAnalytictData(state) {
+            state.currentBalance = {
+                income: 0,
+                expenses: 0,
+            };
+            state.currentDebtAndBalance = {
+                account: 0,
+                debt: 0,
+                saving: 0,
+            };
         },
     },
     getters: {
@@ -98,8 +109,6 @@ const moduleAnalytics = {
                 saving: variable["saving"],
             });
         },
-
-
     },
 };
 
