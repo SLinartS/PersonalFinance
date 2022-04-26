@@ -133,8 +133,7 @@ export default {
                 typeAction: "",
                 typeBlock: "",
             });
-            this.$store.commit("clearAllErrors");
-            // this.$store.commit("setChangedDataCategory", []);
+
         },
         addCategoryItem() {
             this.$store.dispatch("insertCategoryById", {

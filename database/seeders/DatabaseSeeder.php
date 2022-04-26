@@ -25,9 +25,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'name' => 'Андрей',
-            'email' => 'test1@gmail.com',
-            'password' => "\$2y\$10\$z1qSA9R8NxTaMWMy6o8/IuvJFqjMR11H6prY2BIhC/oCRYriQyrva",
+            'name' => 'Евгений',
+            'email' => 't@mail.ru',
+            'password' => "\$2y\$10\$enL6ffOcNFMcskSS2N8P2uJFAxa1v42V0k6eRPb2VzXrhQGEOZTZy",
             'avatar_url' => 'link1'
         ]);
         DB::table('users')->insert([
@@ -106,39 +106,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         //----------------------------------------------------------------------------------------------------------------------
-
-        //        DB::table('colors')->insert([
-        //            'title' => 'mainBlue',
-        //            'value' => '#007C8D',
-        //        ]);
-        //        DB::table('colors')->insert([
-        //            'title' => 'mainYellow',
-        //            'value' => '#DFAD00',
-        //        ]);
-        //        DB::table('colors')->insert([
-        //            'title' => 'mainGreen',
-        //            'value' => '#00C064',
-        //        ]);
-        //        DB::table('colors')->insert([
-        //            'title' => 'mainRed',
-        //            'value' => '#DB4437',
-        //        ]);
-        //        DB::table('colors')->insert([
-        //            'title' => 'mainWhite',
-        //            'value' => '#F8F8F8',
-        //        ]);
-        //        DB::table('colors')->insert([
-        //            'title' => 'secondWhite',
-        //            'value' => '#EFEFEF',
-        //        ]);
-        //        DB::table('colors')->insert([
-        //            'title' => 'mainBlack',
-        //            'value' => '#222222',
-        //        ]);
-        //        DB::table('colors')->insert([
-        //            'title' => 'mainGray',
-        //            'value' => '#E1E1E1',
-        //        ]);
 
         DB::table('colors')->insert([
             'title' => 'CategoryBlue',
@@ -329,7 +296,7 @@ class DatabaseSeeder extends Seeder
         DB::table('operations')->insert([
             'description' => 'Поел в столовой',
             'amount' => "1000",
-            'time' => "2022-04-024 21:30:00",
+            'time' => "2022-04-023 21:30:00",
             "account_id" => 1,
             "category_id" => 4,
             "user_id" => 2,
@@ -337,7 +304,7 @@ class DatabaseSeeder extends Seeder
         DB::table('operations')->insert([
             'description' => 'Купил попить',
             'amount' => "50",
-            'time' => "2022-04-29 15:00:00",
+            'time' => "2022-04-24 15:00:00",
             "account_id" => 2,
             "category_id" => 4,
             "user_id" => 2,

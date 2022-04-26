@@ -21,7 +21,6 @@
 
 <script>
 import moment from "moment";
-// import { computed } from '@vue/runtime-core'
 export default {
     data() {
         return {};

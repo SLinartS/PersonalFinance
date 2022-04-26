@@ -63,11 +63,6 @@ export default {
         this.getCurrentBalanceByUserId();
         this.loadOptions();
     },
-    // watch: {
-    //     $route(to, from) {
-    //         this.getCurrentBalanceByUserId();
-    //     },
-    // },
     computed: {
         AuthStatusStatus() {
             return this.$store.getters.getAuthStatusStatus;
@@ -127,10 +122,13 @@ export default {
                 return {
                     income: 0,
                     expenses: 0,
-                }
+                };
             }
         },
         currentIncome() {
+            if (this.getCurrentBalance["income"] === 0) {
+                return "0";
+            }
             let parts = this.getCurrentBalance["income"]
                 .toFixed(2)
                 .replaceAll(".", this.options["options"]["separatorValue"])
@@ -142,6 +140,9 @@ export default {
             return parts.join(".");
         },
         currentExpenses() {
+            if (this.getCurrentBalance["expenses"] === 0) {
+                return "0";
+            }
             let parts = this.getCurrentBalance["expenses"]
                 .toFixed(2)
                 .replaceAll(".", this.options["options"]["separatorValue"])
@@ -161,7 +162,9 @@ export default {
                 this.inColor = true;
                 this.exColor = false;
             }
-
+            if (result === 0) {
+                return "0";
+            }
             let parts = result
                 .toFixed(2)
                 .replaceAll(".", this.options["options"]["separatorValue"])
@@ -173,7 +176,7 @@ export default {
             return parts.join(".");
         },
         incomePersent() {
-            if (this.incomeNumbe && this.expensesNumber) {
+            if (this.incomeNumber && this.expensesNumber) {
                 const sum = this.incomeNumber + this.expensesNumber;
                 return Math.round((this.incomeNumber / sum) * 100);
             } else {
@@ -181,7 +184,7 @@ export default {
             }
         },
         expensesPersent() {
-            if (this.incomeNumbe && this.expensesNumber) {
+            if (this.incomeNumber && this.expensesNumber) {
                 const sum = this.incomeNumber + this.expensesNumber;
                 return Math.round((this.expensesNumber / sum) * 100);
             } else {

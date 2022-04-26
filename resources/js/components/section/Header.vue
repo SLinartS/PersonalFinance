@@ -23,9 +23,6 @@
             <li class="navigation-item">
                 <router-link to="/analytics">Аналитика</router-link>
             </li>
-            <!-- <li class="navigation-item">
-                <router-link to="/budget">Бюджет</router-link>
-            </li> -->
         </ul>
         <div v-if="!authStatus.status" class="header__buttons-section">
             <button
@@ -44,13 +41,13 @@
             </button>
         </div>
         <div v-else class="header__buttons-section">
-            <p class="header__buttons-section__user-name">{{ userName }}</p>
+            <p class="header__buttons-section__user-name" id="header__buttons-section__user-name">{{ userName }}</p>
             <button
                 type="button"
                 class="button header__button button--exit"
                 @click="exitAccount"
             >
-                Выйти из аккаунта
+                Выйти
             </button>
             <button
                 type="button"
@@ -74,28 +71,50 @@
                 />
             </svg>
         </button>
-        <PopupNav v-if="popupNav"></PopupNav>
-        <PopupAuth v-if="popupAuth"></PopupAuth>
-        <PopupReg v-if="popupReg"></PopupReg>
-        <PopupSetting v-if="popupSetting"></PopupSetting>
-        <PopupBalanceChange
-            v-if="popupBalanceChange['status']"
-        ></PopupBalanceChange>
-        <PopupBalanceDelete
-            v-if="popupBalanceDelete['status']"
-        ></PopupBalanceDelete>
-        <PopupOperationChange
-            v-if="popupOperationChange['status']"
-        ></PopupOperationChange>
-        <PopupOperationDelete
-            v-if="popupOperationDelete['status']"
-        ></PopupOperationDelete>
-        <PopupOperationAdd
-            v-if="popupOperationAdd['status']"
-        ></PopupOperationAdd>
-        <PopupCategoryChange
-            v-if="PopupCategoryChange['status']"
-        ></PopupCategoryChange>
+
+        <Transition mode="out-in">
+            <PopupNav v-if="popupNav"></PopupNav>
+        </Transition>
+
+        <Transition mode="out-in">
+            <PopupAuth v-if="popupAuth"></PopupAuth>
+        </Transition>
+        <Transition mode="out-in">
+            <PopupReg v-if="popupReg"></PopupReg>
+        </Transition>
+        <Transition mode="out-in">
+            <PopupSetting v-if="popupSetting"></PopupSetting>
+        </Transition>
+        <Transition mode="out-in">
+            <PopupBalanceChange
+                v-if="popupBalanceChange['status']"
+            ></PopupBalanceChange>
+        </Transition>
+        <Transition mode="out-in">
+            <PopupBalanceDelete
+                v-if="popupBalanceDelete['status']"
+            ></PopupBalanceDelete>
+        </Transition>
+        <Transition mode="out-in">
+            <PopupOperationChange
+                v-if="popupOperationChange['status']"
+            ></PopupOperationChange>
+        </Transition>
+        <Transition mode="out-in">
+            <PopupOperationDelete
+                v-if="popupOperationDelete['status']"
+            ></PopupOperationDelete>
+        </Transition>
+        <Transition mode="out-in">
+            <PopupOperationAdd
+                v-if="popupOperationAdd['status']"
+            ></PopupOperationAdd>
+        </Transition>
+        <Transition mode="out-in">
+            <PopupCategoryChange
+                v-if="PopupCategoryChange['status']"
+            ></PopupCategoryChange>
+        </Transition>
     </header>
 </template>
 
@@ -197,4 +216,24 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+
+.v-enter-from {
+    opacity: 0;
+    transform: translate(0, -100%);
+}
+.v-enter-to {
+    opacity: 1;
+    transition: all 0.4s ease-out;
+}
+
+.v-leave-from {
+    opacity: 1;
+}
+
+.v-leave-to {
+    opacity: 0;
+    transition: all 0.4s ease-out;
+    transform: translate(0, -100%);
+}
+</style>

@@ -12,6 +12,7 @@
     background: var(--main-white);
     color: var(--main-black);
     overflow: hidden;
+    z-index: 3;
 }
 
 .link--setting-account {

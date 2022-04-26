@@ -14,7 +14,6 @@
 </template>
 
 <script>
-// import { computed } from '@vue/runtime-core'
 import addCategoryImg from "../../../../../public/assets/files/images/categories/plus-solid.svg";
 export default {
     name: "categoryItemEmpty",

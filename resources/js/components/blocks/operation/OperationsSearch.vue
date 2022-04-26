@@ -48,7 +48,7 @@
             class="operation-search__input"
             :value="modelValue"
             @input="$emit('update:modelValue', $event.target.value)"
-            @keydown.enter="$emit('updateSearchText')"
+            @keydown.enter="updateSearchText"
             placeholder="Покормил кота.."
             type="text"
         />
@@ -87,6 +87,14 @@ export default {
             this.rangeStart = this.$refs.operSearchTimeStart.value;
             this.rangeEnd = this.$refs.operSearchTimeEnd.value;
             this.$emit("updateSearchTime", {
+                rangeStart: this.rangeStart,
+                rangeEnd: this.rangeEnd,
+            });
+        },
+        updateSearchText() {
+            this.rangeStart = this.$refs.operSearchTimeStart.value;
+            this.rangeEnd = this.$refs.operSearchTimeEnd.value;
+            this.$emit('updateSearchText', {
                 rangeStart: this.rangeStart,
                 rangeEnd: this.rangeEnd,
             });

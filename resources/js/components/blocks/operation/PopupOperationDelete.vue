@@ -57,7 +57,9 @@ export default {
     methods: {
         togglePopupOperationDelete() {
             this.$store.commit("togglePopupOperationDelete", { status: false, categoryId: "", typeAction: "", typeBlock: "" })
-            this.$store.commit("togglePopupOperationAdd", { status: true });
+            if (this.currentPopupOperationDelete["typeBlock"] === "category") {
+                this.$store.commit("togglePopupOperationAdd", { status: true });
+            }
             this.$store.commit("setChangedDataOperation", [])
         },
         deleteOperationItem() {

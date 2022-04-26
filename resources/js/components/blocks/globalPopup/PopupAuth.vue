@@ -20,7 +20,7 @@
             <div class="auth-reg__input-block">
                 <img class="auth-reg__image" src="../../../../../public/assets/files/images/key-solid.svg" alt="">
                 <div class="auth-reg__input-container">
-                    <input v-model="fieldPassword" class="input" type="text" name="password" placeholder="Пароль">
+                    <input v-model="fieldPassword" class="input" type="password" name="password" placeholder="Пароль">
                     <p class="error-p"> {{ passwordExist }} </p>
                 </div>
             </div>

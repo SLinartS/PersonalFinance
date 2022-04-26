@@ -24,8 +24,6 @@ export default {
 </script>
 
 <style scoped>
-
-
 .v-enter-from {
     opacity: 0;
     transform: translate(0, 100%);
@@ -43,4 +41,5 @@ export default {
     opacity: 0;
     transition: all 0.4s ease-out;
     transform: translate(0, 100%);
-}</style>
+}
+</style>

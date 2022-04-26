@@ -8,9 +8,6 @@ import CategoriesPage from "./components/pages/CategoriesPage"
 
 import OperationsPage from "./components/pages/OperationsPage"
 import AnalyticsPage from "./components/pages/AnalyticsPage";
-import BudgetPage from "./components/pages/BudgetPage";
-
-
 
 
 const router = createRouter( {
@@ -26,7 +23,6 @@ const router = createRouter( {
         },
         { path: "/operations", component: OperationsPage},
         { path: "/analytics", component: AnalyticsPage},
-        { path: "/budget", component: BudgetPage},
     ]
 })
 

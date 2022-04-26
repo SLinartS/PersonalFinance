@@ -5,7 +5,7 @@
             @updateSearchText="loadDateByUserIdText"
             @updateSearchTime="loadDateByUserIdTime"
         ></OperationsSearch>
-        <div class="container-for-vue" v-if="currentOperations.length">
+        <div class="container-for-vue" v-if="currentOperations.lenght !== 0">
             <DateBlock
                 v-for="operations in currentOperations"
                 :key="operations.id"
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import moment from "moment";
 import DateBlock from "../blocks/operation/DateBlock";
 import OperationsSearch from "../blocks/operation/OperationsSearch.vue";
 
@@ -37,10 +38,39 @@ export default {
         };
     },
     mounted() {
-        this.loadDateByUserIdText();
+        this.loadDateByUserIdTextInitial();
     },
+
     methods: {
-        loadDateByUserIdText() {
+        loadDateByUserIdText(range) {
+            if (this.AuthStatusStatus) {
+                if (
+                    this.searchCrit.lenght !== 0 &&
+                    !range["rangeStart"] &&
+                    !range["rangeEnd"]
+                ) {
+                    this.$store.commit(
+                        "setSearchRangeStart",
+                        "1970-01-01 00:00:00"
+                    );
+                    this.$store.commit(
+                        "setSearchRangeEnd",
+                        moment().format("YYYY-MM-DD HH:mm:ss")
+                    );
+                } else {
+                    this.$store.commit(
+                        "setSearchRangeStart",
+                        range["rangeStart"] + " 00:00:00"
+                    );
+                    this.$store.commit(
+                        "setSearchRangeEnd",
+                        range["rangeEnd"] + " 23:59:59"
+                    );
+                }
+                this.$store.dispatch("loadOperationByUserId");
+            }
+        },
+        loadDateByUserIdTextInitial(range) {
             if (this.AuthStatusStatus) {
                 this.$store.dispatch("loadOperationByUserId");
             }

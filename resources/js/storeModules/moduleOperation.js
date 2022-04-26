@@ -58,20 +58,7 @@ const moduleOperation = {
                 searchRangeStart: getters.getSearchRangeStart,
                 searchRangeEnd: getters.getSearchRangeEnd,
             };
-
-            if (data["searchCrit"].length === 0) {
-                await dispatch("globalValidate", {
-                    title: "notValidateCode",
-                    description: "notValidateCode",
-                    amount: "notValidateCode",
-                    time: data["searchRangeStart"],
-                    timeTwo: data["searchRangeEnd"],
-                    selected: "notValidateCode",
-                    img: "notValidateCode",
-                });
-            } else {
-                commit("clearAllErrors");
-            }
+            commit("clearAllErrors");
 
             if (getters.getErrorStatus === 0) {
                 let variable;
@@ -185,10 +172,11 @@ const moduleOperation = {
             }
         },
 
-        async deleteOperationById({ commit }, id) {
+        async deleteOperationById({ commit, dispatch }, id) {
             await fetch("/api/deleteOperationById/" + id)
                 .then()
                 .catch((error) => console.log(error));
+            dispatch("loadOperationByUserId");
         },
     },
 };

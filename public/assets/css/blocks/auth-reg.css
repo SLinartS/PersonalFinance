@@ -15,6 +15,7 @@
     display: block;
     background: var(--main-white);
     overflow: hidden;
+    z-index: 3;
 }
 
 .auth-reg--reg {
