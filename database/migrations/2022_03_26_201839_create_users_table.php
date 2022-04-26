@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name', 40);
             $table->string('email', 40)->unique();
             $table->string('password', 100);
-            $table->string('avatar_url', 50);
+            $table->string('avatar_url', 100);
         });
     }
 
