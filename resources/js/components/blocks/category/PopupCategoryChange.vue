@@ -21,6 +21,7 @@
                     class="change__block-input"
                     @input="(e) => (img_url = e.target.value)"
                     :value="img_url"
+                    placeholder="assets/files/images/categories/money.svg"
                 />
                 <p class="error-p">{{ imgError }}</p>
                 <h2 class="change__block-title">Цвет</h2>

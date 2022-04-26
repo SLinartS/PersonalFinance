@@ -3,7 +3,7 @@
 */
 
 .balance-change {
-    height: 25rem;
+    height: 26rem;
     width: 60rem;
     z-index: 2;
     box-shadow: 0 0 20px rgb(34, 34, 34);
@@ -19,7 +19,7 @@
 }
 
 .balance-change--delete {
-    height: 22rem;
+    height: 20rem;
 }
 
 .balance-change--operation {

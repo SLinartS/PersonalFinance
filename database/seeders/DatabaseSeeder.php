@@ -30,15 +30,8 @@ class DatabaseSeeder extends Seeder
             'password' => "\$2y\$10\$enL6ffOcNFMcskSS2N8P2uJFAxa1v42V0k6eRPb2VzXrhQGEOZTZy",
             'avatar_url' => 'link1'
         ]);
-        DB::table('users')->insert([
-            'name' => 'Маша',
-            'email' => 'test2@gmail.com',
-            'password' => "test2password",
-            'avatar_url' => 'link2'
-        ]);
 
         //----------------------------------------------------------------------------------------------------------------------
-
 
         DB::table('currencies')->insert([
             'value' => '₽',
@@ -254,11 +247,11 @@ class DatabaseSeeder extends Seeder
             "user_id" => 2,
         ]);
         DB::table('operations')->insert([
-            'description' => 'Нашёл деньги у банкомата',
+            'description' => 'Подарили на работе',
             'amount' => "1000",
             'time' => "2022-04-01 01:00:00",
             "account_id" => 1,
-            "category_id" => 12,
+            "category_id" => 13,
             "user_id" => 2,
         ]);
         DB::table('operations')->insert([
@@ -278,15 +271,15 @@ class DatabaseSeeder extends Seeder
             "user_id" => 2,
         ]);
         DB::table('operations')->insert([
-            'description' => 'Доехал до дома',
-            'amount' => "300",
+            'description' => 'Такси до дома',
+            'amount' => "500",
             'time' => "2022-04-03 12:00:00",
             "account_id" => 3,
             "category_id" => 3,
             "user_id" => 2,
         ]);
         DB::table('operations')->insert([
-            'description' => 'Еда для дома',
+            'description' => 'Еда домой',
             'amount' => "2000",
             'time' => "2022-04-10 06:25:00",
             "account_id" => 4,
@@ -295,7 +288,7 @@ class DatabaseSeeder extends Seeder
         ]);
         DB::table('operations')->insert([
             'description' => 'Поел в столовой',
-            'amount' => "1000",
+            'amount' => "300",
             'time' => "2022-04-023 21:30:00",
             "account_id" => 1,
             "category_id" => 4,
@@ -324,16 +317,8 @@ class DatabaseSeeder extends Seeder
             "user_id" => 2,
         ]);
         DB::table('users_categories')->insert([
-            "category_id" => 3,
-            "user_id" => 3,
-        ]);
-        DB::table('users_categories')->insert([
             "category_id" => 4,
             "user_id" => 2,
-        ]);
-        DB::table('users_categories')->insert([
-            "category_id" => 4,
-            "user_id" => 3,
         ]);
         DB::table('users_categories')->insert([
             "category_id" => 5,

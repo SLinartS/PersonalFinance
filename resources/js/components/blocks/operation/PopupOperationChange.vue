@@ -31,6 +31,7 @@
                     class="change__block-input"
                     @input="(e) => (amount = e.target.value)"
                     :value="amount"
+                    placeholder="0.00"
                 />
                 <p class="error-p">{{ amountError }}</p>
             </div>

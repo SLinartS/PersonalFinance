@@ -11,6 +11,7 @@
                     class="change__block-input"
                     @input="(e) => (title = e.target.value)"
                     :value="title"
+                    @keydown.enter.prevent=""
                 />
                 <p class="error-p">{{ titleError }}</p>
             </div>

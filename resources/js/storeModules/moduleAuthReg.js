@@ -9,10 +9,10 @@ const moduleAuthReg = {
             fieldPasswordRepeat: "",
             errors: {},
             authStatus: {
-                status: true,
-                userId: 2,
-                userName: "Евгений",
-                userEmail: "test1@gmail.com",
+                status: false,
+                userId: 0,
+                userName: "",
+                userEmail: "",
             },
         };
     },
@@ -175,7 +175,6 @@ const moduleAuthReg = {
 
             commit("clearFields");
             router.push({ name: "main", params: {} });
-            console.log(state.authStatus);
         },
     },
 };

@@ -3,7 +3,7 @@
 */
 
 .auth-reg {
-    height: 40rem;
+    height: 36rem;
     width: 75rem;
     z-index: 2;
     box-shadow: 0 0 20px rgb(34, 34, 34);
@@ -19,7 +19,7 @@
 }
 
 .auth-reg--reg {
-    height: 48rem;
+    height: 47rem;
 }
 
 .auth-reg__header {

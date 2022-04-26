@@ -23312,7 +23312,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
- // import { computed } from '@vue/runtime-core'
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -23387,7 +23386,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _public_assets_files_images_categories_plus_solid_svg__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../public/assets/files/images/categories/plus-solid.svg */ "./public/assets/files/images/categories/plus-solid.svg");
-// import { computed } from '@vue/runtime-core'
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "categoryItemEmpty",
@@ -23534,11 +23532,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.getCurrentBalanceByUserId();
     this.loadOptions();
   },
-  // watch: {
-  //     $route(to, from) {
-  //         this.getCurrentBalanceByUserId();
-  //     },
-  // },
   computed: _defineProperty({
     AuthStatusStatus: function AuthStatusStatus() {
       return this.$store.getters.getAuthStatusStatus;
@@ -23749,7 +23742,6 @@ __webpack_require__.r(__webpack_exports__);
         typeAction: "",
         typeBlock: ""
       });
-      this.$store.commit("clearAllErrors"); // this.$store.commit("setChangedDataCategory", []);
     },
     addCategoryItem: function addCategoryItem() {
       this.$store.dispatch("insertCategoryById", {
@@ -24110,8 +24102,15 @@ __webpack_require__.r(__webpack_exports__);
       this.$store.commit("togglePopupReg", true);
     },
     toggleSetting: function toggleSetting() {
-      this.$store.commit("changeErrors", {});
-      this.$store.commit("togglePopupSetting", true);
+      if (this.AuthStatusStatus) {
+        this.$store.commit("changeErrors", {});
+        this.$store.commit("togglePopupSetting", true);
+      }
+    }
+  },
+  computed: {
+    AuthStatusStatus: function AuthStatusStatus() {
+      return this.$store.getters.getAuthStatusStatus;
     }
   }
 });
@@ -25580,7 +25579,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onInput: _cache[0] || (_cache[0] = function (e) {
       return $data.title = e.target.value;
     }),
-    value: $data.title
+    value: $data.title,
+    onKeydown: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)((0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {}, ["prevent"]), ["enter"]))
   }, null, 40
   /* PROPS, HYDRATE_EVENTS */
   , _hoisted_5), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.titleError), 1
@@ -25588,12 +25588,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   )]), $options.currentPopupBalanceChange['typeAction'] === 'change' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "button button--cancel balance-change__button",
-    onClick: _cache[1] || (_cache[1] = function () {
+    onClick: _cache[2] || (_cache[2] = function () {
       return $options.togglePopupBalanceChange && $options.togglePopupBalanceChange.apply($options, arguments);
     })
   }, " Отмена "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
-    onClick: _cache[2] || (_cache[2] = function () {
+    onClick: _cache[3] || (_cache[3] = function () {
       return $options.updateAccountItem && $options.updateAccountItem.apply($options, arguments);
     }),
     "class": "button button--save balance-change__button",
@@ -25601,12 +25601,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, " Сохранить ")])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
     "class": "button button--cancel balance-change__button",
-    onClick: _cache[3] || (_cache[3] = function () {
+    onClick: _cache[4] || (_cache[4] = function () {
       return $options.togglePopupBalanceChange && $options.togglePopupBalanceChange.apply($options, arguments);
     })
   }, " Отмена "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "button",
-    onClick: _cache[4] || (_cache[4] = function () {
+    onClick: _cache[5] || (_cache[5] = function () {
       return $options.addAccountItem && $options.addAccountItem.apply($options, arguments);
     }),
     "class": "button button--save balance-change__button",
@@ -26057,7 +26057,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onInput: _cache[1] || (_cache[1] = function (e) {
       return $data.img_url = e.target.value;
     }),
-    value: $data.img_url
+    value: $data.img_url,
+    placeholder: "assets/files/images/categories/money.svg"
   }, null, 40
   /* PROPS, HYDRATE_EVENTS */
   , _hoisted_8), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.imgError), 1
@@ -26234,7 +26235,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "change__block-input",
     onInput: _cache[3] || (_cache[3] = function (e) {
       return $data.amount = e.target.value;
-    })
+    }),
+    placeholder: "0.00"
   }, null, 32
   /* HYDRATE_EVENTS */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.amountError), 1
@@ -26389,8 +26391,9 @@ var _hoisted_14 = {
 
 var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "auth-reg__input-block"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  "class": "auth-reg__forgot-password",
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  type: "button",
+  "class": "button auth-reg__forgot-password",
   href: ""
 }, "Забыли пароль?")], -1
 /* HOISTED */
@@ -27321,7 +27324,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onInput: _cache[1] || (_cache[1] = function (e) {
       return $data.amount = e.target.value;
     }),
-    value: $data.amount
+    value: $data.amount,
+    placeholder: "0.00"
   }, null, 40
   /* PROPS, HYDRATE_EVENTS */
   , _hoisted_13), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.amountError), 1
@@ -27861,7 +27865,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onUpdateSearchTime: $options.loadDateByUserIdTime
   }, null, 8
   /* PROPS */
-  , ["modelValue", "onUpdateSearchText", "onUpdateSearchTime"]), $options.currentOperations.lenght !== 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_2, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.currentOperations, function (operations) {
+  , ["modelValue", "onUpdateSearchText", "onUpdateSearchTime"]), $options.currentOperations.length !== 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_2, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.currentOperations, function (operations) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_DateBlock, {
       key: operations.id,
       datetime: operations[0].time,
@@ -28664,17 +28668,11 @@ var moduleAuthReg = {
       fieldPassword: "",
       fieldPasswordRepeat: "",
       errors: {},
-      // authStatus: {
-      //     status: false,
-      //     userId: 0,
-      //     userName: "",
-      //     userEmail: "",
-      // },
       authStatus: {
-        status: true,
-        userId: 2,
-        userName: "Евгений",
-        userEmail: "test1@gmail.com"
+        status: false,
+        userId: 0,
+        userName: "",
+        userEmail: ""
       }
     };
   },
@@ -28932,9 +28930,8 @@ var moduleAuthReg = {
                   name: "main",
                   params: {}
                 });
-                console.log(state.authStatus);
 
-              case 9:
+              case 8:
               case "end":
                 return _context5.stop();
             }
@@ -49070,7 +49067,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.v-enter-from[data-v-332fccf4] {\n    opacity: 0;\n    transform: translate(0, 100%);\n}\n.v-enter-to[data-v-332fccf4] {\n    opacity: 1;\n    transition: all 0.4s ease-out;\n}\n.v-leave-from[data-v-332fccf4] {\n    opacity: 1;\n}\n.v-leave-to[data-v-332fccf4] {\n    opacity: 0;\n    transition: all 0.4s ease-out;\n    transform: translate(0, 100%);\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.v-enter-from[data-v-332fccf4] {\r\n    opacity: 0;\r\n    transform: translate(0, 100%);\n}\n.v-enter-to[data-v-332fccf4] {\r\n    opacity: 1;\r\n    transition: all 0.4s ease-out;\n}\n.v-leave-from[data-v-332fccf4] {\r\n    opacity: 1;\n}\n.v-leave-to[data-v-332fccf4] {\r\n    opacity: 0;\r\n    transition: all 0.4s ease-out;\r\n    transform: translate(0, 100%);\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -49094,7 +49091,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.v-enter-from[data-v-6c08e0a2] {\n    opacity: 0;\n    transform: translate(0, -100%);\n}\n.v-enter-to[data-v-6c08e0a2] {\n    opacity: 1;\n    transition: all 0.4s ease-out;\n}\n.v-leave-from[data-v-6c08e0a2] {\n    opacity: 1;\n}\n.v-leave-to[data-v-6c08e0a2] {\n    opacity: 0;\n    transition: all 0.4s ease-out;\n    transform: translate(0, -100%);\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.v-enter-from[data-v-6c08e0a2] {\r\n    opacity: 0;\r\n    transform: translate(0, -100%);\n}\n.v-enter-to[data-v-6c08e0a2] {\r\n    opacity: 1;\r\n    transition: all 0.4s ease-out;\n}\n.v-leave-from[data-v-6c08e0a2] {\r\n    opacity: 1;\n}\n.v-leave-to[data-v-6c08e0a2] {\r\n    opacity: 0;\r\n    transition: all 0.4s ease-out;\r\n    transform: translate(0, -100%);\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

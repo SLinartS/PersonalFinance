@@ -195,7 +195,7 @@
         font-size: 1.6rem;
         grid-template-columns: repeat(6, 15rem);
     }
-
+analytics__main-bar__elem-result
     /*CURRENT-BALANCE*/
 
     .current-balance {
@@ -215,12 +215,8 @@
     }
 
     .analytics__main-bar__elem-result {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        grid-template-columns: 2fr 1fr;
     }
-
-
 }
 
 @media (max-width: 1000px) {

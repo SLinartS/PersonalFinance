@@ -5,7 +5,7 @@
             @updateSearchText="loadDateByUserIdText"
             @updateSearchTime="loadDateByUserIdTime"
         ></OperationsSearch>
-        <div class="container-for-vue" v-if="currentOperations.lenght !== 0">
+        <div class="container-for-vue" v-if="currentOperations.length !== 0">
             <DateBlock
                 v-for="operations in currentOperations"
                 :key="operations.id"

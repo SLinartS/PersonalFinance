@@ -46,6 +46,7 @@
                     type="text"
                     class="change__block-input"
                     @input="(e) => (amount = e.target.value)"
+                    placeholder="0.00"
                 />
                 <p class="error-p">{{ amountError }}</p>
                 <h2 class="change__block-title">Тип счёта</h2>

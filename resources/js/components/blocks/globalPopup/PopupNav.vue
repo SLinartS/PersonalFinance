@@ -78,8 +78,15 @@ export default {
             this.$store.commit("togglePopupReg", true);
         },
         toggleSetting() {
-            this.$store.commit("changeErrors", {});
-            this.$store.commit("togglePopupSetting", true);
+            if (this.AuthStatusStatus) {
+                this.$store.commit("changeErrors", {});
+                this.$store.commit("togglePopupSetting", true);
+            }
+        },
+    },
+    computed: {
+        AuthStatusStatus() {
+            return this.$store.getters.getAuthStatusStatus;
         },
     },
 };

@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="auth-reg__input-block">
-                <a class="auth-reg__forgot-password" href="">Забыли пароль?</a>
+                <button type="button" class="button auth-reg__forgot-password" href="">Забыли пароль?</button>
             </div>
         </div>
         <div class="auth-reg__button-section">
